@@ -1,0 +1,6 @@
+@import "../../variables";
+
+.shop-page-wrapper {
+  width: 100%;
+  height: calc(100vh - #{($navbar-default-height + px)});
+}

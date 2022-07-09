@@ -1,0 +1,8 @@
+@import "../../variables";
+
+.registration-form {
+  width: $auth-forms-default-width + px;
+  height: $registration-form-default-height + px;
+  @include flex-column-all-center;
+  border: 3px double $auth-forms-border-color;
+}

@@ -1,0 +1,96 @@
+@import "../../variables";
+
+.navbar {
+  width: 100%;
+  height: $navbar-default-height + px;
+  @include flex-line-spacebetween-vertical-center;
+  position: relative;
+  padding: $navbar-paddings-top-bottom $navbar-paddings-left-right;
+  background-color: $navbar-color;
+
+  &-actions-wrapper {
+    @include flex-line-start-vertical-center;
+    gap: 10px;
+
+    .logo-link {
+      @include flex-all-center;
+      @include user-select-none;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .selection-mode-button {
+      @include flex-all-center;
+      @include user-select-none;
+      padding: $navbar-buttons-paddings;
+      background: none;
+      color: #fff;
+      border: 2px solid #fff;
+      cursor: pointer;
+    }
+  }
+
+  &-buttons-wrapper {
+    @include flex-line-start-vertical-center;
+
+    .authorization-page-button {
+      @include flex-all-center;
+      @include user-select-none;
+      padding: $navbar-buttons-paddings;
+      background: none;
+      color: #fff;
+      border: 2px solid #fff;
+      cursor: pointer;
+    }
+
+    .adminpanel-page-button {
+      @include flex-all-center;
+      @include user-select-none;
+      padding: $navbar-buttons-paddings;
+      background: none;
+      color: #fff;
+      border: 2px solid #fff;
+      cursor: pointer;
+    }
+
+    .logout-button {
+      @include flex-all-center;
+      @include user-select-none;
+      padding: $navbar-buttons-paddings;
+      background: none;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  &-selection-bar {
+    width: 100%;
+    height: 0;
+    position: absolute;
+    top: $navbar-default-height + px;
+    left: 0;
+    @include flex-line-start-vertical-center;
+    background: $selection-bar-color;
+    transition-property: height, box-shadow;
+    transition-timing-function: linear;
+    transition-duration: 0.5s;
+    z-index: 1;
+    overflow: hidden;
+
+    &.active {
+      height: $navbar-default-height * 1.4 + px;
+      box-shadow: 0 2px 8px 0 rgba($color: #000000, $alpha: 0.3);
+    }
+  }
+}
+
+@media (hover: hover) {
+  .selection-mode-button,
+  .authorization-page-button,
+  .adminpanel-page-button {
+    &:hover {
+      background: rgba($color: #000, $alpha: 0.1);
+    }
+  }
+}

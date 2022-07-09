@@ -1,0 +1,32 @@
+{
+  "name": "react-online-store",
+  "version": "1.0.0",
+  "description": "React Online Store (PERN stack)",
+  "main": "server.js",
+  "author": "Deguz <deguz@mail.ru>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "yarn --cwd client run start",
+    "client:install": "yarn --cwd client add react-scripts --save",
+    "client:build": "yarn --cwd client run build",
+    "development": "concurrently \"yarn server\" \"yarn client\"",
+    "heroku-postbuild": "yarn client:install && yarn client:build"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-fileupload": "^1.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.21.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "concurrently": "^7.2.2",
+    "nodemon": "^2.0.18"
+  }
+}

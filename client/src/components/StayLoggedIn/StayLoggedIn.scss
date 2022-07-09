@@ -1,0 +1,79 @@
+@import "../../variables";
+
+.stay-logged-in-wrapper {
+  @include flex-all-center;
+  position: absolute;
+  left: 4px;
+
+  .checkbox {
+    width: 100%;
+    @include flex-all-center;
+    position: relative;
+
+    #stay-logged-in-checkbox {
+      appearance: none;
+
+      &:checked + label {
+        &::after {
+          opacity: 1;
+        }
+      }
+    }
+
+    label {
+      @include user-select-none;
+      padding-left: 20px;
+      color: $auth-stayloggedin-checkbox-color;
+      font-weight: bold;
+
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        border: 1px solid $auth-stayloggedin-checkbox-color;
+        background-color: #fff;
+        z-index: 1;
+      }
+
+      &::after {
+        content: "✔";
+        display: block;
+        position: absolute;
+        opacity: 0;
+        transition: opacity 0.15s;
+        z-index: 1;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .stay-logged-in-wrapper {
+    width: $auth-login-button-default-width + px;
+    height: $auth-stayloggedin-checkbox-default-size + px;
+    bottom: -33px;
+
+    .checkbox {
+      height: $auth-stayloggedin-checkbox-default-size + px;
+
+      label {
+        width: $auth-login-button-default-width + px;
+        margin-top: -1px;
+        font-size: $auth-stayloggedin-checkbox-default-fsize + px;
+
+        &::before {
+          width: $auth-stayloggedin-checkbox-default-size + px;
+          height: $auth-stayloggedin-checkbox-default-size + px;
+          top: 0;
+          left: 0;
+        }
+
+        &::after {
+          top: 0;
+          left: 4px;
+          font-size: $auth-stayloggedin-checkbox-default-fsize + px;
+        }
+      }
+    }
+  }
+}
