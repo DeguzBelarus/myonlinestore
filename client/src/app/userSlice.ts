@@ -10,7 +10,7 @@ interface UserState {
    userId: string | null,
    nickname: string | null,
    isStayLoggedIn: boolean,
-   registrationEmail: string | null,
+   registrationEmail: string,
    authMessage: string,
    authStatus: "idle" | "loading" | "failed"
 }
@@ -22,7 +22,7 @@ const initialState = {
    userId: null,
    nickname: null,
    isStayLoggedIn: true,
-   registrationEmail: null,
+   registrationEmail: "",
    authMessage: "",
    authStatus: "idle"
 } as UserState
@@ -59,7 +59,7 @@ export const loginAsync = createAsyncThunk(
 export const checkAuthorizationAsync = createAsyncThunk(
    "user/checkauthorization",
    async (token: string) => {
-      const url = `${process.env.REACT_APP_API_URL}/api/user/check`
+      const url = `${process.env.REACT_APP_API_URL}/api/user/authcheck`
       const response: any = await checkAuthorization(url, token)
       const result = await response.json()
       if (result.token) {
@@ -143,7 +143,7 @@ export const userSlice = createSlice({
                state.token = action.payload.responseData.token
 
                if (state.isStayLoggedIn) {
-                  localStorage.setItem("token", action.payload.responseData.token)
+                  localStorage.setItem("MyOnlineStoreToken", action.payload.responseData.token)
                }
             } else {
                state.authMessage = action.payload.message
@@ -168,11 +168,10 @@ export const userSlice = createSlice({
                state.userId = action.payload.userData.id
                state.nickname = action.payload.userData.nickname
                state.role = action.payload.userData.role
-               state.authMessage = action.payload.responseData.message
                state.token = action.payload.responseData.token
 
                if (state.isStayLoggedIn) {
-                  localStorage.setItem("token", action.payload.responseData.token)
+                  localStorage.setItem("MyOnlineStoreToken", action.payload.responseData.token)
                }
             } else {
                state.authMessage = action.payload.message
@@ -206,7 +205,7 @@ export const userSlice = createSlice({
                state.token = action.payload.responseData.token
 
                if (state.isStayLoggedIn) {
-                  localStorage.setItem("token", action.payload.responseData.token)
+                  localStorage.setItem("MyOnlineStoreToken", action.payload.responseData.token)
                }
             } else {
                state.authMessage = action.payload.message

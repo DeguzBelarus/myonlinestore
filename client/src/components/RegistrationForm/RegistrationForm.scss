@@ -1,8 +1,260 @@
 @import "../../variables";
 
-.registration-form {
-  width: $auth-forms-default-width + px;
-  height: $registration-form-default-height + px;
-  @include flex-column-all-center;
+#registration-form {
+  @include flex-column-line-center-vertical-top;
+  position: relative;
+  padding: 12px 10px 5px;
   border: 3px double $auth-forms-border-color;
+  background-color: #fff;
+
+  .registration-email-header {
+    @include user-select-none;
+  }
+
+  .heading-paragraph {
+    @include user-select-none;
+    color: $auth-registration-email-header-color;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    position: relative;
+    margin-bottom: 18px;
+    border: none;
+
+    &:first-of-type {
+      margin-bottom: 25px;
+    }
+
+    input {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      bottom: 0;
+      padding: 10px;
+      border: none;
+      outline: none;
+      background-color: #fff;
+      border-bottom: 1px solid $auth-inputs-border-color;
+
+      &::placeholder {
+        opacity: 0;
+        transition-property: opacity;
+        transition-duration: 1s;
+      }
+
+      &:focus {
+        outline: none;
+
+        &:placeholder-shown {
+          + span {
+            color: $auth-inputs-placeholder-color;
+            background-color: #fff;
+            cursor: default;
+          }
+
+          ~ .line {
+            background-color: $auth-inputs-line-color;
+          }
+        }
+      }
+
+      &:focus,
+      &:not(:placeholder-shown) {
+        + span {
+          color: $auth-inputs-placeholder-color;
+          background-color: #fff;
+          cursor: default;
+
+          ~ .line {
+            width: 100%;
+          }
+        }
+      }
+
+      &:not(:focus),
+      &:not(:placeholder-shown) {
+        + span {
+          color: $auth-inputs-placeholder-valid-color;
+          background-color: #fff;
+        }
+      }
+
+      &:invalid {
+        + span {
+          color: red;
+          background-color: #fff;
+        }
+
+        ~ .line {
+          background-color: red;
+        }
+      }
+
+      &:placeholder-shown {
+        + span {
+          color: #999;
+          background-color: #fff;
+        }
+      }
+    }
+
+    span {
+      @include user-select-none;
+      position: absolute;
+      left: 10px;
+      opacity: 0.8;
+      transition: all 0.3s linear;
+      color: #999;
+      cursor: text;
+    }
+
+    .line {
+      width: 0;
+      height: 2px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background-color: $auth-inputs-line-valid-color;
+      transition-property: width, background-color;
+      transition-duration: 0.3s;
+      transition-timing-function: linear;
+    }
+  }
+
+  .buttons {
+    @include flex-line-start-vertical-center;
+    position: relative;
+    gap: 6px;
+
+    .loginpage-enter-button {
+      @include flex-all-center;
+      @include user-select-none;
+      position: relative;
+      color: $auth-backto-login-button-fcolor;
+      border: 2px solid $auth-backto-login-button-bcolor;
+      cursor: pointer;
+
+      &:not(:hover) {
+        background-color: $auth-registration-button-bgcolor;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .register-button {
+      @include flex-all-center;
+      @include user-select-none;
+      position: relative;
+      color: $auth-register-button-fcolor;
+      border: 2px solid $auth-register-button-bcolor;
+      transition-property: opacity;
+      transition-duration: 0.2s;
+      cursor: pointer;
+
+      &:not(:hover) {
+        background-color: $auth-register-button-bgcolor;
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      &::before {
+        content: "Loading...";
+        width: 0;
+        height: 100%;
+        @include flex-all-center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $auth-register-button-bcolor;
+        color: #fff;
+        transition-property: width;
+        transition-duration: 0.33s;
+        transition-timing-function: linear;
+        overflow: hidden;
+      }
+
+      &.active {
+        background-color: rgba(
+          $color: $auth-register-button-bcolor,
+          $alpha: 0.2
+        );
+
+        &::before {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  #registration-form {
+    width: $auth-forms-default-width + px;
+    height: $registration-form-default-height + px;
+
+    label {
+      width: $auth-inputs-default-width + px;
+      height: $auth-inputs-default-height + px;
+
+      input {
+        &:focus,
+        &:not(:placeholder-shown) {
+          + span {
+            top: -$auth-inputs-default-height * 0.5 + px;
+            left: 1px;
+            opacity: 1;
+            font-size: $auth-inputs-placeholder-default-fsize * 0.75 + px;
+          }
+        }
+      }
+
+      span {
+        top: $auth-inputs-default-height * 0.1 + px;
+        font-size: $auth-inputs-placeholder-default-fsize + px;
+      }
+    }
+  }
+
+  .buttons {
+    .loginpage-enter-button {
+      width: $auth-backto-login-button-default-width + px;
+      height: $auth-buttons-default-height + px;
+      padding: $auth-buttons-paddings;
+    }
+
+    .register-button {
+      width: $auth-register-button-default-width + px;
+      height: $auth-buttons-default-height + px;
+      padding: $auth-buttons-paddings;
+    }
+  }
+}
+
+@media (hover: hover) {
+  .buttons {
+    .loginpage-enter-button {
+      &:hover {
+        background-color: rgba(
+          $color: $auth-backto-login-button-bcolor,
+          $alpha: 0.2
+        );
+      }
+    }
+
+    .register-button {
+      &:hover {
+        background-color: rgba(
+          $color: $auth-register-button-bcolor,
+          $alpha: 0.2
+        );
+      }
+    }
+  }
 }

@@ -22,7 +22,7 @@ class UserController {
         email.length < 8 ||
         !email.includes("@") ||
         !email.includes(".") ||
-        email.length > 254
+        email.length > 255
       ) {
         return next(
           ApiError.badRequest(
@@ -38,6 +38,15 @@ class UserController {
             lang === "ru"
               ? "Минимальная длина пароля - 8 символов"
               : "The minimum password length is 8 characters"
+          )
+        );
+      }
+      if (password.length > 255) {
+        return next(
+          ApiError.badRequest(
+            lang === "ru"
+              ? "Максимальная длина пароля - 255 символов"
+              : "The maximum password length is 255 characters"
           )
         );
       }
@@ -98,7 +107,7 @@ class UserController {
           role,
         },
         process.env.SECRET_KEY,
-        { expiresIn: "23h" }
+        { expiresIn: "13h" }
       );
 
       return response.status(201).json({
@@ -147,7 +156,7 @@ class UserController {
           role: user.role,
         },
         process.env.SECRET_KEY,
-        { expiresIn: "23h" }
+        { expiresIn: "13h" }
       );
 
       return response.json({
@@ -167,13 +176,13 @@ class UserController {
       const { lang } = request.body;
       const token = jwt.sign(
         {
-          id: request.id,
-          email: request.email,
-          nickname: request.nickname,
-          role: request.role,
+          id: request.user.id,
+          email: request.user.email,
+          nickname: request.user.nickname,
+          role: request.user.role,
         },
         process.env.SECRET_KEY,
-        { expiresIn: "23h" }
+        { expiresIn: "13h" }
       );
 
       return response.json({

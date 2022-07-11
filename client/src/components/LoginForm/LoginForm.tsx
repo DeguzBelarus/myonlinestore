@@ -2,9 +2,15 @@ import { FC, useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
-import { getAuthStatus, setRegistrationEmail, setAuthMessage, loginAsync, getAuthMessage } from "../../app/userSlice";
+import {
+   getAuthStatus,
+   setRegistrationEmail,
+   setAuthMessage,
+   loginAsync,
+} from "../../app/userSlice";
 import { getCurrentLanguage } from "../../app/globalSlice";
 import { StayLoggedIn } from "../StayLoggedIn/StayLoggedIn";
+import { AuthMessage } from "../AuthMessage/AuthMessage";
 import "./LoginForm.scss"
 
 interface Props {
@@ -18,16 +24,15 @@ export const LoginForm: FC<Props> = ({ isAuth, previousRoute }) => {
    const dispatch = useAppDispatch()
    const navigate = useNavigate()
 
-   const authMessage: string = useAppSelector(getAuthMessage)
    const currentLanguage: string = useAppSelector(getCurrentLanguage)
    const authStatus: string = useAppSelector(getAuthStatus)
-   const [loginFormData, setloginFormData]: any = useState({
+   const [loginFormData, setLoginFormData]: any = useState({
       email: "", password: "", lang: currentLanguage
    })
    const [registrationEmail, setRegistrationEmailLocal]: any = useState("")
 
    const loginFormDataUpdate = (event: any) => {
-      setloginFormData({ ...loginFormData, [event.target.name]: event.target.value })
+      setLoginFormData({ ...loginFormData, [event.target.name]: event.target.value })
    }
 
    const registrationEmailUpdate = (event: any) => {
@@ -39,13 +44,16 @@ export const LoginForm: FC<Props> = ({ isAuth, previousRoute }) => {
       if (registrationEmail.length < 8 ||
          !registrationEmail.includes("@") ||
          !registrationEmail.includes(".") ||
-         registrationEmail.length > 254) {
-         return dispatch(setAuthMessage("The specified email is incorrect"))
+         registrationEmail.length > 255) {
+         return dispatch(setAuthMessage(currentLanguage === "ru"
+            ? "Указанный адрес электронной почты неверный"
+            : "The specified email is incorrect"))
       }
 
       registrationEmailInput.current.value = ""
       dispatch(setRegistrationEmail(registrationEmail))
       navigate("/registration")
+      dispatch(setAuthMessage(""))
    }
 
    const registrationPageEnterKey = (event: any) => {
@@ -54,13 +62,16 @@ export const LoginForm: FC<Props> = ({ isAuth, previousRoute }) => {
          if (registrationEmail.length < 8 ||
             !registrationEmail.includes("@") ||
             !registrationEmail.includes(".") ||
-            registrationEmail.length > 254) {
-            return dispatch(setAuthMessage("The specified email is incorrect"))
+            registrationEmail.length > 255) {
+            return dispatch(setAuthMessage(currentLanguage === "ru"
+               ? "Указанный адрес электронной почты неверный"
+               : "The specified email is incorrect"))
          }
 
          registrationEmailInput.current.value = ""
          dispatch(setRegistrationEmail(registrationEmail))
          navigate("/registration")
+         dispatch(setAuthMessage(""))
       }
    }
 
@@ -69,11 +80,20 @@ export const LoginForm: FC<Props> = ({ isAuth, previousRoute }) => {
       if (loginFormData.email.length < 8 ||
          !loginFormData.email.includes("@") ||
          !loginFormData.email.includes(".") ||
-         loginFormData.email.length > 254) {
-         return dispatch(setAuthMessage("The specified email is incorrect"))
+         loginFormData.email.length > 255) {
+         return dispatch(setAuthMessage(currentLanguage === "ru"
+            ? "Указанный адрес электронной почты неверный"
+            : "The specified email is incorrect"))
       }
       if (loginFormData.password.length < 8) {
-         return dispatch(setAuthMessage("The minimum password length is 8 characters"))
+         return dispatch(setAuthMessage(currentLanguage === "ru"
+            ? "Минимальная длина пароля составляет 8 символов"
+            : "The minimum password length is 8 characters"))
+      }
+      if (loginFormData.password.length > 255) {
+         return dispatch(setAuthMessage(currentLanguage === "ru"
+            ? "Максимальная длина пароля составляет 255 символов"
+            : "The maximum password length is 255 characters"))
       }
 
       dispatch(loginAsync(JSON.stringify(loginFormData)))
@@ -95,16 +115,17 @@ export const LoginForm: FC<Props> = ({ isAuth, previousRoute }) => {
             type="email"
             id="email-input"
             name="email"
-            placeholder="Enter your email"
-            title="Enter your email"
+            placeholder={currentLanguage === "ru" ? "Введите Ваш email" : "Enter your email"}
+            title={currentLanguage === "ru" ? "Введите Ваш email" : "Enter your email"}
+            pattern="[^@\s]+@[^@\s]+\.[^@\s]{2,4}"
             required
             autoFocus
             autoComplete="off"
             minLength={8}
-            maxLength={254}
+            maxLength={255}
             onChange={loginFormDataUpdate}
          />
-         <span className="placeholder-immitator">Enter your email</span>
+         <span className="placeholder-immitator">{currentLanguage === "ru" ? "Введите Ваш email" : "Enter your email"}</span>
          <div className="line"></div>
       </label>
       <label htmlFor="password-input">
@@ -112,29 +133,30 @@ export const LoginForm: FC<Props> = ({ isAuth, previousRoute }) => {
             type="password"
             id="password-input"
             name="password"
-            placeholder="Enter your password"
-            title="Enter your password"
+            placeholder={currentLanguage === "ru" ? "Введите Ваш пароль" : "Enter your password"}
+            title={currentLanguage === "ru" ? "Введите Ваш пароль" : "Enter your password"}
             required
             autoComplete="off"
             minLength={8}
-            maxLength={254}
+            maxLength={255}
             onChange={loginFormDataUpdate}
          />
-         <span className="placeholder-immitator">Enter your password</span>
+         <span className="placeholder-immitator">{currentLanguage === "ru" ? "Введите Ваш пароль" : "Enter your password"}</span>
          <div className="line"></div>
       </label>
+
       <div className="buttons">
          <button
             type="submit"
             className={authStatus === "loading" ? "login-button active" : "login-button"}
             disabled={authStatus === "loading"}
-         >Login</button>
+         >{currentLanguage === "ru" ? "Вход" : "Login"}</button>
          <button
             type="button"
             className="registration-button"
             disabled={authStatus === "loading"}
             onClick={registrationPageEnter}
-         >Registration</button>
+         >{currentLanguage === "ru" ? "Регистрация" : "Registration"}</button>
          <StayLoggedIn />
       </div>
       <label
@@ -144,22 +166,19 @@ export const LoginForm: FC<Props> = ({ isAuth, previousRoute }) => {
             type="email"
             id="registration-email-input"
             name="registration-email"
-            placeholder="Enter registration email"
-            title="Enter registration email"
+            placeholder={currentLanguage === "ru" ? "Введите регистрационный email" : "Enter registration email"}
+            title={currentLanguage === "ru" ? "Введите регистрационный email" : "Enter registration email"}
+            pattern="[^@\s]+@[^@\s]+\.[^@\s]{2,4}"
             autoComplete="off"
             minLength={8}
-            maxLength={254}
+            maxLength={255}
             onChange={registrationEmailUpdate}
             onKeyDown={registrationPageEnterKey}
             ref={registrationEmailInput}
             form="off"
          />
       </label>
-      <div
-         className={authMessage
-            ? "message-container active"
-            : "message-container"}>
-         <p className="message-paragraph">{authMessage}</p>
-      </div>
+
+      <AuthMessage />
    </form >
 }

@@ -22,21 +22,23 @@ import {
    setPreviousRoute,
    getCartPageIsActive
 } from "../../app/shopSlice";
+import { getCurrentLanguage } from "../../app/globalSlice";
 import "./NavBar.scss"
 
 export const NavBar: FC = () => {
    const navigate = useNavigate()
    const dispatch = useAppDispatch()
 
-   const isAuth = useAppSelector(getIsAuth)
-   const userRole = useAppSelector(getUserRole)
-   const selectionMode = useAppSelector(getSelectionMode)
-   const shopPageIsActive = useAppSelector(getShopPageIsActive)
-   const cartPageIsActive = useAppSelector(getCartPageIsActive)
-   const authorizationPageIsActive = useAppSelector(getAuthorizationPageIsActive)
-   const adminPanelPageIsActive = useAppSelector(getAdminPanelPageIsActive)
-   const productPageIsActive = useAppSelector(getProductPageIsActive)
-   const routeId = useAppSelector(getRouteId)
+   const isAuth: boolean = useAppSelector(getIsAuth)
+   const userRole: string = useAppSelector(getUserRole)
+   const selectionMode: boolean = useAppSelector(getSelectionMode)
+   const shopPageIsActive: boolean = useAppSelector(getShopPageIsActive)
+   const cartPageIsActive: boolean = useAppSelector(getCartPageIsActive)
+   const authorizationPageIsActive: boolean = useAppSelector(getAuthorizationPageIsActive)
+   const adminPanelPageIsActive: boolean = useAppSelector(getAdminPanelPageIsActive)
+   const productPageIsActive: boolean = useAppSelector(getProductPageIsActive)
+   const routeId: string | null = useAppSelector(getRouteId)
+   const currentLanguage: string = useAppSelector(getCurrentLanguage)
 
    const selectionModeHandler = () => {
       if (!selectionMode) {
@@ -51,21 +53,17 @@ export const NavBar: FC = () => {
 
       switch (true) {
          case shopPageIsActive:
-            dispatch(setPreviousRoute("/shop"))
-            break
+            return dispatch(setPreviousRoute("/shop"))
          case adminPanelPageIsActive:
-            dispatch(setPreviousRoute("/admin"))
-            break
+            return dispatch(setPreviousRoute("/admin"))
          case productPageIsActive:
-            dispatch(setPreviousRoute(`/shop/product/${routeId}`))
-            break
+            return dispatch(setPreviousRoute(`/shop/product/${routeId}`))
          case cartPageIsActive:
-            dispatch(setPreviousRoute("/shop/cart"))
-            break
+            return dispatch(setPreviousRoute("/shop/cart"))
       }
    }
 
-   const AdminPanelPageEnter = () => {
+   const adminPanelPageEnter = () => {
       navigate("/admin")
    }
 
@@ -92,8 +90,7 @@ export const NavBar: FC = () => {
                type="button"
                className="selection-mode-button"
                onClick={selectionModeHandler}
-            >Choose Products
-            </button>}
+            >{currentLanguage === "ru" ? "Выбрать товары" : "Choose Products"}</button>}
       </div>
       <div className="navbar-buttons-wrapper">
          {!isAuth
@@ -102,7 +99,7 @@ export const NavBar: FC = () => {
                   type="button"
                   className="authorization-page-button"
                   onClick={loginPageEnter}
-               >Authorization</button>}
+               >{currentLanguage === "ru" ? "Авторизация" : "Authorization"}</button>}
             </>
             : userRole === "ADMIN"
                ? <>
@@ -110,20 +107,20 @@ export const NavBar: FC = () => {
                      <button
                         type="button"
                         className="adminpanel-page-button"
-                        onClick={AdminPanelPageEnter}
-                     >Admin Panel</button>}
+                        onClick={adminPanelPageEnter}
+                     >{currentLanguage === "ru" ? "Панель Администратора" : "Admin Panel"}</button>}
                   <button
                      type="button"
                      className="logout-button"
                      onClick={logout}
-                  >Logout</button>
+                  >{currentLanguage === "ru" ? "Выйти" : "Logout"}</button>
                </>
                : <>
                   <button
                      type="button"
                      className="logout-button"
                      onClick={logout}
-                  >Logout</button>
+                  >{currentLanguage === "ru" ? "Выйти" : "Logout"}</button>
                </>}
       </div>
       {shopPageIsActive &&

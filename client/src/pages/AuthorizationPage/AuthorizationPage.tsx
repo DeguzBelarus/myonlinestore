@@ -26,7 +26,13 @@ export const AuthorizationPage: FC<Props> = ({ type }) => {
    }, [])
    return <div className="authorization-page-wrapper">
       {type === "login"
-         ? <LoginForm isAuth={isAuth} previousRoute={previousRoute} />
-         : <RegistrationForm isAuth={isAuth} previousRoute={previousRoute} />}
+         ? <LoginForm
+            isAuth={isAuth}
+            previousRoute={previousRoute}
+         />
+         : <RegistrationForm
+            isAuth={isAuth}
+            previousRoute={previousRoute}
+         />}
    </div>
 }

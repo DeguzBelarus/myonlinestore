@@ -109,26 +109,6 @@
     }
   }
 
-  .registration-email-label {
-    input {
-      border-bottom: 2px solid $auth-inputs-border-color;
-      border-right: 2px solid $auth-inputs-border-color;
-      border-left: 2px solid $auth-inputs-border-color;
-      background-color: rgba($color: $auth-inputs-border-color, $alpha: 0.5);
-
-      &::placeholder {
-        opacity: 1;
-        color: #fff;
-      }
-
-      &:focus {
-        &::placeholder {
-          opacity: 0.4;
-        }
-      }
-    }
-  }
-
   .buttons {
     @include flex-line-start-vertical-center;
     position: relative;
@@ -164,7 +144,7 @@
         background-color: $auth-login-button-bcolor;
         color: #fff;
         transition-property: width;
-        transition-duration: 0.35s;
+        transition-duration: 0.33s;
         transition-timing-function: linear;
         overflow: hidden;
       }
@@ -219,30 +199,23 @@
     }
   }
 
-  .message-container {
-    width: calc(100% + 6px);
-    height: 0;
-    @include flex-all-center;
-    @include user-select-none;
-    position: absolute;
-    left: -3px;
-    overflow: hidden;
-    transition-property: height;
-    transition-duration: 0.2s;
-    transition-timing-function: linear;
-    background-color: $auth-inputs-border-color;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+  .registration-email-label {
+    input {
+      border-bottom: 2px solid $auth-inputs-border-color;
+      border-right: 2px solid $auth-inputs-border-color;
+      border-left: 2px solid $auth-inputs-border-color;
+      background-color: rgba($color: $auth-inputs-border-color, $alpha: 0.5);
 
-    &.active {
-      height: $auth-message-container-default-height + px;
-      border: 1px solid $auth-registration-button-bcolor;
-      border-top: none;
-    }
+      &::placeholder {
+        opacity: 1;
+        color: #fff;
+      }
 
-    .message-paragraph {
-      font-weight: bold;
-      color: #fff;
+      &:focus {
+        &::placeholder {
+          opacity: 0.4;
+        }
+      }
     }
   }
 }
@@ -271,14 +244,6 @@
       span {
         top: $auth-inputs-default-height * 0.1 + px;
         font-size: $auth-inputs-placeholder-default-fsize + px;
-      }
-    }
-
-    .message-container {
-      top: $login-form-default-height - 3 + px;
-
-      .message-paragraph {
-        font-size: $default-font-size * 0.85 + px;
       }
     }
 

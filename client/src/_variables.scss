@@ -14,7 +14,14 @@ $auth-login-button-bgcolor: #fff;
 $auth-registration-button-fcolor: #000;
 $auth-registration-button-bcolor: #f00cbb;
 $auth-registration-button-bgcolor: #fff;
+$auth-backto-login-button-fcolor: #000;
+$auth-backto-login-button-bcolor: #f00cbb;
+$auth-backto-login-button-bgcolor: #fff;
+$auth-register-button-fcolor: #000;
+$auth-register-button-bcolor: #0aad0a;
+$auth-register-button-bgcolor: #fff;
 $auth-stayloggedin-checkbox-color: #0aad0a;
+$auth-registration-email-header-color: #f00cbb;
 //== colors
 
 //== sizes
@@ -31,7 +38,7 @@ $auth-buttons-paddings: 5px 20px;
 
 //== auth page
 $login-form-default-height: 230;
-$registration-form-default-height: 230;
+$registration-form-default-height: 270;
 $auth-forms-default-width: 350;
 $auth-inputs-default-width: 300;
 $auth-inputs-default-height: 25;
@@ -39,9 +46,11 @@ $auth-reg_email-input-def-width: 241;
 $auth-inputs-placeholder-default-fsize: 16;
 $auth-login-button-default-width: 110;
 $auth-registration-button-default-width: 125;
+$auth-backto-login-button-default-width: 85;
+$auth-register-button-default-width: 120;
 $auth-buttons-default-height: 30;
-$auth-stayloggedin-checkbox-default-size: 15;
-$auth-stayloggedin-checkbox-default-fsize: 12;
+$auth-stayloggedin-checkbox-default-size: 14;
+$auth-stayloggedin-checkbox-default-fsize: 11;
 $auth-message-container-default-height: 25;
 //== auth page
 //== sizes
