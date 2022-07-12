@@ -23,6 +23,7 @@ import {
    getCartPageIsActive
 } from "../../app/shopSlice";
 import { getCurrentLanguage } from "../../app/globalSlice";
+import { LanguageSwitcher } from "../LanguageSwitcher/LanguageSwitcher";
 import "./NavBar.scss"
 
 export const NavBar: FC = () => {
@@ -94,21 +95,24 @@ export const NavBar: FC = () => {
       </div>
       <div className="navbar-buttons-wrapper">
          {!isAuth
-            ? <>{!authorizationPageIsActive &&
-               <button
-                  type="button"
-                  className="authorization-page-button"
-                  onClick={loginPageEnter}
-               >{currentLanguage === "ru" ? "Авторизация" : "Authorization"}</button>}
+            ? <>
+               <LanguageSwitcher />
+               {!authorizationPageIsActive &&
+                  <button
+                     type="button"
+                     className="authorization-page-button"
+                     onClick={loginPageEnter}
+                  >{currentLanguage === "ru" ? "Авторизация" : "Authorization"}</button>}
             </>
             : userRole === "ADMIN"
                ? <>
+                  <LanguageSwitcher />
                   {!adminPanelPageIsActive &&
                      <button
                         type="button"
                         className="adminpanel-page-button"
                         onClick={adminPanelPageEnter}
-                     >{currentLanguage === "ru" ? "Панель Администратора" : "Admin Panel"}</button>}
+                     >{currentLanguage === "ru" ? "Админ панель" : "Admin Panel"}</button>}
                   <button
                      type="button"
                      className="logout-button"
@@ -116,6 +120,7 @@ export const NavBar: FC = () => {
                   >{currentLanguage === "ru" ? "Выйти" : "Logout"}</button>
                </>
                : <>
+                  <LanguageSwitcher />
                   <button
                      type="button"
                      className="logout-button"

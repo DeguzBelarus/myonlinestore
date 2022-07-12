@@ -125,7 +125,9 @@ export const LoginForm: FC<Props> = ({ isAuth, previousRoute }) => {
             maxLength={255}
             onChange={loginFormDataUpdate}
          />
-         <span className="placeholder-immitator">{currentLanguage === "ru" ? "Введите Ваш email" : "Enter your email"}</span>
+         <span className="placeholder-immitator">
+            {currentLanguage === "ru" ? "Введите Ваш email" : "Enter your email"}
+         </span>
          <div className="line"></div>
       </label>
       <label htmlFor="password-input">
@@ -141,7 +143,9 @@ export const LoginForm: FC<Props> = ({ isAuth, previousRoute }) => {
             maxLength={255}
             onChange={loginFormDataUpdate}
          />
-         <span className="placeholder-immitator">{currentLanguage === "ru" ? "Введите Ваш пароль" : "Enter your password"}</span>
+         <span className="placeholder-immitator">
+            {currentLanguage === "ru" ? "Введите Ваш пароль" : "Enter your password"}
+         </span>
          <div className="line"></div>
       </label>
 

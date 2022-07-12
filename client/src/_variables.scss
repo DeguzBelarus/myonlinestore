@@ -33,7 +33,11 @@ $navbar-default-height: 40;
 $navbar-paddings-top-bottom: 5px;
 $navbar-paddings-left-right: 10px;
 $navbar-buttons-paddings: 5px 10px;
-$auth-buttons-paddings: 5px 20px;
+$navbar-buttons-default-height: 30;
+$navbar-lang-switcher-default-width: 50;
+$navbar-auth-button-default-width: 105;
+$navbar-product-choose-button-default-width: 130;
+
 //== navbar
 
 //== auth page
@@ -42,13 +46,14 @@ $registration-form-default-height: 270;
 $auth-forms-default-width: 350;
 $auth-inputs-default-width: 300;
 $auth-inputs-default-height: 25;
-$auth-reg_email-input-def-width: 241;
+$auth-reg-email-input-def-width: 241;
 $auth-inputs-placeholder-default-fsize: 16;
 $auth-login-button-default-width: 110;
 $auth-registration-button-default-width: 125;
 $auth-backto-login-button-default-width: 85;
-$auth-register-button-default-width: 120;
+$auth-register-button-default-width: 155;
 $auth-buttons-default-height: 30;
+$auth-buttons-paddings: 5px 20px;
 $auth-stayloggedin-checkbox-default-size: 14;
 $auth-stayloggedin-checkbox-default-fsize: 11;
 $auth-message-container-default-height: 25;

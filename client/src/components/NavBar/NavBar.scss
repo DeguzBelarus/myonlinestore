@@ -13,6 +13,7 @@
     gap: 10px;
 
     .logo-link {
+      height: $navbar-buttons-default-height + px;
       @include flex-all-center;
       @include user-select-none;
       color: #fff;
@@ -20,6 +21,8 @@
     }
 
     .selection-mode-button {
+      width: $navbar-product-choose-button-default-width + px;
+      height: $navbar-buttons-default-height + px;
       @include flex-all-center;
       @include user-select-none;
       padding: $navbar-buttons-paddings;
@@ -32,8 +35,11 @@
 
   &-buttons-wrapper {
     @include flex-line-start-vertical-center;
+    gap: 5px;
 
     .authorization-page-button {
+      width: $navbar-auth-button-default-width + px;
+      height: $navbar-buttons-default-height + px;
       @include flex-all-center;
       @include user-select-none;
       padding: $navbar-buttons-paddings;
@@ -44,6 +50,7 @@
     }
 
     .adminpanel-page-button {
+      height: $navbar-buttons-default-height + px;
       @include flex-all-center;
       @include user-select-none;
       padding: $navbar-buttons-paddings;
@@ -54,6 +61,7 @@
     }
 
     .logout-button {
+      height: $navbar-buttons-default-height + px;
       @include flex-all-center;
       @include user-select-none;
       padding: $navbar-buttons-paddings;

@@ -45,15 +45,25 @@ export const RegistrationForm: FC<Props> = ({ isAuth, previousRoute }) => {
       event.preventDefault()
       switch (true) {
          case registrationFormData.nickname.length < 2:
-            return dispatch(setAuthMessage("The minimum nickname length is 2 characters"))
+            return dispatch(setAuthMessage(currentLanguage === "ru"
+               ? "Минимальная длина никнейма - 2 символа"
+               : "The minimum nickname length is 2 characters"))
          case registrationFormData.nickname.length > 10:
-            return dispatch(setAuthMessage("The maximum nickname length is 10 characters"))
+            return dispatch(setAuthMessage(currentLanguage === "ru"
+               ? "Максимальная длина никнейма - 10 символов"
+               : "The maximum nickname length is 10 characters"))
          case registrationFormData.password.length < 8:
-            return dispatch(setAuthMessage("The minimum password length is 8 characters"))
+            return dispatch(setAuthMessage(currentLanguage === "ru"
+               ? "Минимальная длина пароля - 8 символов"
+               : "The minimum password length is 8 characters"))
          case registrationFormData.password.length > 255:
-            return dispatch(setAuthMessage("The maximum password length is 255 characters"))
+            return dispatch(setAuthMessage(currentLanguage === "ru"
+               ? "Максимальная длина пароля - 255 символов"
+               : "The maximum password length is 255 characters"))
          case registrationFormData.password !== confirmPasswordInput.current.value:
-            return dispatch(setAuthMessage("Passwords don't match"))
+            return dispatch(setAuthMessage(currentLanguage === "ru"
+               ? "Пароли не совпадают"
+               : "Passwords don't match"))
       }
 
       dispatch(registrationAsync(JSON.stringify(registrationFormData)))
@@ -82,8 +92,8 @@ export const RegistrationForm: FC<Props> = ({ isAuth, previousRoute }) => {
             type="text"
             id="nickname-input"
             name="nickname"
-            placeholder="Enter your nickname"
-            title="Enter your nickname"
+            placeholder={currentLanguage === "ru" ? "Введите Ваш никнейм" : "Enter your nickname"}
+            title={currentLanguage === "ru" ? "Введите Ваш никнейм" : "Enter your nickname"}
             required
             autoFocus
             autoComplete="off"
@@ -91,7 +101,9 @@ export const RegistrationForm: FC<Props> = ({ isAuth, previousRoute }) => {
             maxLength={10}
             onChange={registrationFormDataUpdate}
          />
-         <span className="placeholder-immitator">Enter your nickname</span>
+         <span className="placeholder-immitator">
+            {currentLanguage === "ru" ? "Введите Ваш никнейм" : "Enter your nickname"}
+         </span>
          <div className="line"></div>
       </label>
       <label htmlFor="password-input">
@@ -99,30 +111,34 @@ export const RegistrationForm: FC<Props> = ({ isAuth, previousRoute }) => {
             type="password"
             id="password-input"
             name="password"
-            placeholder="Enter your password"
-            title="Enter your password"
+            placeholder={currentLanguage === "ru" ? "Введите Ваш пароль" : "Enter your password"}
+            title={currentLanguage === "ru" ? "Введите Ваш пароль" : "Enter your password"}
             required
             autoComplete="off"
             minLength={8}
             maxLength={255}
             onChange={registrationFormDataUpdate}
          />
-         <span className="placeholder-immitator">Enter your password</span>
+         <span className="placeholder-immitator">
+            {currentLanguage === "ru" ? "Введите Ваш пароль" : "Enter your password"}
+         </span>
          <div className="line"></div>
       </label>
       <label htmlFor="password-confirm-input">
          <input
             type="password"
             id="password-confirm-input"
-            placeholder="Confirm your password"
-            title="Confirm your password"
+            placeholder={currentLanguage === "ru" ? "Подтвердите Ваш пароль" : "Confirm your password"}
+            title={currentLanguage === "ru" ? "Подтвердите Ваш пароль" : "Confirm your password"}
             required
             autoComplete="off"
             minLength={8}
             maxLength={255}
             ref={confirmPasswordInput}
          />
-         <span className="placeholder-immitator">Confirm your password</span>
+         <span className="placeholder-immitator">
+            {currentLanguage === "ru" ? "Подтвердите Ваш пароль" : "Confirm your password"}
+         </span>
          <div className="line"></div>
       </label>
 
@@ -132,12 +148,12 @@ export const RegistrationForm: FC<Props> = ({ isAuth, previousRoute }) => {
             className="loginpage-enter-button"
             disabled={authStatus === "loading"}
             onClick={loginPageEnter}
-         >Back</button>
+         >{currentLanguage === "ru" ? "Назад" : "Back"}</button>
          <button
             type="submit"
             className={authStatus === "loading" ? "register-button active" : "register-button"}
             disabled={authStatus === "loading"}
-         >Register</button>
+         >{currentLanguage === "ru" ? "Зарегистрироваться" : "Register"}</button>
       </div>
 
       <AuthMessage />

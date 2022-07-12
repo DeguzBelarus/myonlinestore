@@ -1,0 +1,72 @@
+@import "../../variables";
+
+.language-switcher-wrapper {
+  width: $navbar-lang-switcher-default-width + px;
+  height: $navbar-buttons-default-height + px;
+  @include flex-column-all-center;
+  @include user-select-none;
+  background: none;
+  color: #fff;
+  border: 2px solid #fff;
+  overflow: hidden;
+  cursor: pointer;
+
+  .lang-block-ru {
+    width: 100%;
+    height: 25%;
+    @include flex-all-center;
+    transition-property: height;
+    transition-duration: 0.25s;
+    transition-timing-function: linear;
+    overflow: hidden;
+    border-bottom: 1px solid #fff;
+
+    &.active {
+      height: 75%;
+    }
+
+    .lang-name-span {
+      font-size: $default-font-size * 0.8 + px;
+
+      &.active {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .lang-block-en {
+    width: 100%;
+    height: 25%;
+    @include flex-all-center;
+    transition-property: height;
+    transition-duration: 0.25s;
+    transition-timing-function: linear;
+    overflow: hidden;
+    border-top: 1px solid #fff;
+
+    &.active {
+      height: 75%;
+    }
+
+    .lang-name-span {
+      font-size: $default-font-size * 0.8 + px;
+
+      &.active {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+@media (hover: hover) {
+  .language-switcher-wrapper {
+    &:hover {
+      background: rgba($color: #000, $alpha: 0.1);
+
+      .lang-block-ru,
+      .lang-block-en {
+        height: 50%;
+      }
+    }
+  }
+}
