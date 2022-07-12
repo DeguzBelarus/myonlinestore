@@ -7,6 +7,8 @@ import "./AuthMessage.scss"
 export const AuthMessage: FC = () => {
    const messageWrapper: any = useRef(null)
 
+   const dispatch = useAppDispatch()
+
    const authMessage: string = useAppSelector(getAuthMessage)
    const registrationEmail: string = useAppSelector(getRegistrationEmail)
    const location = window.location.pathname
@@ -18,6 +20,10 @@ export const AuthMessage: FC = () => {
    useEffect(() => {
       if (authMessage) {
          messageWrapper.current.style.transitionDuration = "0.2s"
+
+         setTimeout(() => {
+            dispatch(setAuthMessage(""))
+         }, 5000)
       }
    }, [authMessage])
    return <div
@@ -25,7 +31,9 @@ export const AuthMessage: FC = () => {
          ? registrationEmail
             ? "message-container active registration-page"
             : "message-container active"
-         : "message-container"}
+         : registrationEmail
+            ? "message-container registration-page"
+            : "message-container"}
       ref={messageWrapper}>
       <p className="message-paragraph">{authMessage}</p>
    </div>

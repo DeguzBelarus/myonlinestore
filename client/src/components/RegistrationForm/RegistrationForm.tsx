@@ -83,8 +83,14 @@ export const RegistrationForm: FC<Props> = ({ isAuth, previousRoute }) => {
          dispatch(setAuthMessage(""))
       }
    }, [isAuth])
+
+   useEffect(() => {
+      setRegistrationFormData({ ...registrationFormData, lang: currentLanguage })
+   }, [currentLanguage])
    return <form id="registration-form" onSubmit={registrationSubmit}>
-      <h2 className="registration-email-header">Registration:</h2>
+      <h2 className="registration-email-header">{currentLanguage === "ru"
+         ? "Регистрация:"
+         : "Registration:"}</h2>
       <p className="heading-paragraph">{registrationEmail}</p>
 
       <label htmlFor="nickname-input">
@@ -151,7 +157,13 @@ export const RegistrationForm: FC<Props> = ({ isAuth, previousRoute }) => {
          >{currentLanguage === "ru" ? "Назад" : "Back"}</button>
          <button
             type="submit"
-            className={authStatus === "loading" ? "register-button active" : "register-button"}
+            className={authStatus === "loading"
+               ? currentLanguage === "ru"
+                  ? "register-button active ru"
+                  : "register-button active"
+               : currentLanguage === "ru"
+                  ? "register-button ru"
+                  : "register-button "}
             disabled={authStatus === "loading"}
          >{currentLanguage === "ru" ? "Зарегистрироваться" : "Register"}</button>
       </div>

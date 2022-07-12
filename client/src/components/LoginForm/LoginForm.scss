@@ -149,6 +149,12 @@
         overflow: hidden;
       }
 
+      &.ru {
+        &::before {
+          content: "Загрузка...";
+        }
+      }
+
       &.active {
         background-color: rgba($color: $auth-login-button-bcolor, $alpha: 0.2);
 

@@ -50,6 +50,7 @@
     }
 
     .adminpanel-page-button {
+      width: $navbar-admin-panel-button-default-width + px;
       height: $navbar-buttons-default-height + px;
       @include flex-all-center;
       @include user-select-none;
@@ -61,6 +62,7 @@
     }
 
     .logout-button {
+      width: $navbar-logout-button-default-width + px;
       height: $navbar-buttons-default-height + px;
       @include flex-all-center;
       @include user-select-none;

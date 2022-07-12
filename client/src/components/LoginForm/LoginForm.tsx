@@ -109,6 +109,9 @@ export const LoginForm: FC<Props> = ({ isAuth, previousRoute }) => {
       }
    }, [isAuth])
 
+   useEffect(() => {
+      setLoginFormData({ ...loginFormData, lang: currentLanguage })
+   }, [currentLanguage])
    return <form id="login-form" onSubmit={loginSubmit} >
       <label htmlFor="email-input">
          <input
@@ -152,7 +155,13 @@ export const LoginForm: FC<Props> = ({ isAuth, previousRoute }) => {
       <div className="buttons">
          <button
             type="submit"
-            className={authStatus === "loading" ? "login-button active" : "login-button"}
+            className={authStatus === "loading"
+               ? currentLanguage === "ru"
+                  ? "login-button active ru"
+                  : "login-button active"
+               : currentLanguage === "ru"
+                  ? "login-button ru"
+                  : "login-button "}
             disabled={authStatus === "loading"}
          >{currentLanguage === "ru" ? "Вход" : "Login"}</button>
          <button

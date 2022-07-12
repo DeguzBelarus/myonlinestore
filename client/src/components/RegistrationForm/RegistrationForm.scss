@@ -180,6 +180,12 @@
         overflow: hidden;
       }
 
+      &.ru {
+        &::before {
+          content: "Загрузка...";
+        }
+      }
+
       &.active {
         background-color: rgba(
           $color: $auth-register-button-bcolor,
