@@ -7,7 +7,8 @@ export function authorization(url: string, body: any) {
             "Content-Type": "application/json"
          }
       })
-   } catch (exception: any) {
+   }
+   catch (exception: any) {
       console.error("\x1b[40m\x1b[31m\x1b[1m", exception.message);
    }
 }

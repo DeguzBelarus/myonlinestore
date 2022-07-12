@@ -38,7 +38,7 @@ const initialState = {
 export const createTypeAsync = createAsyncThunk(
    "product/types/create",
    async (body: any) => {
-      const url = `${process.env.REACT_APP_API_URL}/api/type`
+      const url = `${process.env.REACT_APP_API_URL}/api/type/add`
       const response: any = createType(url, JSON.stringify(body.data), body.token)
       return await response.json()
    }
@@ -58,7 +58,7 @@ export const getTypesAsync = createAsyncThunk(
 export const createBrandAsync = createAsyncThunk(
    "product/brands/create",
    async (body: any) => {
-      const url = `${process.env.REACT_APP_API_URL}/api/brand`
+      const url = `${process.env.REACT_APP_API_URL}/api/brand/add`
       const response: any = createBrand(url, JSON.stringify(body.data), body.token)
       return await response.json()
    }
@@ -78,7 +78,7 @@ export const getBrandsAsync = createAsyncThunk(
 export const createProductAsync = createAsyncThunk(
    "product/create",
    async (body: any) => {
-      const url = `${process.env.REACT_APP_API_URL}/api/product`
+      const url = `${process.env.REACT_APP_API_URL}/api/product/add`
       const response: any = await createProduct(url, body.data, body.token)
       return await response.json()
    }

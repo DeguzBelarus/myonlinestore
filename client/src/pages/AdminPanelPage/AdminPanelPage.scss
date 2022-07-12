@@ -1,2 +1,7 @@
+@import "../../variables";
+
 .admin-panel-wrapper {
+  width: 100%;
+  height: calc(100vh - #{($navbar-default-height + px)});
+  @include flex-column-line-center-vertical-top;
 }

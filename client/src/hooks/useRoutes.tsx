@@ -15,7 +15,13 @@ export const useRoutes = () => {
    if (isAuth) {
       if (role === "ADMIN") {
          return <Routes>
-            <Route path="admin" element={<AdminPanelPage />}></Route>
+            <Route path="admin">
+               <Route path="/admin" element={<AdminPanelPage type="general" />}></Route>
+               <Route path="types" element={<AdminPanelPage type="types" />}></Route>
+               <Route path="brands" element={<AdminPanelPage type="brands" />}></Route>
+               <Route path="products" element={<AdminPanelPage type="products" />}></Route>
+               <Route path="users" element={<AdminPanelPage type="users" />}></Route>
+            </Route>
             <Route path="shop">
                <Route path="/shop" element={<ShopPage />}></Route>
                <Route path="product/:id" element={<ProductPage />}></Route>

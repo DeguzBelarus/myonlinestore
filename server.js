@@ -17,6 +17,13 @@ app.use(fileUpload({}));
 app.use("/api", router);
 app.use(errorHandlingMiddleware);
 
+if (process.env.NODE_ENV === "production") {
+  app.use("/", express.static(path.join(__dirname, "client", "build")));
+  app.get("*", (request, response) => {
+    response.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+
 (async function () {
   try {
     await sequelize.authenticate();

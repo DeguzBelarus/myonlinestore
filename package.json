@@ -6,16 +6,17 @@
   "author": "Deguz <deguz@mail.ru>",
   "license": "MIT",
   "scripts": {
-    "start": "node server.js",
+    "start": "cross-env NODE_ENV=production node server.js",
     "server": "nodemon server.js",
     "client": "yarn --cwd client run start",
     "client:install": "yarn --cwd client add react-scripts --save",
     "client:build": "yarn --cwd client run build",
-    "development": "concurrently \"yarn server\" \"yarn client\"",
+    "development": "cross-env NODE_ENV=development concurrently \"yarn server\" \"yarn client\"",
     "heroku-postbuild": "yarn client:install && yarn client:build"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-fileupload": "^1.4.0",

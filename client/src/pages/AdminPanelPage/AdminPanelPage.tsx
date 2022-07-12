@@ -4,7 +4,11 @@ import { useAppDispatch } from "../../app/hooks";
 import { setAdminPanelPageIsActive } from "../../app/shopSlice";
 import "./AdminPanelPage.scss"
 
-export const AdminPanelPage: FC = () => {
+interface Props {
+   type: string
+}
+
+export const AdminPanelPage: FC<Props> = ({ type }) => {
    const dispatch = useAppDispatch()
 
    useEffect(() => {
