@@ -1,0 +1,9 @@
+@import "../../../variables";
+
+.users-management-wrapper {
+  width: $admin-users-management-default-width + px;
+  height: $admin-users-management-default-height + px;
+  @include flex-column-line-center-vertical-top;
+  @include user-select-none;
+  border: 3px double $admin-action-management-bcolor;
+}

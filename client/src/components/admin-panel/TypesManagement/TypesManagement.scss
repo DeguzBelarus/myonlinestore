@@ -1,0 +1,66 @@
+@import "../../../variables";
+
+.types-management-wrapper {
+  width: $admin-types-management-default-width + px;
+  height: $admin-types-management-default-height + px;
+  @include flex-column-line-center-vertical-top;
+  @include user-select-none;
+  border: 3px double $admin-action-management-bcolor;
+
+  .management-items-wrapper {
+    width: 100%;
+    height: 100%;
+    @include flex-column-line-center-vertical-top;
+    overflow-y: scroll;
+
+    .management-item {
+      width: 100%;
+      height: $default-font-size * 1.15 + px;
+      @include flex-all-center;
+
+      &:nth-of-type(even) {
+        background: #eee;
+      }
+
+      span {
+        font-size: $default-font-size * 0.85 + px;
+      }
+
+      button {
+        font-size: $default-font-size * 0.7 + px;
+      }
+    }
+  }
+
+  .type-management-form {
+    width: 100%;
+    height: 100%;
+    @include flex-column-all-center;
+
+    .buttons {
+      width: 100%;
+      @include flex-all-center;
+      border-bottom: 1px solid #000;
+    }
+
+    .management-items-wrapper {
+      width: 100%;
+      @include flex-column-line-center-vertical-top;
+      overflow-y: scroll;
+
+      .management-item {
+        width: 100%;
+        height: $default-font-size * 1.15 + px;
+        @include flex-all-center;
+
+        &:nth-of-type(even) {
+          background: #eee;
+        }
+
+        span {
+          font-size: $default-font-size * 0.85 + px;
+        }
+      }
+    }
+  }
+}

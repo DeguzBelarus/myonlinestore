@@ -1,0 +1,37 @@
+@import "../../../variables";
+
+.actions-wrapper {
+  width: $admin-actions-container-default-width + px;
+  height: $admin-actions-container-default-height + px;
+  @include flex-column-all-center;
+  @include user-select-none;
+  gap: 5px;
+  border: 3px double $admin-actions-container-bcolor;
+
+  .admin-action-button {
+    width: $admin-actions-buttons-default-width + px;
+    height: $admin-actions-buttons-default-height + px;
+    padding: $admin-actions-buttons-paddings;
+    border: 2px solid $admin-action-button-bcolor;
+    color: $admin-action-button-fcolor;
+    font-size: $default-font-size * 0.8 + px;
+    cursor: pointer;
+
+    &:not(:hover) {
+      background-color: $admin-action-button-bgcolor;
+    }
+  }
+}
+
+@media (hover: hover) {
+  .actions-wrapper {
+    .admin-action-button {
+      &:hover {
+        background-color: rgba(
+          $color: $admin-action-button-bcolor,
+          $alpha: 0.2
+        );
+      }
+    }
+  }
+}

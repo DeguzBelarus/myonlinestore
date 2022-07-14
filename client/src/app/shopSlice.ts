@@ -13,7 +13,8 @@ interface ShopState {
    currentPage: number,
    productsPerPage: number,
    previousRoute: string,
-   routId: string | null
+   routId: string | null,
+   adminEditingType: "read" | "create" | "update" | "delete"
 }
 
 const initialState = {
@@ -28,7 +29,8 @@ const initialState = {
    currentPage: 1,
    productsPerPage: 20,
    previousRoute: "",
-   routId: null
+   routId: null,
+   adminEditingType: "read"
 } as ShopState
 
 export const shopSlice = createSlice({
@@ -107,6 +109,12 @@ export const shopSlice = createSlice({
          } else {
             state.cartPageIsActive = initialState.cartPageIsActive
          }
+      }, setAdminEditingType(state: any, action: PayloadAction<any>) {
+         if (action.payload) {
+            state.adminEditingType = action.payload
+         } else {
+            state.adminEditingType = initialState.adminEditingType
+         }
       }
    }
 })
@@ -123,7 +131,8 @@ export const {
    setPreviousRoute,
    setProductPageIsActive,
    setRoutId,
-   setCartPageIsActive
+   setCartPageIsActive,
+   setAdminEditingType
 } = shopSlice.actions
 
 export const getSelectionMode = (state: RootState) => state.shop.selectionMode
@@ -138,5 +147,6 @@ export const getCurrentPage = (state: RootState) => state.shop.currentPage
 export const getProductsPerPage = (state: RootState) => state.shop.productsPerPage
 export const getPreviousRoute = (state: RootState) => state.shop.previousRoute
 export const getRouteId = (state: RootState) => state.shop.routId
+export const getAdminEditingType = (state: RootState) => state.shop.adminEditingType
 
 export default shopSlice.reducer

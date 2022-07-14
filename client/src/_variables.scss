@@ -1,7 +1,10 @@
 // variables
 //== colors
+//== navbar
 $navbar-color: #f00cbb;
 $selection-bar-color: rgba(#8f0d70, 0.1);
+//== navbar
+//== auth page
 $auth-forms-border-color: #f00cbb;
 $auth-inputs-border-color: #f00cbb;
 $auth-inputs-placeholder-color: #f00cbb;
@@ -22,6 +25,19 @@ $auth-register-button-bcolor: #0aad0a;
 $auth-register-button-bgcolor: #fff;
 $auth-stayloggedin-checkbox-color: #0aad0a;
 $auth-registration-email-header-color: #f00cbb;
+//== auth page
+//== admin panel
+$admin-actions-container-bcolor: #f00cbb;
+$admin-action-management-bcolor: #f00cbb;
+$admin-action-button-fcolor: #000;
+$admin-action-button-bcolor: #f00cbb;
+$admin-action-button-bgcolor: #fff;
+$admin-crud-mode-switcher-bcolor: #f00cbb;
+$admin-crud-mode-button-bgcolor: #f00cbb;
+$admin-crud-mode-button-bgcolor-active: #0aad0a;
+$admin-crud-mode-button-fcolor: #f00cbb;
+$admin-crud-mode-button-fcolor-active: #0aad0a;
+//== admin panel
 //== colors
 
 //== sizes
@@ -61,6 +77,20 @@ $auth-message-container-default-height: 25;
 //== auth page
 
 //== admin panel
+$admin-actions-container-default-width: 300;
+$admin-actions-container-default-height: 300;
+$admin-actions-buttons-paddings: 10px 5px;
+$admin-actions-buttons-default-width: 200;
+$admin-actions-buttons-default-height: 40;
+$admin-types-management-default-width: 300;
+$admin-types-management-default-height: 300;
+$admin-brands-management-default-width: 300;
+$admin-brands-management-default-height: 300;
+$admin-products-management-default-width: 300;
+$admin-products-management-default-height: 300;
+$admin-users-management-default-width: 300;
+$admin-users-management-default-height: 300;
+$admin-crud-mode-switcher-default-height: 40;
 //== admin panel
 //== sizes
 // variables

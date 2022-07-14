@@ -1,0 +1,9 @@
+@import "../../../variables";
+
+.brands-management-wrapper {
+  width: $admin-brands-management-default-width + px;
+  height: $admin-brands-management-default-height + px;
+  @include flex-column-line-center-vertical-top;
+  @include user-select-none;
+  border: 3px double $admin-action-management-bcolor;
+}

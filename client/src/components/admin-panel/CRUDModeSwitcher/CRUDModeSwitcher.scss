@@ -1,0 +1,37 @@
+@import "../../../variables";
+
+.crud-mode-switcher-wrapper {
+  width: 100%;
+  height: $admin-crud-mode-switcher-default-height + px;
+  @include flex-all-center;
+  @include user-select-none;
+  border-bottom: 3px double $admin-crud-mode-switcher-bcolor;
+
+  .crud-mode-button {
+    width: 25%;
+    height: 100%;
+    @include flex-all-center;
+    @include user-select-none;
+    cursor: pointer;
+    background-color: rgba(
+      $color: $admin-crud-mode-button-bgcolor,
+      $alpha: 0.2
+    );
+
+    .crud-mode-span {
+      font-size: $default-font-size * 0.75 + px;
+      color: $admin-crud-mode-button-fcolor;
+    }
+
+    &.active {
+      background-color: rgba(
+        $color: $admin-crud-mode-button-bgcolor-active,
+        $alpha: 0.2
+      );
+
+      .crud-mode-span {
+        color: $admin-crud-mode-button-fcolor-active;
+      }
+    }
+  }
+}

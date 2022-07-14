@@ -4,7 +4,7 @@ import { authorization, checkAuthorization } from "./userAPI"
 import jwtDecode from "jwt-decode"
 
 interface UserState {
-   token: string | null,
+   token: string,
    isAuth: boolean,
    role: string,
    userId: string | null,
@@ -16,7 +16,7 @@ interface UserState {
 }
 
 const initialState = {
-   token: null,
+   token: "",
    isAuth: false,
    role: "USER",
    userId: null,
@@ -31,7 +31,7 @@ const initialState = {
 export const registrationAsync = createAsyncThunk(
    "user/registration",
    async (body: any) => {
-      const url = `${process.env.REACT_APP_API_URL}/api/user/registration`
+      const url = `/api/user/registration`
       const response: any = await authorization(url, body)
       const result = await response.json()
       if (result.token) {
@@ -45,7 +45,7 @@ export const registrationAsync = createAsyncThunk(
 export const loginAsync = createAsyncThunk(
    "user/login",
    async (body: any) => {
-      const url = `${process.env.REACT_APP_API_URL}/api/user/login`
+      const url = `/api/user/login`
       const response: any = await authorization(url, body)
       const result = await response.json()
       if (result.token) {
@@ -59,7 +59,7 @@ export const loginAsync = createAsyncThunk(
 export const checkAuthorizationAsync = createAsyncThunk(
    "user/checkauthorization",
    async (token: string) => {
-      const url = `${process.env.REACT_APP_API_URL}/api/user/authcheck`
+      const url = `/api/user/authcheck`
       const response: any = await checkAuthorization(url, token)
       const result = await response.json()
       if (result.token) {

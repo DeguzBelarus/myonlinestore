@@ -5,6 +5,10 @@
   "main": "server.js",
   "author": "Deguz <deguz@mail.ru>",
   "license": "MIT",
+  "engines": {
+    "node": "16.15.1",
+    "yarn": "1.22.19"
+  },
   "scripts": {
     "start": "cross-env NODE_ENV=production node server.js",
     "server": "nodemon server.js",

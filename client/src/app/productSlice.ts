@@ -1,6 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store"
-import { createType, getTypes, createBrand, getBrands, createProduct, getProducts } from "./productAPI"
+import {
+   createType,
+   getTypes,
+   createBrand,
+   getBrands,
+   createProduct,
+   getProducts,
+   deleteType
+} from "./productAPI"
 
 export interface CurrentProduct {
    id: number,
@@ -13,9 +21,14 @@ export interface CurrentProduct {
    description: {}[]
 }
 
+export interface ManagementItem {
+   id: number,
+   name: string
+}
+
 interface ProductState {
-   types: {}[],
-   brands: {}[],
+   types: ManagementItem[],
+   brands: ManagementItem[],
    products: {}[],
    currentProduct: CurrentProduct,
    totalProducts: number | null,
@@ -38,8 +51,23 @@ const initialState = {
 export const createTypeAsync = createAsyncThunk(
    "product/types/create",
    async (body: any) => {
-      const url = `${process.env.REACT_APP_API_URL}/api/type/add`
-      const response: any = createType(url, JSON.stringify(body.data), body.token)
+      const url = `/api/type/add`
+      const response: any = await createType(url, JSON.stringify(body.data), body.token)
+      return await response.json()
+   }
+)
+
+export interface DeleteRequestObject {
+   id: string,
+   token: string,
+   lang: string
+}
+
+export const deleteTypeAsync = createAsyncThunk(
+   "product/types/delete",
+   async (data: DeleteRequestObject) => {
+      const url = `/api/type/${data.id}/delete?${data.lang}`
+      const response: any = await deleteType(url, data.token)
       return await response.json()
    }
 )
@@ -47,7 +75,7 @@ export const createTypeAsync = createAsyncThunk(
 export const getTypesAsync = createAsyncThunk(
    "product/types/get",
    async () => {
-      const url = `${process.env.REACT_APP_API_URL}/api/type`
+      const url = `/api/type`
       const response: any = await getTypes(url)
       return await response.json()
    }
@@ -58,8 +86,8 @@ export const getTypesAsync = createAsyncThunk(
 export const createBrandAsync = createAsyncThunk(
    "product/brands/create",
    async (body: any) => {
-      const url = `${process.env.REACT_APP_API_URL}/api/brand/add`
-      const response: any = createBrand(url, JSON.stringify(body.data), body.token)
+      const url = `/api/brand/add`
+      const response: any = await createBrand(url, JSON.stringify(body.data), body.token)
       return await response.json()
    }
 )
@@ -67,7 +95,7 @@ export const createBrandAsync = createAsyncThunk(
 export const getBrandsAsync = createAsyncThunk(
    "product/brands/get",
    async () => {
-      const url = `${process.env.REACT_APP_API_URL}/api/brand`
+      const url = `/api/brand`
       const response: any = await getBrands(url)
       return await response.json()
    }
@@ -78,7 +106,7 @@ export const getBrandsAsync = createAsyncThunk(
 export const createProductAsync = createAsyncThunk(
    "product/create",
    async (body: any) => {
-      const url = `${process.env.REACT_APP_API_URL}/api/product/add`
+      const url = `/api/product/add`
       const response: any = await createProduct(url, body.data, body.token)
       return await response.json()
    }
@@ -110,11 +138,11 @@ export const getProductsAsync = createAsyncThunk(
          if (brandId) {
             urlSearchParams.append("brandId", `${brandId}`)
          }
-         const url = `${process.env.REACT_APP_API_URL}/api/product?${urlSearchParams}`
+         const url = `/api/product?${urlSearchParams}`
          const response: any = await getProducts(url)
          return await response.json()
       } else {
-         const url = `${process.env.REACT_APP_API_URL}/api/product`
+         const url = `/api/product`
          const response: any = await getProducts(url)
          return await response.json()
       }
@@ -124,7 +152,7 @@ export const getProductsAsync = createAsyncThunk(
 export const getProductAsync = createAsyncThunk(
    "product/get/one",
    async (id: string) => {
-      const url = `${process.env.REACT_APP_API_URL}/api/product/${id}`
+      const url = `/api/product/${id}`
       const response: any = await getProducts(url)
       return await response.json()
    }
@@ -164,7 +192,8 @@ export const productSlice = createSlice({
    }, extraReducers: (builder) => {
       builder
 
-         // get types cases
+         // types cases
+         // get types
          .addCase(getTypesAsync.pending, (state) => {
             state.productStatus = "loading"
          })
@@ -176,7 +205,36 @@ export const productSlice = createSlice({
             state.productStatus = "failed"
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
-         // get types cases
+         // get types
+
+         // create type
+         .addCase(createTypeAsync.pending, (state) => {
+            state.productStatus = "loading"
+         })
+         .addCase(createTypeAsync.fulfilled, (state, action) => {
+            state.productStatus = "idle"
+            state.types = action.payload
+         })
+         .addCase(createTypeAsync.rejected, (state, action) => {
+            state.productStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+         // create type
+
+         // delete type
+         .addCase(deleteTypeAsync.pending, (state) => {
+            state.productStatus = "loading"
+         })
+         .addCase(deleteTypeAsync.fulfilled, (state, action) => {
+            state.productStatus = "idle"
+            state.types = action.payload
+         })
+         .addCase(deleteTypeAsync.rejected, (state, action) => {
+            state.productStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+         // delete type
+         // types cases
 
          // get brands cases
          .addCase(getBrandsAsync.pending, (state) => {

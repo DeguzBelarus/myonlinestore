@@ -1,0 +1,9 @@
+@import "../../../variables";
+
+.products-management-wrapper {
+  width: $admin-products-management-default-width + px;
+  height: $admin-products-management-default-height + px;
+  @include flex-column-line-center-vertical-top;
+  @include user-select-none;
+  border: 3px double $admin-action-management-bcolor;
+}

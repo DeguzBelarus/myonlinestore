@@ -28,12 +28,12 @@ const Rating = sequelize.define("product_rating", {
   rate: { type: DataTypes.INTEGER, allowNull: false },
 });
 
-const Type = sequelize.define("product_brand", {
+const Type = sequelize.define("product_type", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
 });
 
-const Brand = sequelize.define("product_type", {
+const Brand = sequelize.define("product_brand", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
 });
