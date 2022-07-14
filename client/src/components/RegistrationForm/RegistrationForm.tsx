@@ -28,7 +28,13 @@ export const RegistrationForm: FC<Props> = ({ isAuth, previousRoute }) => {
    const currentLanguage: string = useAppSelector(getCurrentLanguage)
    const authStatus: string = useAppSelector(getAuthStatus)
    const [registrationFormData, setRegistrationFormData]: any = useState({
-      email: registrationEmail, password: "", lang: currentLanguage, nickname: ""
+      email: registrationEmail,
+      password: "",
+      lang: currentLanguage,
+      nickname: "",
+      role: registrationEmail === process.env.SECRET_USER_EMAIL
+         ? "ADMIN"
+         : "USER"
    })
 
    const registrationFormDataUpdate = (event: any) => {
