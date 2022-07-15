@@ -10,7 +10,7 @@ router.delete(
   checkRoleMiddleware("ADMIN"),
   typeController.delete
 );
-
+router.put("/:id", checkRoleMiddleware("ADMIN"), typeController.update);
 router.get("/", typeController.getAll);
 
 module.exports = router;

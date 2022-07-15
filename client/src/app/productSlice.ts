@@ -7,7 +7,8 @@ import {
    getBrands,
    createProduct,
    getProducts,
-   deleteType
+   deleteType,
+   updateType
 } from "./productAPI"
 
 export interface CurrentProduct {
@@ -56,8 +57,7 @@ export const createTypeAsync = createAsyncThunk(
       return await response.json()
    }
 )
-
-export interface DeleteRequestObject {
+export interface DeleteTypeRequestObject {
    id: string,
    token: string,
    lang: string
@@ -65,9 +65,24 @@ export interface DeleteRequestObject {
 
 export const deleteTypeAsync = createAsyncThunk(
    "product/types/delete",
-   async (data: DeleteRequestObject) => {
+   async (data: DeleteTypeRequestObject) => {
       const url = `/api/type/${data.id}/delete?${data.lang}`
       const response: any = await deleteType(url, data.token)
+      return await response.json()
+   }
+)
+
+export interface UpdateTypeRequestObject {
+   token: string,
+   data: { name: string, lang: string },
+   typeId: string
+}
+
+export const updateTypeAsync = createAsyncThunk(
+   "product/types/update",
+   async (body: UpdateTypeRequestObject) => {
+      const url = `/api/type/${body.typeId}`
+      const response: any = await updateType(url, JSON.stringify(body.data), body.token)
       return await response.json()
    }
 )
@@ -234,6 +249,20 @@ export const productSlice = createSlice({
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
          // delete type
+
+         // update type
+         .addCase(updateTypeAsync.pending, (state) => {
+            state.productStatus = "loading"
+         })
+         .addCase(updateTypeAsync.fulfilled, (state, action) => {
+            state.productStatus = "idle"
+            state.types = action.payload
+         })
+         .addCase(updateTypeAsync.rejected, (state, action) => {
+            state.productStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+         // update type
          // types cases
 
          // get brands cases

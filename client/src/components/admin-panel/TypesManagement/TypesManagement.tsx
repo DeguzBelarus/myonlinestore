@@ -7,7 +7,9 @@ import {
    ManagementItem,
    createTypeAsync,
    deleteTypeAsync,
-   DeleteRequestObject
+   DeleteTypeRequestObject,
+   updateTypeAsync,
+   UpdateTypeRequestObject
 } from "../../../app/productSlice";
 import { getAdminEditingType } from "../../../app/shopSlice";
 import { getToken } from "../../../app/userSlice";
@@ -25,13 +27,25 @@ export const TypesManagement: FC = () => {
    const adminEditingType: string = useAppSelector(getAdminEditingType)
    const currentLanguage: string = useAppSelector(getCurrentLanguage)
    const [typeName, setTypeName]: any = useState("")
+   const [typeId, setTypeId]: any = useState(null)
+   const [updatingMode, setupdatingMode]: any = useState(false)
 
    const typeNameHandler = (event: any) => {
       setTypeName(event.target.value)
    }
 
+   const updatingModeHandler = (id: number) => {
+      if (updatingMode && (typeId === String(id))) {
+         setupdatingMode(false)
+         setTypeId(null)
+      } else {
+         setupdatingMode(true)
+         setTypeId(String(id))
+      }
+   }
+
    const productsTypeDelete = (id: number) => {
-      const data: DeleteRequestObject = { id: String(id), token: token, lang: currentLanguage }
+      const data: DeleteTypeRequestObject = { id: String(id), token: token, lang: currentLanguage }
       dispatch(deleteTypeAsync(data))
    }
 
@@ -41,6 +55,23 @@ export const TypesManagement: FC = () => {
       typeNameInput.current.value = ""
       dispatch(createTypeAsync({ data: { name: typeName }, token: token }))
    }
+
+   const productsTypeUpdate = (event: any) => {
+      event.preventDefault()
+      if (!typeNameInput.current.value) return
+      typeNameInput.current.value = ""
+      const data: UpdateTypeRequestObject = {
+         data: { name: typeName, lang: currentLanguage },
+         token: token,
+         typeId: typeId
+      }
+      dispatch(updateTypeAsync(data))
+   }
+
+   useEffect(() => {
+      setupdatingMode(false)
+      setTypeId(null)
+   }, [adminEditingType])
 
    useEffect(() => {
       dispatch(getTypesAsync())
@@ -55,29 +86,56 @@ export const TypesManagement: FC = () => {
             })}
          </div>}
       {adminEditingType === "create" &&
-         <form className="type-management-form" onSubmit={productsTypeAdd}>
-            <input
-               type="text"
-               placeholder="Enter new type name"
-               onChange={typeNameHandler}
-               ref={typeNameInput} />
-            <div className="buttons">
-               <button type="submit">Add</button>
-               <button type="reset">Clear</button>
-            </div>
+         <>
+            <form className="type-management-form" onSubmit={productsTypeAdd}>
+               <input
+                  type="text"
+                  placeholder="Enter new type name"
+                  onChange={typeNameHandler}
+                  ref={typeNameInput} />
+               <div className="buttons">
+                  <button type="submit">Add</button>
+                  <button type="reset">Clear</button>
+               </div>
+            </form>
 
             <div className="management-items-wrapper">
                {productsTypes.map((type: ManagementItem) => {
                   return <div className="management-item" key={type.id}><span>{type.name}</span></div>
                })}
             </div>
-         </form>}
+         </>
+      }
       {adminEditingType === "update" &&
-         <div className="management-items-wrapper">
-            {productsTypes.map((type: ManagementItem) => {
-               return <div className="management-item" key={type.id}><span>{type.name}</span></div>
-            })}
-         </div>}
+         <>
+            {updatingMode && <form className="type-management-form" onSubmit={productsTypeUpdate}>
+               <input
+                  type="text"
+                  placeholder="Enter new type name"
+                  onChange={typeNameHandler}
+                  ref={typeNameInput} />
+               <div className="buttons">
+                  <button type="submit">Change</button>
+                  <button type="reset">Clear</button>
+                  <button type="button" onClick={() => updatingModeHandler(typeId)}>X</button>
+               </div>
+            </form>
+            }
+
+            <div className="management-items-wrapper">
+               {productsTypes.map((type: ManagementItem) => {
+                  return <div className="management-item" key={type.id}>
+                     <span>{type.name}</span>
+                     <button
+                        type="button"
+                        className={typeId === String(type.id) ? "update-button active" : "update-button"}
+                        onClick={() => updatingModeHandler(type.id)}
+                     >change</button>
+                  </div>
+               })}
+            </div>
+         </>
+      }
       {adminEditingType === "delete" &&
          <div className="management-items-wrapper">
             {productsTypes.map((type: ManagementItem) => {
