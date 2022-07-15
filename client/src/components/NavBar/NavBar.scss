@@ -18,6 +18,12 @@
       @include user-select-none;
       color: #fff;
       font-weight: bold;
+
+      .main-logo {
+        width: $navbar-mainlogo-default-size + px;
+        height: $navbar-mainlogo-default-size + px;
+        margin-right: 4px;
+      }
     }
 
     .selection-mode-button {
