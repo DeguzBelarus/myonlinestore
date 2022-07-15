@@ -90,7 +90,8 @@ export const TypesManagement: FC = () => {
             <form className="type-management-form" onSubmit={productsTypeAdd}>
                <input
                   type="text"
-                  placeholder="Enter new type name"
+                  placeholder={currentLanguage === "ru" ? "Введите новое имя типа" : "Enter new type name"}
+                  autoFocus
                   onChange={typeNameHandler}
                   ref={typeNameInput} />
                <div className="buttons">
@@ -111,7 +112,8 @@ export const TypesManagement: FC = () => {
             {updatingMode && <form className="type-management-form" onSubmit={productsTypeUpdate}>
                <input
                   type="text"
-                  placeholder="Enter new type name"
+                  placeholder={currentLanguage === "ru" ? "Введите новое имя типа" : "Enter new type name"}
+                  autoFocus
                   onChange={typeNameHandler}
                   ref={typeNameInput} />
                <div className="buttons">

@@ -322,5 +322,6 @@ export const getProductsBrands = (state: RootState) => state.product.brands
 export const getAllProducts = (state: RootState) => state.product.products
 export const getCurrentProduct = (state: RootState) => state.product.currentProduct
 export const getTotalProducts = (state: RootState) => state.product.totalProducts
+export const getProductStatus = (state: RootState) => state.product.productStatus
 
 export default productSlice.reducer

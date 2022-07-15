@@ -2,14 +2,13 @@
 
 .crud-mode-switcher-wrapper {
   width: 100%;
-  height: $admin-crud-mode-switcher-default-height + px;
   @include flex-all-center;
   @include user-select-none;
   border-bottom: 3px double $admin-crud-mode-switcher-bcolor;
 
   .crud-mode-button {
     width: 25%;
-    height: 100%;
+    height: $admin-crud-mode-switcher-default-height + px;
     @include flex-all-center;
     @include user-select-none;
     cursor: pointer;
