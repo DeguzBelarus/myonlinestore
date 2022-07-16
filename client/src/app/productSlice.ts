@@ -118,6 +118,36 @@ export const createBrandAsync = createAsyncThunk(
       return await response.json()
    }
 )
+
+export interface UpdateBrandRequestObject {
+   token: string,
+   data: { name: string, lang: string },
+   brandId: string
+}
+
+export const updateBrandAsync = createAsyncThunk(
+   "product/brands/update",
+   async (body: UpdateBrandRequestObject) => {
+      const url = `/api/brand/${body.brandId}`
+      const response: any = await updateBrand(url, JSON.stringify(body.data), body.token)
+      return await response.json()
+   }
+)
+
+export interface DeleteBrandRequestObject {
+   id: string,
+   token: string,
+   lang: string
+}
+
+export const deleteBrandAsync = createAsyncThunk(
+   "product/brands/delete",
+   async (data: DeleteBrandRequestObject) => {
+      const url = `/api/brand/${data.id}/delete?${data.lang}`
+      const response: any = await deleteBrand(url, data.token)
+      return await response.json()
+   }
+)
 // brands thunks
 
 // products thunks
@@ -239,20 +269,6 @@ export const productSlice = createSlice({
          })
          // create type
 
-         // delete type
-         .addCase(deleteTypeAsync.pending, (state) => {
-            state.productStatus = "loading"
-         })
-         .addCase(deleteTypeAsync.fulfilled, (state, action) => {
-            state.productStatus = "idle"
-            state.types = action.payload
-         })
-         .addCase(deleteTypeAsync.rejected, (state, action) => {
-            state.productStatus = "failed"
-            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
-         })
-         // delete type
-
          // update type
          .addCase(updateTypeAsync.pending, (state) => {
             state.productStatus = "loading"
@@ -266,8 +282,23 @@ export const productSlice = createSlice({
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
          // update type
+
+         // delete type
+         .addCase(deleteTypeAsync.pending, (state) => {
+            state.productStatus = "loading"
+         })
+         .addCase(deleteTypeAsync.fulfilled, (state, action) => {
+            state.productStatus = "idle"
+            state.types = action.payload
+         })
+         .addCase(deleteTypeAsync.rejected, (state, action) => {
+            state.productStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+         // delete type
          // types cases
 
+         // brands cases
          // get brands cases
          .addCase(getBrandsAsync.pending, (state) => {
             state.productStatus = "loading"
@@ -282,6 +313,50 @@ export const productSlice = createSlice({
          })
          // get brands cases
 
+         // create brand
+         .addCase(createBrandAsync.pending, (state) => {
+            state.productStatus = "loading"
+         })
+         .addCase(createBrandAsync.fulfilled, (state, action) => {
+            state.productStatus = "idle"
+            state.brands = action.payload
+         })
+         .addCase(createBrandAsync.rejected, (state, action) => {
+            state.productStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+         // create brand
+
+         // update brand
+         .addCase(updateBrandAsync.pending, (state) => {
+            state.productStatus = "loading"
+         })
+         .addCase(updateBrandAsync.fulfilled, (state, action) => {
+            state.productStatus = "idle"
+            state.brands = action.payload
+         })
+         .addCase(updateBrandAsync.rejected, (state, action) => {
+            state.productStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+         // update brand
+
+         // delete brand
+         .addCase(deleteBrandAsync.pending, (state) => {
+            state.productStatus = "loading"
+         })
+         .addCase(deleteBrandAsync.fulfilled, (state, action) => {
+            state.productStatus = "idle"
+            state.brands = action.payload
+         })
+         .addCase(deleteBrandAsync.rejected, (state, action) => {
+            state.productStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+         // delete brand
+         // brands cases
+
+         // products cases
          // get products cases
          .addCase(getProductsAsync.pending, (state) => {
             state.productStatus = "loading"
@@ -310,6 +385,7 @@ export const productSlice = createSlice({
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
       // get one product cases
+      // products cases
    }
 })
 
