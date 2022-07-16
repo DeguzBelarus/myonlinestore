@@ -21,8 +21,17 @@
       padding-left: 2px;
       border: 2px solid $admin-action-management-bcolor;
 
+      &::placeholder {
+        transition-property: opacity;
+        transition-duration: 0.4s;
+      }
+
       &:focus {
         outline: none;
+
+        &::placeholder {
+          opacity: 0.4;
+        }
       }
     }
 
