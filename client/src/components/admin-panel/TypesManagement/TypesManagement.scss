@@ -124,7 +124,7 @@
         cursor: pointer;
 
         &:not(:hover) {
-          background-color: rgba($color: #aaa, $alpha: 0.6);
+          background-color: rgba($color: #aaa, $alpha: 0.7);
         }
 
         &.active {
@@ -141,14 +141,14 @@
         height: 100%;
         @include flex-all-center;
         margin-left: 5px;
-        color: #fff;
+        color: #000;
         border: 1px solid #aaa;
         border-top: none;
         border-bottom: none;
         cursor: pointer;
 
         &:not(:hover) {
-          background-color: rgba($color: red, $alpha: 0.7);
+          background-color: rgba($color: red, $alpha: 0.4);
         }
       }
     }

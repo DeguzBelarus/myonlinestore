@@ -74,6 +74,7 @@ export const TypesManagement: FC = () => {
    useEffect(() => {
       setupdatingMode(false)
       setTypeId(null)
+      dispatch(getTypesAsync())
    }, [adminEditingType])
 
    useEffect(() => {
