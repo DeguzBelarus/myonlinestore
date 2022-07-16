@@ -12,6 +12,7 @@
     height: $admin-management-form-default-height + px;
     @include flex-column-all-center;
     padding: $admin-management-form-paddings;
+    padding-bottom: 0;
     background-color: #fff;
 
     input {
