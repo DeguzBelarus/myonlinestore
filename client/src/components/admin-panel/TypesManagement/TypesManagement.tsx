@@ -39,6 +39,7 @@ export const TypesManagement: FC = () => {
       if (updatingMode && (typeId === String(id))) {
          setupdatingMode(false)
          setTypeId(null)
+         typeNameInput.current.value = ""
       } else {
          if (typeNameInput.current) {
             typeNameInput.current.value = name
@@ -72,7 +73,6 @@ export const TypesManagement: FC = () => {
    const productsTypeUpdate = (event: any) => {
       event.preventDefault()
       if (!typeNameInput.current.value) return
-      typeNameInput.current.value = ""
       const data: UpdateTypeRequestObject = {
          data: { name: typeName, lang: currentLanguage },
          token: token,
