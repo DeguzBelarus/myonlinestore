@@ -29,19 +29,29 @@ export const TypesManagement: FC = () => {
    const [typeName, setTypeName]: any = useState("")
    const [typeId, setTypeId]: any = useState(null)
    const [updatingMode, setupdatingMode]: any = useState(false)
+   const [typeInputDefaultValue, setTypeInputDefaultValue]: any = useState("")
 
    const typeNameHandler = (event: any) => {
       setTypeName(event.target.value)
    }
 
-   const updatingModeHandler = (id: number) => {
+   const updatingModeHandler = (id: number, name: string) => {
       if (updatingMode && (typeId === String(id))) {
          setupdatingMode(false)
          setTypeId(null)
       } else {
+         if (typeNameInput.current) {
+            typeNameInput.current.value = name
+         }
+         setTypeInputDefaultValue(name)
          setupdatingMode(true)
          setTypeId(String(id))
       }
+   }
+
+   const updatingModeOff = () => {
+      setupdatingMode(false)
+      setTypeId(null)
    }
 
    const productsTypeDelete = (id: number) => {
@@ -120,6 +130,7 @@ export const TypesManagement: FC = () => {
                   type="text"
                   placeholder={currentLanguage === "ru" ? "Введите новое имя типа" : "Enter new type name"}
                   autoFocus
+                  defaultValue={typeInputDefaultValue}
                   onChange={typeNameHandler}
                   ref={typeNameInput} />
                <div className="buttons">
@@ -127,7 +138,7 @@ export const TypesManagement: FC = () => {
                      ? "Изменить" : "Change"}</button>
                   <button type="reset" className="reset-button">{currentLanguage === "ru"
                      ? "Очистить" : "Clear"}</button>
-                  <button type="button" className="close-button" onClick={() => updatingModeHandler(typeId)}>X</button>
+                  <button type="button" className="close-button" onClick={updatingModeOff}>X</button>
                </div>
             </form>
             }
@@ -139,7 +150,7 @@ export const TypesManagement: FC = () => {
                      <button
                         type="button"
                         className={typeId === String(type.id) ? "update-button active" : "update-button"}
-                        onClick={() => updatingModeHandler(type.id)}>
+                        onClick={() => updatingModeHandler(type.id, type.name)}>
                         {typeId === String(type.id)
                            ? "..."
                            : currentLanguage === "ru"
