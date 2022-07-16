@@ -6,7 +6,51 @@ class BrandController {
     try {
       const { name } = request.body;
       const newBrand = await Brand.create({ name });
-      return response.status(201).json(newBrand);
+      const allBrands = await Brand.findAll();
+      return response.status(201).json(allBrands);
+    } catch (exception) {
+      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
+    }
+  }
+
+  async update(request, response) {
+    try {
+      const { id } = request.params;
+      const { lang, name } = request.body;
+      const updatedBrand = await Brand.findOne({ where: { id: id } });
+      if (updatedBrand) {
+        await updatedBrand.update({ name: name });
+        const allBrands = await Brand.findAll();
+        return response.json(allBrands);
+      } else {
+        return response.status(204).json({
+          message:
+            lang === "ru"
+              ? "Указанный бренд не найден"
+              : "The specified brand was not found",
+        });
+      }
+    } catch (exception) {
+      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
+    }
+  }
+
+  async delete(request, response) {
+    try {
+      const { id } = request.params;
+      const { lang } = request.query;
+      const deletedBrand = await Brand.destroy({ where: { id: id } });
+      if (deletedBrand) {
+        const allBrands = await Brand.findAll();
+        return response.json(allBrands);
+      } else {
+        return response.status(204).json({
+          message:
+            lang === "ru"
+              ? "Указанный бренд не найден"
+              : "The specified brand was not found",
+        });
+      }
     } catch (exception) {
       console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
     }

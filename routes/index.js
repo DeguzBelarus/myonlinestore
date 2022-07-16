@@ -7,8 +7,8 @@ const typeRouter = require("./typeRouter");
 const brandRouter = require("./brandRouter");
 
 router.use("/user", userRouter);
-router.use("/product", productRouter);
 router.use("/type", typeRouter);
 router.use("/brand", brandRouter);
+router.use("/product", productRouter);
 
 module.exports = router;

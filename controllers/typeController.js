@@ -13,12 +13,13 @@ class TypeController {
     }
   }
 
-  async delete(request, response) {
+  async update(request, response) {
     try {
       const { id } = request.params;
-      const { lang } = request.query;
-      const deletedType = await Type.destroy({ where: { id: id } });
-      if (deletedType) {
+      const { lang, name } = request.body;
+      const updatedType = await Type.findOne({ where: { id: id } });
+      if (updatedType) {
+        await updatedType.update({ name: name });
         const allTypes = await Type.findAll();
         return response.json(allTypes);
       } else {
@@ -34,13 +35,12 @@ class TypeController {
     }
   }
 
-  async update(request, response) {
+  async delete(request, response) {
     try {
       const { id } = request.params;
-      const { lang, name } = request.body;
-      const updatedType = await Type.findOne({ where: { id: id } });
-      if (updatedType) {
-        await updatedType.update({ name: name });
+      const { lang } = request.query;
+      const deletedType = await Type.destroy({ where: { id: id } });
+      if (deletedType) {
         const allTypes = await Type.findAll();
         return response.json(allTypes);
       } else {
