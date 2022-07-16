@@ -83,12 +83,15 @@
       height: $default-font-size * 1.4 + px;
       min-height: $default-font-size * 1.4 + px;
       @include flex-all-center;
-      background-color: #fff;
-      border-top: 1px solid #ccc;
-      border-bottom: 1px solid #ccc;
+      background: rgba($color: #000, $alpha: 0.1);
+
+      &:not(:hover) {
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+      }
 
       &:nth-of-type(even) {
-        background: rgba($color: $admin-action-management-bcolor, $alpha: 0.08);
+        background: #fff;
       }
 
       span {
@@ -169,19 +172,25 @@
     }
 
     .management-items-wrapper {
-      .update-button {
+      .management-item {
         &:hover {
-          background-color: rgba(
-            $color: $admin-action-management-bcolor,
-            $alpha: 0.2
-          );
-          color: #000;
+          border-top: 1px solid #aaa;
+          border-bottom: 1px solid #aaa;
         }
-      }
+        .update-button {
+          &:hover {
+            background-color: rgba(
+              $color: $admin-action-management-bcolor,
+              $alpha: 0.2
+            );
+            color: #000;
+          }
+        }
 
-      .delete-button {
-        &:hover {
-          background-color: red;
+        .delete-button {
+          &:hover {
+            background-color: red;
+          }
         }
       }
     }
