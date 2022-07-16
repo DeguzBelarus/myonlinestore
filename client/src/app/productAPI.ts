@@ -1,12 +1,10 @@
 // products types methods
-export function createType(url: string, body: any, token: string) {
+export function getTypes(url: string) {
    try {
       return fetch(url, {
-         method: "POST",
-         body: body,
+         method: "GET",
          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+            "Content-Type": "application/json"
          }
       })
    } catch (exception: any) {
@@ -14,10 +12,11 @@ export function createType(url: string, body: any, token: string) {
    }
 }
 
-export function deleteType(url: string, token: string) {
+export function createType(url: string, body: any, token: string) {
    try {
       return fetch(url, {
-         method: "DELETE",
+         method: "POST",
+         body: body,
          headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
@@ -43,7 +42,23 @@ export function updateType(url: string, body: any, token: string) {
    }
 }
 
-export function getTypes(url: string) {
+export function deleteType(url: string, token: string) {
+   try {
+      return fetch(url, {
+         method: "DELETE",
+         headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+         }
+      })
+   } catch (exception: any) {
+      console.error("\x1b[40m\x1b[31m\x1b[1m", exception.message);
+   }
+}
+// products types methods
+
+// products brands methods
+export function getBrands(url: string) {
    try {
       return fetch(url, {
          method: "GET",
@@ -55,9 +70,7 @@ export function getTypes(url: string) {
       console.error("\x1b[40m\x1b[31m\x1b[1m", exception.message);
    }
 }
-// products types methods
 
-// products brands methods
 export function createBrand(url: string, body: any, token: string) {
    try {
       return fetch(url, {
@@ -72,8 +85,10 @@ export function createBrand(url: string, body: any, token: string) {
       console.error("\x1b[40m\x1b[31m\x1b[1m", exception.message);
    }
 }
+// products brands methods
 
-export function getBrands(url: string) {
+// products methods
+export function getProducts(url: string) {
    try {
       return fetch(url, {
          method: "GET",
@@ -85,9 +100,7 @@ export function getBrands(url: string) {
       console.error("\x1b[40m\x1b[31m\x1b[1m", exception.message);
    }
 }
-// products brands methods
 
-// products methods
 export function createProduct(url: string, body: any, token: string) {
    try {
       return fetch(url, {
@@ -95,19 +108,6 @@ export function createProduct(url: string, body: any, token: string) {
          body: body,
          headers: {
             "Authorization": `Bearer ${token}`
-         }
-      })
-   } catch (exception: any) {
-      console.error("\x1b[40m\x1b[31m\x1b[1m", exception.message);
-   }
-}
-
-export function getProducts(url: string) {
-   try {
-      return fetch(url, {
-         method: "GET",
-         headers: {
-            "Content-Type": "application/json"
          }
       })
    } catch (exception: any) {
