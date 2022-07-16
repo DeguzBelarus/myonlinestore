@@ -11,10 +11,14 @@
     width: 100%;
     height: $admin-management-form-default-height + px;
     @include flex-column-all-center;
-    padding: 5px 0;
+    padding: $admin-management-form-paddings;
+    background-color: #fff;
 
     input {
       width: 80%;
+      height: $admin-management-inputs-default-height + px;
+      padding-left: 2px;
+      border: 2px solid $admin-action-management-bcolor;
 
       &:focus {
         outline: none;
@@ -24,7 +28,43 @@
     .buttons {
       width: 100%;
       @include flex-all-center;
-      border-bottom: 1px solid #000;
+      gap: 5px;
+      padding: 5px;
+      border-bottom: 1px solid #ccc;
+
+      .add-button,
+      .reset-button,
+      .change-button {
+        width: $admin-management-buttons-default-width + px;
+        @include flex-all-center;
+        @include user-select-none;
+        padding: $admin-management-buttons-paddings;
+        color: #000;
+        border: 2px solid $admin-crud-mode-button-bgcolor-active;
+        cursor: pointer;
+
+        &:not(:hover) {
+          background-color: #fff;
+        }
+      }
+
+      .close-button {
+        width: $admin-management-close-button-default-width + px;
+        @include flex-all-center;
+        @include user-select-none;
+        padding: $admin-management-buttons-paddings;
+        color: #000;
+        border: 2px solid $admin-action-management-bcolor;
+        cursor: pointer;
+
+        &:not(:hover) {
+          background-color: #fff;
+        }
+      }
+
+      .reset-button {
+        border: 2px solid $admin-action-management-bcolor;
+      }
     }
   }
 
@@ -32,6 +72,9 @@
     width: 100%;
     height: 100%;
     @include flex-column-line-center-vertical-top;
+    gap: 5px;
+    padding-top: 4px;
+    background-color: #fff;
     overflow-y: scroll;
 
     .management-item {
@@ -39,9 +82,12 @@
       height: $default-font-size * 1.4 + px;
       min-height: $default-font-size * 1.4 + px;
       @include flex-all-center;
+      background-color: #fff;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
 
       &:nth-of-type(even) {
-        background: #eee;
+        background: rgba($color: $admin-action-management-bcolor, $alpha: 0.08);
       }
 
       span {
@@ -49,12 +95,91 @@
       }
 
       button {
+        @include flex-all-center;
         font-size: $default-font-size * 0.8 + px;
       }
 
       .update-button {
+        width: $admin-management-update-button-default-width + px;
+        height: 100%;
+        @include flex-all-center;
+        margin-left: 5px;
+        color: #000;
+        border: 1px solid #aaa;
+        border-top: none;
+        border-bottom: none;
+        cursor: pointer;
+
+        &:not(:hover) {
+          background-color: rgba($color: orange, $alpha: 0.6);
+        }
+
         &.active {
-          background-color: rgba($color: orange, $alpha: 0.5);
+          background-color: rgba(
+            $color: $admin-action-management-bcolor,
+            $alpha: 0.8
+          );
+          color: #fff;
+        }
+      }
+
+      .close-button {
+        width: $admin-management-close-button-default-width + px;
+        height: 100%;
+        @include flex-all-center;
+        margin-left: 5px;
+        color: #fff;
+        border: 1px solid #aaa;
+        border-top: none;
+        border-bottom: none;
+        cursor: pointer;
+
+        &:not(:hover) {
+          background-color: rgba($color: red, $alpha: 0.7);
+        }
+      }
+    }
+  }
+}
+
+@media (hover: hover) {
+  .types-management-wrapper {
+    .type-management-form {
+      .buttons {
+        .add-button,
+        .change-button {
+          &:hover {
+            background-color: rgba(
+              $color: $admin-crud-mode-button-bgcolor-active,
+              $alpha: 0.2
+            );
+          }
+        }
+        .reset-button,
+        .close-button {
+          &:hover {
+            background-color: rgba(
+              $color: $admin-action-management-bcolor,
+              $alpha: 0.2
+            );
+          }
+        }
+      }
+    }
+
+    .management-items-wrapper {
+      .update-button {
+        &:hover {
+          background-color: rgba(
+            $color: $admin-action-management-bcolor,
+            $alpha: 0.2
+          );
+        }
+      }
+
+      .close-button {
+        &:hover {
+          background-color: red;
         }
       }
     }

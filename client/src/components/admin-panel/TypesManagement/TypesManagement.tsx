@@ -51,7 +51,10 @@ export const TypesManagement: FC = () => {
 
    const productsTypeAdd = (event: any) => {
       event.preventDefault()
-      if (!typeNameInput.current.value) return
+      const newTypeName = typeNameInput.current.value
+      if (!newTypeName) return
+      if (productsTypes.some((type) => type.name === newTypeName)) return
+
       typeNameInput.current.value = ""
       dispatch(createTypeAsync({ data: { name: typeName }, token: token }))
    }
@@ -95,8 +98,10 @@ export const TypesManagement: FC = () => {
                   onChange={typeNameHandler}
                   ref={typeNameInput} />
                <div className="buttons">
-                  <button type="submit">Add</button>
-                  <button type="reset">Clear</button>
+                  <button type="submit" className="add-button">{currentLanguage === "ru"
+                     ? "Добавить" : "Add"}</button>
+                  <button type="reset" className="reset-button">{currentLanguage === "ru"
+                     ? "Очистить" : "Clear"}</button>
                </div>
             </form>
 
@@ -117,9 +122,11 @@ export const TypesManagement: FC = () => {
                   onChange={typeNameHandler}
                   ref={typeNameInput} />
                <div className="buttons">
-                  <button type="submit">Change</button>
-                  <button type="reset">Clear</button>
-                  <button type="button" onClick={() => updatingModeHandler(typeId)}>X</button>
+                  <button type="submit" className="change-button">{currentLanguage === "ru"
+                     ? "Изменить" : "Change"}</button>
+                  <button type="reset" className="reset-button">{currentLanguage === "ru"
+                     ? "Очистить" : "Clear"}</button>
+                  <button type="button" className="close-button" onClick={() => updatingModeHandler(typeId)}>X</button>
                </div>
             </form>
             }
@@ -131,8 +138,13 @@ export const TypesManagement: FC = () => {
                      <button
                         type="button"
                         className={typeId === String(type.id) ? "update-button active" : "update-button"}
-                        onClick={() => updatingModeHandler(type.id)}
-                     >change</button>
+                        onClick={() => updatingModeHandler(type.id)}>
+                        {typeId === String(type.id)
+                           ? "..."
+                           : currentLanguage === "ru"
+                              ? "изменить"
+                              : "change"}
+                     </button>
                   </div>
                })}
             </div>
@@ -143,7 +155,7 @@ export const TypesManagement: FC = () => {
             {productsTypes.map((type: ManagementItem) => {
                return <div className="management-item" key={type.id}>
                   <span>{type.name}</span>
-                  <button type="button" onClick={() => productsTypeDelete(type.id)}>X</button>
+                  <button type="button" className="close-button" onClick={() => productsTypeDelete(type.id)}>X</button>
                </div>
             })}
          </div>}

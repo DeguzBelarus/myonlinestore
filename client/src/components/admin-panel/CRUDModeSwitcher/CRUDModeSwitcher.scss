@@ -12,14 +12,20 @@
     @include flex-all-center;
     @include user-select-none;
     cursor: pointer;
-    background-color: rgba(
-      $color: $admin-crud-mode-button-bgcolor,
-      $alpha: 0.2
-    );
+
+    &:not(:hover) {
+      background-color: rgba(
+        $color: $admin-crud-mode-button-bgcolor,
+        $alpha: 0.2
+      );
+    }
 
     .crud-mode-span {
       font-size: $default-font-size * 0.75 + px;
-      color: $admin-crud-mode-button-fcolor;
+
+      &:not(:hover) {
+        color: $admin-crud-mode-button-fcolor;
+      }
     }
 
     &.active {
@@ -30,6 +36,29 @@
 
       .crud-mode-span {
         color: $admin-crud-mode-button-fcolor-active;
+      }
+    }
+  }
+}
+
+@media (hover: hover) {
+  .crud-mode-switcher-wrapper {
+    .crud-mode-button {
+      &:hover {
+        background-color: rgba(
+          $color: $admin-crud-mode-button-bgcolor-hover,
+          $alpha: 0.3
+        );
+
+        .crud-mode-span {
+          color: $admin-crud-mode-button-fcolor-hover;
+        }
+
+        &.active {
+          .crud-mode-span {
+            color: $admin-crud-mode-button-fcolor-active;
+          }
+        }
       }
     }
   }
