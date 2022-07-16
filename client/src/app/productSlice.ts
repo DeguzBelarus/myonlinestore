@@ -24,14 +24,14 @@ export interface CurrentProduct {
    description: {}[]
 }
 
-export interface ManagementItem {
+export interface TypeOrBrandObject {
    id: number,
    name: string
 }
 
 interface ProductState {
-   types: ManagementItem[],
-   brands: ManagementItem[],
+   types: TypeOrBrandObject[],
+   brands: TypeOrBrandObject[],
    products: {}[],
    currentProduct: CurrentProduct,
    totalProducts: number | null,

@@ -6,4 +6,204 @@
   @include flex-column-line-center-vertical-top;
   @include user-select-none;
   border: 3px double $admin-action-management-bcolor;
+
+  .brand-management-form {
+    width: 100%;
+    height: $admin-management-form-default-height + px;
+    @include flex-column-all-center;
+    padding: $admin-management-form-paddings;
+    padding-bottom: 0;
+    background-color: #fff;
+
+    input {
+      width: 80%;
+      height: $admin-management-inputs-default-height + px;
+      padding-left: 2px;
+      border: 2px solid $admin-action-management-bcolor;
+
+      &::placeholder {
+        transition-property: opacity;
+        transition-duration: 0.4s;
+      }
+
+      &:focus {
+        outline: none;
+
+        &::placeholder {
+          opacity: 0.4;
+        }
+      }
+    }
+
+    .buttons {
+      width: 100%;
+      @include flex-all-center;
+      gap: 5px;
+      padding: 5px;
+      border-bottom: 1px solid #ccc;
+
+      .add-button,
+      .reset-button,
+      .change-button {
+        width: $admin-management-buttons-default-width + px;
+        @include flex-all-center;
+        @include user-select-none;
+        padding: $admin-management-buttons-paddings;
+        color: #000;
+        border: 2px solid $admin-crud-mode-button-bgcolor-active;
+        cursor: pointer;
+
+        &:not(:hover) {
+          background-color: #fff;
+        }
+      }
+
+      .close-button {
+        width: $admin-management-close-button-default-width + px;
+        @include flex-all-center;
+        @include user-select-none;
+        padding: $admin-management-buttons-paddings;
+        color: #000;
+        border: 2px solid $admin-action-management-bcolor;
+        cursor: pointer;
+
+        &:not(:hover) {
+          background-color: #fff;
+        }
+      }
+
+      .reset-button {
+        border: 2px solid $admin-action-management-bcolor;
+      }
+    }
+  }
+
+  .management-items-wrapper {
+    width: 100%;
+    height: 100%;
+    @include flex-column-line-center-vertical-top;
+    gap: 2px;
+    padding-top: 4px;
+    background-color: #fff;
+    overflow-y: scroll;
+
+    .management-item {
+      width: 100%;
+      height: $default-font-size * 1.4 + px;
+      min-height: $default-font-size * 1.4 + px;
+      @include flex-all-center;
+      background: rgba($color: #000, $alpha: 0.1);
+
+      &:not(:hover) {
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+      }
+
+      &:nth-of-type(even) {
+        background: #fff;
+      }
+
+      span {
+        font-size: $default-font-size * 0.85 + px;
+      }
+
+      button {
+        @include flex-all-center;
+        font-size: $default-font-size * 0.8 + px;
+      }
+
+      .update-button {
+        width: $admin-management-update-button-default-width + px;
+        height: 100%;
+        @include flex-all-center;
+        margin-left: 5px;
+        color: #000;
+        border: 2px solid #555;
+        border-top: none;
+        border-bottom: none;
+        cursor: pointer;
+
+        &:not(:hover) {
+          background-color: rgba($color: #999, $alpha: 0.7);
+        }
+
+        &.active {
+          background-color: rgba(
+            $color: $admin-action-management-bcolor,
+            $alpha: 0.8
+          );
+          color: #fff;
+        }
+      }
+
+      .delete-button {
+        width: $admin-management-delete-button-default-width + px;
+        height: 100%;
+        @include flex-all-center;
+        margin-left: 5px;
+        color: #000;
+        border: 2px solid #555;
+        border-top: none;
+        border-bottom: none;
+        cursor: pointer;
+
+        &:not(:hover) {
+          background-color: rgba($color: red, $alpha: 0.5);
+        }
+      }
+    }
+  }
+}
+
+@media (hover: hover) {
+  .brands-management-wrapper {
+    .brand-management-form {
+      .buttons {
+        .add-button,
+        .change-button {
+          &:hover {
+            background-color: rgba(
+              $color: $admin-crud-mode-button-bgcolor-active,
+              $alpha: 0.2
+            );
+          }
+        }
+
+        .reset-button,
+        .close-button {
+          &:hover {
+            background-color: rgba(
+              $color: $admin-action-management-bcolor,
+              $alpha: 0.2
+            );
+          }
+        }
+      }
+    }
+
+    .management-items-wrapper {
+      .management-item {
+        &:hover {
+          border-top: 1px solid #aaa;
+          border-bottom: 1px solid #aaa;
+        }
+
+        .update-button {
+          &:hover {
+            background-color: rgba(
+              $color: $admin-action-management-bcolor,
+              $alpha: 0.2
+            );
+            color: #000;
+          }
+        }
+
+        .delete-button {
+          &:hover {
+            background-color: red;
+          }
+        }
+      }
+    }
+  }
 }

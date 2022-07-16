@@ -118,13 +118,13 @@
         @include flex-all-center;
         margin-left: 5px;
         color: #000;
-        border: 1px solid #aaa;
+        border: 2px solid #555;
         border-top: none;
         border-bottom: none;
         cursor: pointer;
 
         &:not(:hover) {
-          background-color: rgba($color: #aaa, $alpha: 0.7);
+          background-color: rgba($color: #999, $alpha: 0.7);
         }
 
         &.active {
@@ -142,13 +142,13 @@
         @include flex-all-center;
         margin-left: 5px;
         color: #000;
-        border: 1px solid #aaa;
+        border: 2px solid #555;
         border-top: none;
         border-bottom: none;
         cursor: pointer;
 
         &:not(:hover) {
-          background-color: rgba($color: red, $alpha: 0.4);
+          background-color: rgba($color: red, $alpha: 0.5);
         }
       }
     }
@@ -168,6 +168,7 @@
             );
           }
         }
+
         .reset-button,
         .close-button {
           &:hover {
@@ -186,6 +187,7 @@
           border-top: 1px solid #aaa;
           border-bottom: 1px solid #aaa;
         }
+
         .update-button {
           &:hover {
             background-color: rgba(

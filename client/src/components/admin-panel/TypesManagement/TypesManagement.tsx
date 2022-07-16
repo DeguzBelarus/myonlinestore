@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 import {
    getTypesAsync,
    getProductsTypes,
-   ManagementItem,
+   TypeOrBrandObject,
    createTypeAsync,
    deleteTypeAsync,
    DeleteTypeRequestObject,
@@ -22,14 +22,14 @@ export const TypesManagement: FC = () => {
 
    const dispatch = useAppDispatch()
 
-   const productsTypes: ManagementItem[] = useAppSelector(getProductsTypes)
+   const productsTypes: TypeOrBrandObject[] = useAppSelector(getProductsTypes)
    const token: string | null = useAppSelector(getToken)
    const adminEditingType: string = useAppSelector(getAdminEditingType)
    const currentLanguage: string = useAppSelector(getCurrentLanguage)
    const [typeName, setTypeName]: any = useState("")
    const [typeId, setTypeId]: any = useState(null)
-   const [updatingMode, setupdatingMode]: any = useState(false)
-   const [typeInputDefaultValue, setTypeInputDefaultValue]: any = useState("")
+   const [updatingMode, setUpdatingMode]: any = useState(false)
+   const [typeNameInputDefaultValue, setTypeNameInputDefaultValue]: any = useState("")
 
    const typeNameHandler = (event: any) => {
       setTypeName(event.target.value)
@@ -37,27 +37,23 @@ export const TypesManagement: FC = () => {
 
    const updatingModeHandler = (id: number, name: string) => {
       if (updatingMode && (typeId === String(id))) {
-         setupdatingMode(false)
+         setUpdatingMode(false)
          setTypeId(null)
          typeNameInput.current.value = ""
       } else {
          if (typeNameInput.current) {
             typeNameInput.current.value = name
          }
-         setTypeInputDefaultValue(name)
-         setupdatingMode(true)
+         setTypeNameInputDefaultValue(name)
+         setUpdatingMode(true)
          setTypeId(String(id))
       }
    }
 
    const updatingModeOff = () => {
-      setupdatingMode(false)
+      setUpdatingMode(false)
       setTypeId(null)
-   }
-
-   const productsTypeDelete = (id: number) => {
-      const data: DeleteTypeRequestObject = { id: String(id), token: token, lang: currentLanguage }
-      dispatch(deleteTypeAsync(data))
+      setTypeNameInputDefaultValue("")
    }
 
    const productsTypeAdd = (event: any) => {
@@ -81,8 +77,24 @@ export const TypesManagement: FC = () => {
       dispatch(updateTypeAsync(data))
    }
 
+   const productsTypeDelete = (id: number) => {
+      const data: DeleteTypeRequestObject = { id: String(id), token: token, lang: currentLanguage }
+      dispatch(deleteTypeAsync(data))
+   }
+
+   const sortTypesMethod = (previous: TypeOrBrandObject, next: TypeOrBrandObject) => {
+      switch (true) {
+         case previous.name > next.name:
+            return 1
+         case previous.name < next.name:
+            return -1
+         default:
+            return 0
+      }
+   }
+
    useEffect(() => {
-      setupdatingMode(false)
+      setUpdatingMode(false)
       setTypeId(null)
       dispatch(getTypesAsync())
    }, [adminEditingType])
@@ -95,10 +107,11 @@ export const TypesManagement: FC = () => {
 
       {adminEditingType === "read" &&
          <div className="management-items-wrapper">
-            {productsTypes.map((type: ManagementItem) => {
+            {[...productsTypes].sort(sortTypesMethod).map((type: TypeOrBrandObject) => {
                return <div className="management-item" key={type.id}><span>{type.name}</span></div>
             })}
          </div>}
+
       {adminEditingType === "create" &&
          <>
             <form className="type-management-form" onSubmit={productsTypeAdd}>
@@ -108,6 +121,7 @@ export const TypesManagement: FC = () => {
                   autoFocus
                   onChange={typeNameHandler}
                   ref={typeNameInput} />
+
                <div className="buttons">
                   <button type="submit" className="add-button">{currentLanguage === "ru"
                      ? "Добавить" : "Add"}</button>
@@ -117,12 +131,12 @@ export const TypesManagement: FC = () => {
             </form>
 
             <div className="management-items-wrapper">
-               {productsTypes.map((type: ManagementItem) => {
+               {[...productsTypes].sort(sortTypesMethod).map((type: TypeOrBrandObject) => {
                   return <div className="management-item" key={type.id}><span>{type.name}</span></div>
                })}
             </div>
-         </>
-      }
+         </>}
+
       {adminEditingType === "update" &&
          <>
             {updatingMode && <form className="type-management-form" onSubmit={productsTypeUpdate}>
@@ -130,21 +144,22 @@ export const TypesManagement: FC = () => {
                   type="text"
                   placeholder={currentLanguage === "ru" ? "Введите новое имя типа" : "Enter new type name"}
                   autoFocus
-                  defaultValue={typeInputDefaultValue}
+                  defaultValue={typeNameInputDefaultValue}
                   onChange={typeNameHandler}
                   ref={typeNameInput} />
+
                <div className="buttons">
                   <button type="submit" className="change-button">{currentLanguage === "ru"
                      ? "Изменить" : "Change"}</button>
                   <button type="reset" className="reset-button">{currentLanguage === "ru"
                      ? "Очистить" : "Clear"}</button>
-                  <button type="button" className="close-button" onClick={updatingModeOff}>X</button>
+                  <button type="button" className="close-button" onClick={updatingModeOff}>&times;</button>
                </div>
             </form>
             }
 
             <div className="management-items-wrapper">
-               {productsTypes.map((type: ManagementItem) => {
+               {[...productsTypes].sort(sortTypesMethod).map((type: TypeOrBrandObject) => {
                   return <div className="management-item" key={type.id}>
                      <span>{type.name}</span>
                      <button
@@ -160,11 +175,11 @@ export const TypesManagement: FC = () => {
                   </div>
                })}
             </div>
-         </>
-      }
+         </>}
+
       {adminEditingType === "delete" &&
          <div className="management-items-wrapper">
-            {productsTypes.map((type: ManagementItem) => {
+            {[...productsTypes].sort(sortTypesMethod).map((type: TypeOrBrandObject) => {
                return <div className="management-item" key={type.id}>
                   <span>{type.name}</span>
                   <button type="button" className="delete-button" onClick={() => productsTypeDelete(type.id)}>
