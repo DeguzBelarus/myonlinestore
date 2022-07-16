@@ -60,7 +60,7 @@ export const BrandsManagement: FC = () => {
       event.preventDefault()
       const newBrandName = brandNameInput.current.value
       if (!newBrandName) return
-      if (productsBrands.some((type) => type.name === newBrandName)) return
+      if (productsBrands.some((brand) => brand.name === newBrandName)) return
 
       brandNameInput.current.value = ""
       dispatch(createBrandAsync({ data: { name: brandName }, token: token }))
