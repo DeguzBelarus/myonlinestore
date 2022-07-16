@@ -40,7 +40,7 @@
       @include flex-all-center;
       gap: 5px;
       padding: 5px;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid $admin-action-management-bcolor;
 
       .add-button,
       .reset-button,
@@ -184,8 +184,8 @@
     .management-items-wrapper {
       .management-item {
         &:hover {
-          border-top: 1px solid #aaa;
-          border-bottom: 1px solid #aaa;
+          border-top: 1px solid $admin-action-management-bcolor;
+          border-bottom: 1px solid $admin-action-management-bcolor;
         }
 
         .update-button {
