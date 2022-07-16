@@ -8,7 +8,9 @@ import {
    createProduct,
    getProducts,
    deleteType,
-   updateType
+   updateType,
+   deleteBrand,
+   updateBrand
 } from "./productAPI"
 
 export interface CurrentProduct {
@@ -49,25 +51,20 @@ const initialState = {
 
 // thunks 
 // types thunks
+export const getTypesAsync = createAsyncThunk(
+   "product/types/get",
+   async () => {
+      const url = `/api/type`
+      const response: any = await getTypes(url)
+      return await response.json()
+   }
+)
+
 export const createTypeAsync = createAsyncThunk(
    "product/types/create",
    async (body: any) => {
       const url = `/api/type/add`
       const response: any = await createType(url, JSON.stringify(body.data), body.token)
-      return await response.json()
-   }
-)
-export interface DeleteTypeRequestObject {
-   id: string,
-   token: string,
-   lang: string
-}
-
-export const deleteTypeAsync = createAsyncThunk(
-   "product/types/delete",
-   async (data: DeleteTypeRequestObject) => {
-      const url = `/api/type/${data.id}/delete?${data.lang}`
-      const response: any = await deleteType(url, data.token)
       return await response.json()
    }
 )
@@ -87,26 +84,23 @@ export const updateTypeAsync = createAsyncThunk(
    }
 )
 
-export const getTypesAsync = createAsyncThunk(
-   "product/types/get",
-   async () => {
-      const url = `/api/type`
-      const response: any = await getTypes(url)
+export interface DeleteTypeRequestObject {
+   id: string,
+   token: string,
+   lang: string
+}
+
+export const deleteTypeAsync = createAsyncThunk(
+   "product/types/delete",
+   async (data: DeleteTypeRequestObject) => {
+      const url = `/api/type/${data.id}/delete?${data.lang}`
+      const response: any = await deleteType(url, data.token)
       return await response.json()
    }
 )
 // types thunks
 
 // brands thunks
-export const createBrandAsync = createAsyncThunk(
-   "product/brands/create",
-   async (body: any) => {
-      const url = `/api/brand/add`
-      const response: any = await createBrand(url, JSON.stringify(body.data), body.token)
-      return await response.json()
-   }
-)
-
 export const getBrandsAsync = createAsyncThunk(
    "product/brands/get",
    async () => {
@@ -115,18 +109,18 @@ export const getBrandsAsync = createAsyncThunk(
       return await response.json()
    }
 )
-// brands thunks
 
-// products thunks
-export const createProductAsync = createAsyncThunk(
-   "product/create",
+export const createBrandAsync = createAsyncThunk(
+   "product/brands/create",
    async (body: any) => {
-      const url = `/api/product/add`
-      const response: any = await createProduct(url, body.data, body.token)
+      const url = `/api/brand/add`
+      const response: any = await createBrand(url, JSON.stringify(body.data), body.token)
       return await response.json()
    }
 )
+// brands thunks
 
+// products thunks
 export interface GetProductsQueryParams {
    page?: number,
    limit?: number,
@@ -169,6 +163,15 @@ export const getProductAsync = createAsyncThunk(
    async (id: string) => {
       const url = `/api/product/${id}`
       const response: any = await getProducts(url)
+      return await response.json()
+   }
+)
+
+export const createProductAsync = createAsyncThunk(
+   "product/create",
+   async (body: any) => {
+      const url = `/api/product/add`
+      const response: any = await createProduct(url, body.data, body.token)
       return await response.json()
    }
 )
