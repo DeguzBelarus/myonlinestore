@@ -155,7 +155,7 @@ export const TypesManagement: FC = () => {
             {productsTypes.map((type: ManagementItem) => {
                return <div className="management-item" key={type.id}>
                   <span>{type.name}</span>
-                  <button type="button" className="close-button" onClick={() => productsTypeDelete(type.id)}>X</button>
+                  <button type="button" className="delete-button" onClick={() => productsTypeDelete(type.id)}>X</button>
                </div>
             })}
          </div>}
