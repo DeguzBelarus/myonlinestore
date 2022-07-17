@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { authorization, checkAuthorization } from "./userAPI"
+import { authorization, checkAuthorization, getAllUsers } from "./userAPI"
 import jwtDecode from "jwt-decode"
 
 interface UserState {
@@ -67,6 +67,15 @@ export const checkAuthorizationAsync = createAsyncThunk(
       } else {
          return result
       }
+   }
+)
+
+export const getAllUsersAsync = createAsyncThunk(
+   "user/get",
+   async (token: string) => {
+      const url = `/api/user`
+      const response: any = await getAllUsers(url, token)
+      return await response.json()
    }
 )
 // thunks 

@@ -47,16 +47,16 @@ $admin-crud-mode-button-fcolor-hover: #f00cbb;
 $default-font-size: 16;
 //== general
 //== navbar
-$navbar-mainlogo-default-size: 30;
+$navbar-mainlogo-default-size: 28;
 $navbar-default-height: 40;
 $navbar-paddings-top-bottom: 5px;
 $navbar-paddings-left-right: 10px;
 $navbar-buttons-paddings: 5px 10px;
 $navbar-buttons-default-height: 30;
-$navbar-lang-switcher-default-width: 50;
-$navbar-auth-button-default-width: 105;
-$navbar-product-choose-button-default-width: 130;
-$navbar-admin-panel-button-default-width: 115;
+$navbar-lang-switcher-default-width: 55;
+$navbar-auth-button-default-width: 110;
+$navbar-product-choose-button-default-width: 135;
+$navbar-admin-panel-button-default-width: 125;
 $navbar-logout-button-default-width: 61;
 //== navbar
 
@@ -75,7 +75,7 @@ $auth-register-button-default-width: 155;
 $auth-buttons-default-height: 30;
 $auth-buttons-paddings: 5px 20px;
 $auth-stayloggedin-checkbox-default-size: 14;
-$auth-stayloggedin-checkbox-default-fsize: 11;
+$auth-stayloggedin-checkbox-default-fsize: 10.3;
 $auth-message-container-default-height: 25;
 //== auth page
 
@@ -83,7 +83,7 @@ $auth-message-container-default-height: 25;
 $admin-actions-container-default-width: 300;
 $admin-actions-container-default-height: 300;
 $admin-actions-buttons-paddings: 10px 5px;
-$admin-actions-buttons-default-width: 200;
+$admin-actions-buttons-default-width: 210;
 $admin-actions-buttons-default-height: 40;
 $admin-types-management-default-width: 300;
 $admin-types-management-default-height: 300;
@@ -98,7 +98,7 @@ $admin-management-form-default-height: 75;
 $admin-management-form-paddings: 5px 0;
 $admin-management-inputs-default-height: 28;
 $admin-management-buttons-paddings: 2px 10px;
-$admin-management-buttons-default-width: 80;
+$admin-management-buttons-default-width: 85;
 $admin-management-close-button-default-width: 30;
 $admin-management-update-button-default-width: 75;
 $admin-management-delete-button-default-width: 65;

@@ -26,3 +26,17 @@ export function checkAuthorization(url: string, token: string) {
       console.error("\x1b[40m\x1b[31m\x1b[1m", exception.message);
    }
 }
+
+export function getAllUsers(url: string, token: string) {
+   try {
+      return fetch(url, {
+         method: "GET",
+         headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+         }
+      })
+   } catch (exception: any) {
+      console.error("\x1b[40m\x1b[31m\x1b[1m", exception.message);
+   }
+}

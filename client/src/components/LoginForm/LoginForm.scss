@@ -207,6 +207,7 @@
 
   .registration-email-label {
     input {
+      padding-left: 5px;
       border-bottom: 2px solid $auth-inputs-border-color;
       border-right: 2px solid $auth-inputs-border-color;
       border-left: 2px solid $auth-inputs-border-color;
@@ -248,7 +249,7 @@
       }
 
       span {
-        top: $auth-inputs-default-height * 0.1 + px;
+        top: $auth-inputs-default-height * 0.02 + px;
         font-size: $auth-inputs-placeholder-default-fsize + px;
       }
     }
