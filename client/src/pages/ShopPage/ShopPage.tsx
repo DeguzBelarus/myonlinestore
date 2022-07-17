@@ -13,7 +13,8 @@ export const ShopPage: FC = () => {
    const currentLanguage: string = useAppSelector(getCurrentLanguage)
 
    useEffect(() => {
-
+      document.title = currentLanguage === "ru" ? "MyOnlineStore: Главная страница" : "MyOnlineStore: Main page"
+      document.documentElement.lang = currentLanguage === "ru" ? "ru" : "en"
    }, [currentLanguage])
 
    useEffect(() => {
@@ -26,7 +27,6 @@ export const ShopPage: FC = () => {
 
       document.title = currentLanguage === "ru" ? "MyOnlineStore: Главная страница" : "MyOnlineStore: Main page"
       document.documentElement.lang = currentLanguage === "ru" ? "ru" : "en"
-
       return () => {
          dispatch(setShopPageIsActive(false))
          dispatch(setSelectionMode(false))
