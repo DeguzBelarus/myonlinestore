@@ -101,6 +101,13 @@
       }
     }
 
+    #password-input,
+    #password-confirm-input {
+      &:not(:placeholder-shown) {
+        font-family: "Times New Roman", Times, serif;
+      }
+    }
+
     span {
       @include user-select-none;
       position: absolute;
