@@ -3,6 +3,13 @@ import { RootState } from "./store";
 import { authorization, checkAuthorization, getAllUsers } from "./userAPI"
 import jwtDecode from "jwt-decode"
 
+export interface User {
+   id: number,
+   email: string,
+   password: string,
+   nickname: string
+}
+
 interface UserState {
    token: string,
    isAuth: boolean,
@@ -12,6 +19,7 @@ interface UserState {
    isStayLoggedIn: boolean,
    registrationEmail: string,
    authMessage: string,
+   users: User[],
    authStatus: "idle" | "loading" | "failed"
 }
 
@@ -24,6 +32,7 @@ const initialState = {
    isStayLoggedIn: true,
    registrationEmail: "",
    authMessage: "",
+   users: [],
    authStatus: "idle"
 } as UserState
 
@@ -136,7 +145,7 @@ export const userSlice = createSlice({
    }, extraReducers: (builder) => {
       builder
 
-         // login cases
+         // login
          .addCase(loginAsync.pending, (state) => {
             state.authStatus = "loading"
          })
@@ -163,9 +172,9 @@ export const userSlice = createSlice({
             state.authMessage = String(action.error.message)
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
-         // login cases
+         // login
 
-         // check authorization cases
+         // check authorization
          .addCase(checkAuthorizationAsync.pending, (state) => {
             state.authStatus = "loading"
          })
@@ -196,9 +205,9 @@ export const userSlice = createSlice({
             state.token = initialState.token
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
-         // check authorization cases
+         // check authorization
 
-         // registration cases
+         // registration
          .addCase(registrationAsync.pending, (state) => {
             state.authStatus = "loading"
          })
@@ -225,7 +234,21 @@ export const userSlice = createSlice({
             state.authMessage = String(action.error.message)
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
-      // registration cases
+         // registration
+
+         // get users
+         .addCase(getAllUsersAsync.pending, (state) => {
+            state.authStatus = "loading"
+         })
+         .addCase(getAllUsersAsync.fulfilled, (state, action) => {
+            state.authStatus = "idle"
+            state.users = action.payload
+         })
+         .addCase(getAllUsersAsync.rejected, (state, action) => {
+            state.authStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+      // get users
    }
 })
 
@@ -249,5 +272,6 @@ export const getAuthStatus = (state: RootState) => state.user.authStatus
 export const getIsStayLoggedIn = (state: RootState) => state.user.isStayLoggedIn
 export const getToken = (state: RootState) => state.user.token
 export const getRegistrationEmail = (state: RootState) => state.user.registrationEmail
+export const getUsers = (state: RootState) => state.user.users
 
 export default userSlice.reducer
