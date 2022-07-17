@@ -98,10 +98,6 @@ export const BrandsManagement: FC = () => {
       setBrandId(null)
       dispatch(getBrandsAsync())
    }, [adminEditingType])
-
-   useEffect(() => {
-      dispatch(getBrandsAsync())
-   }, [])
    return <div className="brands-management-wrapper">
       <CRUDModeSwitcher />
 

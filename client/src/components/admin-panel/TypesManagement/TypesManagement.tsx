@@ -98,10 +98,6 @@ export const TypesManagement: FC = () => {
       setTypeId(null)
       dispatch(getTypesAsync())
    }, [adminEditingType])
-
-   useEffect(() => {
-      dispatch(getTypesAsync())
-   }, [])
    return <div className="types-management-wrapper">
       <CRUDModeSwitcher />
 
