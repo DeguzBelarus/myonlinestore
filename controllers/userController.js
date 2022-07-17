@@ -196,6 +196,15 @@ class UserController {
       console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
     }
   }
+
+  async getAll(request, response) {
+    try {
+      const allUsers = await User.findAll();
+      return response.json(allUsers);
+    } catch (exception) {
+      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
+    }
+  }
 }
 
 module.exports = new UserController();
