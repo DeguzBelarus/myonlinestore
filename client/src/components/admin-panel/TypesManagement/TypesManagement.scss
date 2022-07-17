@@ -60,7 +60,7 @@
 
       .close-button {
         width: $admin-management-close-button-default-width + px;
-        @include flex-all-center;
+        @include flex-vertical-center;
         @include user-select-none;
         padding: $admin-management-buttons-paddings;
         color: #000;

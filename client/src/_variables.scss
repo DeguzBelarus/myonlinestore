@@ -142,6 +142,11 @@ $admin-management-delete-button-default-width: 65;
   justify-content: space-between;
   align-items: center;
 }
+
+@mixin flex-vertical-center {
+  display: flex;
+  align-items: center;
+}
 //== flex row mixins
 
 //== flex column mixins
@@ -177,6 +182,12 @@ $admin-management-delete-button-default-width: 65;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  justify-content: center;
+}
+
+@mixin flex-column-vertical-center {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 //== flex column mixins
