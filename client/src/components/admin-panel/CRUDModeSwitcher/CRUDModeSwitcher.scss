@@ -5,6 +5,7 @@
   @include flex-all-center;
   @include user-select-none;
   border-bottom: 3px double $admin-crud-mode-switcher-bcolor;
+  background-color: $admin-crud-mode-switcher-bgcolor;
 
   .crud-mode-button {
     width: 25%;
@@ -14,10 +15,7 @@
     cursor: pointer;
 
     &:not(:hover) {
-      background-color: rgba(
-        $color: $admin-crud-mode-button-bgcolor,
-        $alpha: 0.2
-      );
+      background-color: $admin-crud-mode-switcher-bcolor;
     }
 
     .crud-mode-span {
@@ -29,10 +27,7 @@
     }
 
     &.active {
-      background-color: rgba(
-        $color: $admin-crud-mode-button-bgcolor-active,
-        $alpha: 0.2
-      );
+      background-color: $admin-crud-mode-button-bgcolor-active;
 
       .crud-mode-span {
         color: $admin-crud-mode-button-fcolor-active;
@@ -42,7 +37,7 @@
     &:nth-child(1),
     &:nth-child(2),
     &:nth-child(3) {
-      border-right: 1px solid #ccc;
+      border-right: 2px solid #ccc;
     }
   }
 }
@@ -51,16 +46,15 @@
   .crud-mode-switcher-wrapper {
     .crud-mode-button {
       &:hover {
-        background-color: rgba(
-          $color: $admin-crud-mode-button-bgcolor-hover,
-          $alpha: 0.3
-        );
+        background-color: rgba($color: #000, $alpha: 0.1);
 
         .crud-mode-span {
-          color: $admin-crud-mode-button-fcolor-hover;
+          color: $admin-crud-mode-button-fcolor;
         }
 
         &.active {
+          background-color: $admin-crud-mode-button-bgcolor-active;
+
           .crud-mode-span {
             color: $admin-crud-mode-button-fcolor-active;
           }

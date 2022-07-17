@@ -27,16 +27,18 @@ $auth-stayloggedin-checkbox-color: #0aad0a;
 $auth-registration-email-header-color: #f00cbb;
 //== auth page
 //== admin panel
-$admin-actions-container-bcolor: #f00cbb;
+$admin-actions-container-bcolor: #fff;
+$admin-actions-container-bgcolor: #f00cbb;
 $admin-action-management-bcolor: #f00cbb;
-$admin-action-button-fcolor: #000;
-$admin-action-button-bcolor: #f00cbb;
-$admin-action-button-bgcolor: #fff;
+$admin-action-button-bcolor: #fff;
+$admin-action-button-bgcolor: #f00cbb;
+$admin-action-button-fcolor: #fff;
 $admin-crud-mode-switcher-bcolor: #f00cbb;
+$admin-crud-mode-switcher-bgcolor: #f00cbb;
 $admin-crud-mode-button-bgcolor: #fff;
 $admin-crud-mode-button-bgcolor-active: #0aad0a;
-$admin-crud-mode-button-fcolor: #000;
-$admin-crud-mode-button-fcolor-active: #0aad0a;
+$admin-crud-mode-button-fcolor: #fff;
+$admin-crud-mode-button-fcolor-active: #fff;
 $admin-crud-mode-button-bgcolor-hover: #f00cbb;
 $admin-crud-mode-button-fcolor-hover: #f00cbb;
 //== admin panel
