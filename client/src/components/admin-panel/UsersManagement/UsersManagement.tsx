@@ -6,7 +6,9 @@ import {
    getUsers,
    UserObject,
    DeleteUserRequestObject,
-   deleteUserAsync
+   deleteUserAsync,
+   UpdateUserRequestObject,
+   updateUserAsync
 } from "../../../app/userSlice";
 import { getAdminEditingType } from "../../../app/shopSlice";
 import { getToken } from "../../../app/userSlice";
@@ -24,23 +26,31 @@ export const UsersManagement: FC = () => {
    const adminEditingType: string = useAppSelector(getAdminEditingType)
    const currentLanguage: string = useAppSelector(getCurrentLanguage)
    const [nickname, setNickname]: any = useState("")
+   const [role, setRole]: any = useState("")
    const [userId, setUserId]: any = useState(null)
    const [updatingMode, setUpdatingMode]: any = useState(false)
    const [nicknameInputDefaultValue, setNicknameInputDefaultValue]: any = useState("")
+   const [roleSelectDefaultValue, setRoleSelectDefaultValue]: any = useState("")
 
    const nicknameHandler = (event: any) => {
       setNickname(event.target.value)
    }
 
-   const updatingModeHandler = (id: number, nickname: string) => {
+   const roleHandler = (event: any) => {
+      setRole(event.target.value)
+   }
+
+   const updatingModeHandler = (id: number, nickname: string, role: string) => {
       if (updatingMode && (userId === String(id))) {
          setUpdatingMode(false)
          setUserId(null)
          nicknameInput.current.value = ""
+         setRoleSelectDefaultValue("")
       } else {
          if (nicknameInput.current) {
             nicknameInput.current.value = nickname
          }
+         setRoleSelectDefaultValue(role)
          setNicknameInputDefaultValue(nickname)
          setUpdatingMode(true)
          setUserId(String(id))
@@ -51,6 +61,17 @@ export const UsersManagement: FC = () => {
       setUpdatingMode(false)
       setUserId(null)
       setNicknameInputDefaultValue("")
+   }
+
+   const userUpdate = (event: any) => {
+      event.preventDefault()
+      if (!nicknameInput.current.value || !role) return
+      const data: UpdateUserRequestObject = {
+         data: { nickname: nickname, lang: currentLanguage, role: role },
+         token: token,
+         userId: userId
+      }
+      dispatch(updateUserAsync(data))
    }
 
    const userDelete = (id: number) => {
@@ -87,6 +108,56 @@ export const UsersManagement: FC = () => {
                </div>
             })}
          </div>}
+
+      {adminEditingType === "update" &&
+         <>
+            {updatingMode && <form className="user-management-form" onSubmit={userUpdate}>
+               <input
+                  type="text"
+                  placeholder={currentLanguage === "ru" ? "Введите новый никнейм" : "Enter a new nickname"}
+                  autoFocus
+                  defaultValue={nicknameInputDefaultValue}
+                  onChange={nicknameHandler}
+                  ref={nicknameInput} />
+
+               <select
+                  title={currentLanguage === "ru" ? "Выберите новую роль" : "Select a new role"}
+                  defaultValue={roleSelectDefaultValue}
+                  onChange={roleHandler}>
+                  <option value="ADMIN">ADMIN</option>
+                  <option value="MODER">MODER</option>
+                  <option value="USER">USER</option>
+               </select>
+
+               <div className="buttons">
+                  <button type="submit" className="change-button">{currentLanguage === "ru"
+                     ? "Изменить" : "Change"}</button>
+                  <button type="reset" className="reset-button">{currentLanguage === "ru"
+                     ? "Очистить" : "Clear"}</button>
+                  <button type="button" className="close-button" onClick={updatingModeOff}>&times;</button>
+               </div>
+            </form>
+            }
+
+            <div className="management-items-wrapper">
+               {[...allUsers].sort(sortUsersMethod).map((user: UserObject) => {
+                  return <div className="management-item" key={user.id}>
+                     <span className="user-nickname-span">{user.nickname}</span>
+                     <span className="user-email-span">{user.email}</span>
+                     <span className="user-role-span">{user.role}</span>
+                     <button type="button"
+                        className={userId === String(user.id) ? "update-button active" : "update-button"}
+                        onClick={() => updatingModeHandler(user.id, user.nickname, user.role)}>
+                        {userId === String(user.id)
+                           ? "..."
+                           : currentLanguage === "ru"
+                              ? "изменить"
+                              : "change"}
+                     </button>
+                  </div>
+               })}
+            </div>
+         </>}
 
       {adminEditingType === "delete" &&
          <div className="management-items-wrapper">
