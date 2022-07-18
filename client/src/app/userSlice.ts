@@ -1,6 +1,12 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { authorization, checkAuthorization, getAllUsers, deleteUser } from "./userAPI"
+import {
+   authorization,
+   checkAuthorization,
+   getAllUsers,
+   deleteUser,
+   updateUser
+} from "./userAPI"
 import jwtDecode from "jwt-decode"
 
 export interface UserObject {
@@ -77,6 +83,21 @@ export const checkAuthorizationAsync = createAsyncThunk(
       } else {
          return result
       }
+   }
+)
+
+export interface UpdateUserRequestObject {
+   token: string,
+   data: { nickname: string, lang: string, role: string },
+   userId: string
+}
+
+export const updateUserAsync = createAsyncThunk(
+   "user/update",
+   async (body: UpdateUserRequestObject) => {
+      const url = `/api/user/${body.userId}`
+      const response: any = await updateUser(url, JSON.stringify(body.data), body.token)
+      return await response.json()
    }
 )
 
@@ -265,6 +286,20 @@ export const userSlice = createSlice({
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
          // get users
+
+         // update user
+         .addCase(updateUserAsync.pending, (state) => {
+            state.authStatus = "loading"
+         })
+         .addCase(updateUserAsync.fulfilled, (state, action) => {
+            state.authStatus = "idle"
+            state.users = action.payload
+         })
+         .addCase(updateUserAsync.rejected, (state, action) => {
+            state.authStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+         // update user
 
          // delete user
          .addCase(deleteUserAsync.pending, (state) => {

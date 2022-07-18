@@ -197,6 +197,28 @@ class UserController {
     }
   }
 
+  async update(request, response) {
+    try {
+      const { id } = request.params;
+      const { lang, nickname, role } = request.body;
+      const updatedUser = await User.findOne({ where: { id: id } });
+      if (updatedUser) {
+        await updatedUser.update({ nickname: nickname, role: role });
+        const allUsers = await User.findAll();
+        return response.json(allUsers);
+      } else {
+        return response.status(204).json({
+          message:
+            lang === "ru"
+              ? "Указанный пользователь не найден"
+              : "The specified user was not found",
+        });
+      }
+    } catch (exception) {
+      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
+    }
+  }
+
   async delete(request, response) {
     try {
       const { id } = request.params;

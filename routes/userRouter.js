@@ -9,6 +9,7 @@ router.get("/authcheck", checkAuthMiddleware, userController.authCheck);
 router.get("/", checkRoleMiddleware("ADMIN"), userController.getAll);
 router.post("/registration", userController.registration);
 router.post("/login", userController.login);
+router.put("/:id", checkRoleMiddleware("ADMIN"), userController.update);
 router.delete(
   "/:id/delete",
   checkRoleMiddleware("ADMIN"),
