@@ -99,7 +99,7 @@ export const BrandsManagement: FC = () => {
       dispatch(getBrandsAsync())
    }, [adminEditingType])
    return <div className="brands-management-wrapper">
-      <CRUDModeSwitcher />
+      <CRUDModeSwitcher type="othermanagement" />
 
       {adminEditingType === "read" &&
          <div className="management-items-wrapper">

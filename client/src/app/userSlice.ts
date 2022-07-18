@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { authorization, checkAuthorization, getAllUsers } from "./userAPI"
+import { authorization, checkAuthorization, getAllUsers, deleteUser } from "./userAPI"
 import jwtDecode from "jwt-decode"
 
-export interface User {
+export interface UserObject {
    id: number,
    email: string,
    password: string,
-   nickname: string
+   nickname: string,
+   role: string
 }
 
 interface UserState {
@@ -19,7 +20,7 @@ interface UserState {
    isStayLoggedIn: boolean,
    registrationEmail: string,
    authMessage: string,
-   users: User[],
+   users: UserObject[],
    authStatus: "idle" | "loading" | "failed"
 }
 
@@ -79,8 +80,23 @@ export const checkAuthorizationAsync = createAsyncThunk(
    }
 )
 
+export interface DeleteUserRequestObject {
+   id: string,
+   token: string,
+   lang: string
+}
+
+export const deleteUserAsync = createAsyncThunk(
+   "user/delete",
+   async (data: DeleteUserRequestObject) => {
+      const url = `/api/user/${data.id}/delete?${data.lang}`
+      const response: any = await deleteUser(url, data.token)
+      return await response.json()
+   }
+)
+
 export const getAllUsersAsync = createAsyncThunk(
-   "user/get",
+   "user/getall",
    async (token: string) => {
       const url = `/api/user`
       const response: any = await getAllUsers(url, token)
@@ -248,7 +264,21 @@ export const userSlice = createSlice({
             state.authStatus = "failed"
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
-      // get users
+         // get users
+
+         // delete user
+         .addCase(deleteUserAsync.pending, (state) => {
+            state.authStatus = "loading"
+         })
+         .addCase(deleteUserAsync.fulfilled, (state, action) => {
+            state.authStatus = "idle"
+            state.users = action.payload
+         })
+         .addCase(deleteUserAsync.rejected, (state, action) => {
+            state.authStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+      // delete user
    }
 })
 

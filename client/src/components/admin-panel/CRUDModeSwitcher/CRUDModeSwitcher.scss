@@ -39,6 +39,14 @@
     &:nth-child(3) {
       border-right: 2px solid #ccc;
     }
+
+    &.usermanagement {
+      width: 33.3333%;
+
+      &:nth-child(3) {
+        border-right: none;
+      }
+    }
   }
 }
 

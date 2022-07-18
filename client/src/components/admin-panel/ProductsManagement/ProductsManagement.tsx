@@ -5,6 +5,6 @@ import "./ProductsManagement.scss"
 
 export const ProductsManagement: FC = () => {
    return <div className="products-management-wrapper">
-      <CRUDModeSwitcher />
+      <CRUDModeSwitcher type="othermanagement" />
    </div>
 }

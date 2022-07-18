@@ -6,7 +6,11 @@ import { getCurrentLanguage } from "../../../app/globalSlice";
 import { setAdminEditingType, getAdminEditingType } from "../../../app/shopSlice";
 import "./CRUDModeSwitcher.scss"
 
-export const CRUDModeSwitcher: FC = () => {
+interface Props {
+   type: string
+}
+
+export const CRUDModeSwitcher: FC<Props> = ({ type }) => {
    const dispatch = useAppDispatch()
 
    const adminEditingType: string = useAppSelector(getAdminEditingType)
@@ -30,7 +34,13 @@ export const CRUDModeSwitcher: FC = () => {
    }
 
    return <div className="crud-mode-switcher-wrapper">
-      <div className={adminEditingType === "read" ? "crud-mode-button active" : "crud-mode-button"}
+      <div className={adminEditingType === "read"
+         ? type === "usermanagement"
+            ? "crud-mode-button active usermanagement"
+            : "crud-mode-button active"
+         : type === "usermanagement"
+            ? "crud-mode-button usermanagement"
+            : "crud-mode-button"}
          onClick={setAdminEditingTypeRead}>
          <span className="crud-mode-span">
             {adminEditingType === "read" && productStatus === "loading"
@@ -40,7 +50,8 @@ export const CRUDModeSwitcher: FC = () => {
                   : "View"}
          </span>
       </div>
-      <div className={adminEditingType === "create" ? "crud-mode-button active" : "crud-mode-button"}
+
+      {type !== "usermanagement" && <div className={adminEditingType === "create" ? "crud-mode-button active" : "crud-mode-button"}
          onClick={setAdminEditingTypeCreate}>
          <span className="crud-mode-span">
             {adminEditingType === "create" && productStatus === "loading"
@@ -49,8 +60,15 @@ export const CRUDModeSwitcher: FC = () => {
                   ? "Добавить"
                   : "Add"}
          </span>
-      </div>
-      <div className={adminEditingType === "update" ? "crud-mode-button active" : "crud-mode-button"}
+      </div>}
+
+      <div className={adminEditingType === "update"
+         ? type === "usermanagement"
+            ? "crud-mode-button active usermanagement"
+            : "crud-mode-button active"
+         : type === "usermanagement"
+            ? "crud-mode-button usermanagement"
+            : "crud-mode-button"}
          onClick={setAdminEditingTypeUpdate}>
          <span className="crud-mode-span">
             {adminEditingType === "update" && productStatus === "loading"
@@ -60,7 +78,14 @@ export const CRUDModeSwitcher: FC = () => {
                   : "Edit"}
          </span>
       </div>
-      <div className={adminEditingType === "delete" ? "crud-mode-button active" : "crud-mode-button"}
+
+      <div className={adminEditingType === "delete"
+         ? type === "usermanagement"
+            ? "crud-mode-button active usermanagement"
+            : "crud-mode-button active"
+         : type === "usermanagement"
+            ? "crud-mode-button usermanagement"
+            : "crud-mode-button"}
          onClick={setAdminEditingTypeDelete}>
          <span className="crud-mode-span">
             {adminEditingType === "delete" && productStatus === "loading"
