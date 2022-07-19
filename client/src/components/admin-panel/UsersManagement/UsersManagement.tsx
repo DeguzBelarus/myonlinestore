@@ -58,6 +58,8 @@ export const UsersManagement: FC = () => {
          }
          setRoleSelectDefaultValue(role)
          setNicknameInputDefaultValue(nickname)
+         setNickname(nickname)
+         setRole(role)
          setUpdatingMode(true)
          setUserId(String(id))
       }
@@ -73,7 +75,6 @@ export const UsersManagement: FC = () => {
       event.preventDefault()
       const newNickname = nicknameInput.current.value
       const newRole = roleSelect.current.value
-      console.log(newNickname, newRole, nickname, role);
       if (!nickname || !role) return
       if (nickname === nicknameInputDefaultValue && role === roleSelectDefaultValue) return
 

@@ -45,6 +45,7 @@ export const BrandsManagement: FC = () => {
             brandNameInput.current.value = name
          }
          setBrandNameInputDefaultValue(name)
+         setBrandName(name)
          setUpdatingMode(true)
          setBrandId(String(id))
       }

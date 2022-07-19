@@ -45,6 +45,7 @@ export const TypesManagement: FC = () => {
             typeNameInput.current.value = name
          }
          setTypeNameInputDefaultValue(name)
+         setTypeName(name)
          setUpdatingMode(true)
          setTypeId(String(id))
       }
