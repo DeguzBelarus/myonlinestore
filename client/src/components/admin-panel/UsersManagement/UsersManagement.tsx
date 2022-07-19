@@ -18,6 +18,7 @@ import "./UsersManagement.scss"
 
 export const UsersManagement: FC = () => {
    const nicknameInput: any = useRef(null)
+   const roleSelect: any = useRef(null)
 
    const dispatch = useAppDispatch()
 
@@ -34,10 +35,12 @@ export const UsersManagement: FC = () => {
 
    const nicknameHandler = (event: any) => {
       setNickname(event.target.value)
+      setRole(roleSelect.current.value)
    }
 
    const roleHandler = (event: any) => {
       setRole(event.target.value)
+      setNickname(nicknameInput.current.value)
    }
 
    const updatingModeHandler = (id: number, nickname: string, role: string) => {
@@ -49,6 +52,9 @@ export const UsersManagement: FC = () => {
       } else {
          if (nicknameInput.current) {
             nicknameInput.current.value = nickname
+         }
+         if (roleSelect.current) {
+            roleSelect.current.value = role
          }
          setRoleSelectDefaultValue(role)
          setNicknameInputDefaultValue(nickname)
@@ -65,13 +71,20 @@ export const UsersManagement: FC = () => {
 
    const userUpdate = (event: any) => {
       event.preventDefault()
-      if (!nicknameInput.current.value || !role) return
+      const newNickname = nicknameInput.current.value
+      const newRole = roleSelect.current.value
+      console.log(newNickname, newRole, nickname, role);
+      if (!nickname || !role) return
+      if (nickname === nicknameInputDefaultValue && role === roleSelectDefaultValue) return
+
       const data: UpdateUserRequestObject = {
          data: { nickname: nickname, lang: currentLanguage, role: role },
          token: token,
          userId: userId
       }
       dispatch(updateUserAsync(data))
+      setNicknameInputDefaultValue(nickname)
+      setRoleSelectDefaultValue(role)
    }
 
    const userDelete = (id: number) => {
@@ -123,7 +136,8 @@ export const UsersManagement: FC = () => {
                <select
                   title={currentLanguage === "ru" ? "Выберите новую роль" : "Select a new role"}
                   defaultValue={roleSelectDefaultValue}
-                  onChange={roleHandler}>
+                  onChange={roleHandler}
+                  ref={roleSelect}>
                   <option value="ADMIN">ADMIN</option>
                   <option value="MODER">MODER</option>
                   <option value="USER">USER</option>

@@ -59,7 +59,7 @@ export const TypesManagement: FC = () => {
    const productsTypeAdd = (event: any) => {
       event.preventDefault()
       const newTypeName = typeNameInput.current.value
-      if (!newTypeName) return
+      if (!typeName || !newTypeName) return
       if (productsTypes.some((type) => type.name === newTypeName)) return
 
       typeNameInput.current.value = ""
@@ -68,7 +68,10 @@ export const TypesManagement: FC = () => {
 
    const productsTypeUpdate = (event: any) => {
       event.preventDefault()
-      if (!typeNameInput.current.value) return
+      const newTypeName = typeNameInput.current.value
+      if (!typeName || !newTypeName) return
+      if (productsTypes.some((type) => type.name === newTypeName)) return
+
       const data: UpdateTypeRequestObject = {
          data: { name: typeName, lang: currentLanguage },
          token: token,

@@ -59,7 +59,7 @@ export const BrandsManagement: FC = () => {
    const productsBrandAdd = (event: any) => {
       event.preventDefault()
       const newBrandName = brandNameInput.current.value
-      if (!newBrandName) return
+      if (!newBrandName || !newBrandName) return
       if (productsBrands.some((brand) => brand.name === newBrandName)) return
 
       brandNameInput.current.value = ""
@@ -68,7 +68,10 @@ export const BrandsManagement: FC = () => {
 
    const productsBrandUpdate = (event: any) => {
       event.preventDefault()
-      if (!brandNameInput.current.value) return
+      const newBrandName = brandNameInput.current.value
+      if (!brandName || !newBrandName) return
+      if (productsBrands.some((brand) => brand.name === newBrandName)) return
+
       const data: UpdateBrandRequestObject = {
          data: { name: brandName, lang: currentLanguage },
          token: token,
