@@ -97,8 +97,8 @@
 
     .management-item {
       width: 100%;
-      height: $default-font-size * 1.35 * 3 + px;
-      min-height: $default-font-size * 1.35 * 3 + px;
+      height: $default-font-size * 1.4 * 3 + px;
+      min-height: $default-font-size * 1.4 * 3 + px;
       @include flex-column-all-center;
       position: relative;
       background: rgba($color: #000, $alpha: 0.1);
