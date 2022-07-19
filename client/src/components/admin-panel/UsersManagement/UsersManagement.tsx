@@ -11,7 +11,7 @@ import {
    updateUserAsync
 } from "../../../app/userSlice";
 import { getAdminEditingType } from "../../../app/shopSlice";
-import { getToken } from "../../../app/userSlice";
+import { getToken, getUserRole } from "../../../app/userSlice";
 import { getCurrentLanguage } from "../../../app/globalSlice";
 import { CRUDModeSwitcher } from "../CRUDModeSwitcher/CRUDModeSwitcher";
 import "./UsersManagement.scss"
@@ -24,6 +24,7 @@ export const UsersManagement: FC = () => {
 
    const allUsers: UserObject[] = useAppSelector(getUsers)
    const token: string | null = useAppSelector(getToken)
+   const userRole: string = useAppSelector(getUserRole)
    const adminEditingType: string = useAppSelector(getAdminEditingType)
    const currentLanguage: string = useAppSelector(getCurrentLanguage)
    const [nickname, setNickname]: any = useState("")
@@ -139,8 +140,8 @@ export const UsersManagement: FC = () => {
                   defaultValue={roleSelectDefaultValue}
                   onChange={roleHandler}
                   ref={roleSelect}>
+                  {userRole === "CREATOR" && <option value="CREATOR">CREATOR</option>}
                   <option value="ADMIN">ADMIN</option>
-                  <option value="MODER">MODER</option>
                   <option value="USER">USER</option>
                </select>
 
