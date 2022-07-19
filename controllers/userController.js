@@ -201,6 +201,13 @@ class UserController {
     try {
       const { id } = request.params;
       const { lang, nickname, role } = request.body;
+      const requestUserRole = request.user.role;
+      if (requestUserRole !== "CREATOR" && role === "CREATOR") {
+        return response.status(403).json({
+          message: lang === "ru" ? "Нет прав" : "No rights",
+        });
+      }
+
       const updatedUser = await User.findOne({ where: { id: id } });
       if (updatedUser) {
         await updatedUser.update({ nickname: nickname, role: role });
@@ -225,6 +232,13 @@ class UserController {
       const { lang } = request.query;
       const deletedUser = await User.destroy({ where: { id: id } });
       if (deletedUser) {
+        const requestUserRole = request.user.role;
+        if (requestUserRole !== "CREATOR" && deletedUser.role === "CREATOR") {
+          return response.status(403).json({
+            message: lang === "ru" ? "Нет прав" : "No rights",
+          });
+        }
+
         const allUsers = await User.findAll();
         return response.json(allUsers);
       } else {

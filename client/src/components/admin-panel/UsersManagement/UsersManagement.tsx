@@ -161,15 +161,17 @@ export const UsersManagement: FC = () => {
                      <span className="user-nickname-span">{user.nickname}</span>
                      <span className="user-email-span">{user.email}</span>
                      <span className="user-role-span">{user.role}</span>
-                     <button type="button"
-                        className={userId === String(user.id) ? "update-button active" : "update-button"}
-                        onClick={() => updatingModeHandler(user.id, user.nickname, user.role)}>
-                        {userId === String(user.id)
-                           ? "..."
-                           : currentLanguage === "ru"
-                              ? "изменить"
-                              : "change"}
-                     </button>
+                     {userRole === "CREATOR" || user.role !== "CREATOR"
+                        ? <button type="button"
+                           className={userId === String(user.id) ? "update-button active" : "update-button"}
+                           onClick={() => updatingModeHandler(user.id, user.nickname, user.role)}>
+                           {userId === String(user.id)
+                              ? "..."
+                              : currentLanguage === "ru"
+                                 ? "изменить"
+                                 : "change"}
+                        </button>
+                        : <span className="norules-icon">&#128274;</span>}
                   </div>
                })}
             </div>
@@ -182,10 +184,12 @@ export const UsersManagement: FC = () => {
                   <span className="user-nickname-span">{user.nickname}</span>
                   <span className="user-email-span">{user.email}</span>
                   <span className="user-role-span">{user.role}</span>
-                  <button type="button" className="delete-button" onClick={() => userDelete(user.id)}>
-                     {currentLanguage === "ru"
-                        ? "удалить" : "delete"}
-                  </button>
+                  {userRole === "CREATOR" || user.role !== "CREATOR"
+                     ? <button type="button" className="delete-button" onClick={() => userDelete(user.id)}>
+                        {currentLanguage === "ru"
+                           ? "удалить" : "delete"}
+                     </button>
+                     : <span className="norules-icon">&#128274;</span>}
                </div>
             })}
          </div>}

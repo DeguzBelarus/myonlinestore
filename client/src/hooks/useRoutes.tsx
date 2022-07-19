@@ -13,7 +13,7 @@ export const useRoutes = () => {
    const role: string = useAppSelector(getUserRole)
 
    if (isAuth) {
-      if (role === "ADMIN") {
+      if (role === "ADMIN" || role === "CREATOR") {
          return <Routes>
             <Route path="admin">
                <Route path="/admin" element={<AdminPanelPage type="general" />}></Route>

@@ -33,7 +33,7 @@ export const RegistrationForm: FC<Props> = ({ isAuth, previousRoute }) => {
       lang: currentLanguage,
       nickname: "",
       role: registrationEmail === process.env.REACT_APP_SECRET_USER_EMAIL
-         ? "ADMIN"
+         ? "CREATOR"
          : "USER"
    })
 

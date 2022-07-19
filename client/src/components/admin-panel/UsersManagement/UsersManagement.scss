@@ -177,6 +177,12 @@
           background-color: rgba($color: red, $alpha: 0.5);
         }
       }
+
+      .norules-icon {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+      }
     }
   }
 }

@@ -6,13 +6,17 @@ const checkAuthMiddleware = require("../middleware/checkAuthMiddleware");
 const checkRoleMiddleware = require("../middleware/checkRoleMiddleware");
 
 router.get("/authcheck", checkAuthMiddleware, userController.authCheck);
-router.get("/", checkRoleMiddleware("ADMIN"), userController.getAll);
+router.get("/", checkRoleMiddleware("ADMIN", "CREATOR"), userController.getAll);
 router.post("/registration", userController.registration);
 router.post("/login", userController.login);
-router.put("/:id", checkRoleMiddleware("ADMIN"), userController.update);
+router.put(
+  "/:id",
+  checkRoleMiddleware("ADMIN", "CREATOR"),
+  userController.update
+);
 router.delete(
   "/:id/delete",
-  checkRoleMiddleware("ADMIN"),
+  checkRoleMiddleware("ADMIN", "CREATOR"),
   userController.delete
 );
 

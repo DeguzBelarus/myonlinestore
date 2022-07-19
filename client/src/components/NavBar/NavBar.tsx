@@ -107,7 +107,7 @@ export const NavBar: FC = () => {
                      onClick={loginPageEnter}
                   >{currentLanguage === "ru" ? "Авторизация" : "Authorization"}</button>}
             </>
-            : userRole === "ADMIN"
+            : userRole === "ADMIN" || userRole === "CREATOR"
                ? <>
                   <LanguageSwitcher />
                   {!adminPanelPageIsActive &&

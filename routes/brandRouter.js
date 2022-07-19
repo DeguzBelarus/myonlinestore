@@ -5,11 +5,19 @@ const brandController = require("../controllers/brandController");
 const checkRoleMiddleware = require("../middleware/checkRoleMiddleware");
 
 router.get("/", brandController.getAll);
-router.post("/add", checkRoleMiddleware("ADMIN"), brandController.create);
-router.put("/:id", checkRoleMiddleware("ADMIN"), brandController.update);
+router.post(
+  "/add",
+  checkRoleMiddleware("ADMIN", "CREATOR"),
+  brandController.create
+);
+router.put(
+  "/:id",
+  checkRoleMiddleware("ADMIN", "CREATOR"),
+  brandController.update
+);
 router.delete(
   "/:id/delete",
-  checkRoleMiddleware("ADMIN"),
+  checkRoleMiddleware("ADMIN", "CREATOR"),
   brandController.delete
 );
 

@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = function (role) {
+module.exports = function (roleAdmin, roleCreator) {
   return function (request, response, next) {
     if (request.method === "OPTIONS") {
       next();
@@ -16,8 +16,7 @@ module.exports = function (role) {
         if (error) {
           return response.status(401).json({ message: error.message });
         }
-
-        if (decoded.role !== role) {
+        if (decoded.role !== roleAdmin && decoded.role !== roleCreator) {
           return response.status(403).json({ message: "Forbidden" });
         }
 
