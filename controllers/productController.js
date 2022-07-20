@@ -44,7 +44,7 @@ class ProductController {
       const { brandId, typeId, limit, page } = request.query;
 
       page = page || 1;
-      limit = limit || 12;
+      limit = limit || 20;
       const offSet = page * limit - limit;
 
       let allProducts;
