@@ -1,7 +1,6 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useAppDispatch } from "../../app/hooks";
 
-import { setAdminPanelPageIsActive } from "../../app/shopSlice";
 import { AdminPanelActions } from "../../components/admin-panel/AdminPanelActions/AdminPanelActions";
 import { BrandsManagement } from "../../components/admin-panel/BrandsManagement/BrandsManagement";
 import { ProductsManagement } from "../../components/admin-panel/ProductsManagement/ProductsManagement";
@@ -15,14 +14,6 @@ interface Props {
 
 export const AdminPanelPage: FC<Props> = ({ type }) => {
    const dispatch = useAppDispatch()
-
-   useEffect(() => {
-      dispatch(setAdminPanelPageIsActive(true))
-
-      return () => {
-         dispatch(setAdminPanelPageIsActive(false))
-      }
-   }, [])
    return <div className="admin-panel-wrapper">
       {type === "general" && <AdminPanelActions />}
       {type === "types" && <TypesManagement />}

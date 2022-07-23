@@ -41,8 +41,7 @@ class ProductController {
 
   async getAll(request, response) {
     try {
-      const { brandId, typeId, limit, page } = request.query;
-
+      let { brandId, typeId, limit, page } = request.query;
       page = page || 1;
       limit = limit || 20;
       const offSet = page * limit - limit;

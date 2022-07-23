@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 
 import { getCurrentLanguage } from "../../../app/globalSlice";
-import { setAdminEditingType } from "../../../app/shopSlice";
+import { setAdminEditingType, setAdminPanelPageIsActive } from "../../../app/shopSlice";
 import "./AdminPanelActions.scss"
 
 export const AdminPanelActions: FC = () => {
@@ -30,6 +30,11 @@ export const AdminPanelActions: FC = () => {
 
    useEffect(() => {
       dispatch(setAdminEditingType("read"))
+      dispatch(setAdminPanelPageIsActive(true))
+
+      return () => {
+         dispatch(setAdminPanelPageIsActive(false))
+      }
    }, [])
 
    return <div className="actions-wrapper">

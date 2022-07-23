@@ -21,7 +21,7 @@ export interface CurrentProduct {
    poster: string,
    typeId: number,
    brandId: number,
-   description: {}[]
+   description?: {}[]
 }
 
 export interface TypeOrBrandObject {
@@ -32,7 +32,7 @@ export interface TypeOrBrandObject {
 interface ProductState {
    types: TypeOrBrandObject[],
    brands: TypeOrBrandObject[],
-   products: {}[],
+   products: CurrentProduct[],
    currentProduct: CurrentProduct,
    totalProducts: number | null,
    productStatus: "idle" | "loading" | "failed"
