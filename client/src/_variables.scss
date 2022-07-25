@@ -44,6 +44,10 @@ $admin-crud-mode-button-fcolor-hover: #f00cbb;
 $admin-management-item-nickname-span-fcolor: #f00cbb;
 $admin-management-item-email-span-fcolor: #000;
 $admin-management-item-role-span-fcolor: #0aad0a;
+$admin-management-item-productname-span-fcolor: #f00cbb;
+$admin-management-item-productbrand-span-fcolor: #0aad0a;
+$admin-management-item-producttype-span-fcolor: #000;
+$admin-management-item-productprice-span-fcolor: #f00cbb;
 //== admin panel
 //== colors
 
@@ -95,12 +99,13 @@ $admin-types-management-default-height: 300;
 $admin-brands-management-default-width: 300;
 $admin-brands-management-default-height: 300;
 $admin-products-management-default-width: 300;
-$admin-products-management-default-height: 300;
+$admin-products-management-default-height: 500;
 $admin-users-management-default-width: 300;
 $admin-users-management-default-height: 300;
 $admin-crud-mode-switcher-default-height: 40;
 $admin-management-form-default-height: 75;
 $admin-users-management-form-default-height: 100;
+$admin-products-management-form-default-height: 250;
 $admin-management-form-paddings: 5px 0;
 $admin-management-inputs-default-height: 28;
 $admin-management-buttons-paddings: 2px 10px;
@@ -108,6 +113,8 @@ $admin-management-buttons-default-width: 85;
 $admin-management-close-button-default-width: 30;
 $admin-management-update-button-default-width: 75;
 $admin-management-delete-button-default-width: 65;
+$admin-management-addProperty-button-default-width: 155;
+$admin-management-removeProperty-button-default-width: 20;
 //== admin panel
 //== sizes
 // variables

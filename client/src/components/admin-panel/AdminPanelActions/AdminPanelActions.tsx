@@ -2,6 +2,7 @@ import { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 
+import { getTypesAsync, getBrandsAsync } from "../../../app/productSlice";
 import { getCurrentLanguage } from "../../../app/globalSlice";
 import { setAdminEditingType, setAdminPanelPageIsActive } from "../../../app/shopSlice";
 import "./AdminPanelActions.scss"
@@ -31,6 +32,9 @@ export const AdminPanelActions: FC = () => {
    useEffect(() => {
       dispatch(setAdminEditingType("read"))
       dispatch(setAdminPanelPageIsActive(true))
+
+      dispatch(getTypesAsync())
+      dispatch(getBrandsAsync())
 
       return () => {
          dispatch(setAdminPanelPageIsActive(false))

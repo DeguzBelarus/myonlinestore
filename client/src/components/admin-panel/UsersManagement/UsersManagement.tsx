@@ -171,7 +171,7 @@ export const UsersManagement: FC = () => {
                                  ? "изменить"
                                  : "change"}
                         </button>
-                        : <span className="norules-icon">&#128274;</span>}
+                        : <span className="norights-icon">&#128274;</span>}
                   </div>
                })}
             </div>
@@ -189,7 +189,7 @@ export const UsersManagement: FC = () => {
                         {currentLanguage === "ru"
                            ? "удалить" : "delete"}
                      </button>
-                     : <span className="norules-icon">&#128274;</span>}
+                     : <span className="norights-icon">&#128274;</span>}
                </div>
             })}
          </div>}

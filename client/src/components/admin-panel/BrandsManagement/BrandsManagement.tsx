@@ -117,7 +117,7 @@ export const BrandsManagement: FC = () => {
             <form className="brand-management-form" onSubmit={productsBrandAdd}>
                <input
                   type="text"
-                  placeholder={currentLanguage === "ru" ? "Введите новое имя бренда" : "Enter new brand name"}
+                  placeholder={currentLanguage === "ru" ? "Введите новое название бренда" : "Enter a new brand name"}
                   autoFocus
                   onChange={brandNameHandler}
                   ref={brandNameInput} />
@@ -142,7 +142,7 @@ export const BrandsManagement: FC = () => {
             {updatingMode && <form className="brand-management-form" onSubmit={productsBrandUpdate}>
                <input
                   type="text"
-                  placeholder={currentLanguage === "ru" ? "Введите новое имя бренда" : "Enter new brand name"}
+                  placeholder={currentLanguage === "ru" ? "Введите новое название бренда" : "Enter a new brand name"}
                   autoFocus
                   defaultValue={brandNameInputDefaultValue}
                   onChange={brandNameHandler}

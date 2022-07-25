@@ -13,15 +13,21 @@ import {
    updateBrand
 } from "./productAPI"
 
-export interface CurrentProduct {
+export interface ProductDescriptionObject {
    id: number,
+   title: string,
+   description: string
+}
+
+export interface CurrentProduct {
+   id?: number,
    name: string,
    price: number,
    rating: number,
    poster: string,
-   typeId: number,
-   brandId: number,
-   description?: {}[]
+   productTypeId: number,
+   productBrandId: number,
+   description: ProductDescriptionObject[]
 }
 
 export interface TypeOrBrandObject {
@@ -43,7 +49,7 @@ const initialState = {
    brands: [],
    products: [],
    currentProduct: {
-      id: 0, name: "", price: 0, rating: 0, poster: "", typeId: 0, brandId: 0, description: []
+      id: 0, name: "", price: 0, rating: 0, poster: "", productTypeId: 0, productBrandId: 0, description: []
    },
    totalProducts: null,
    productStatus: "idle"
