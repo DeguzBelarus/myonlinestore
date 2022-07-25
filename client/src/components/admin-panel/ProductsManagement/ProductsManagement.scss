@@ -202,8 +202,8 @@
 
     .management-item {
       width: 100%;
-      height: $default-font-size * 1.4 * 4 + px;
-      min-height: $default-font-size * 1.4 * 4 + px;
+      height: $default-font-size * 1.35 * 4 + px;
+      min-height: $default-font-size * 1.35 * 4 + px;
       @include flex-column-all-center;
       position: relative;
       background: rgba($color: #000, $alpha: 0.1);
@@ -215,6 +215,13 @@
 
       &:nth-of-type(even) {
         background: #fff;
+      }
+
+      .product-poster {
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
       }
 
       span {

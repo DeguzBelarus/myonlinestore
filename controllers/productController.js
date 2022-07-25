@@ -11,7 +11,17 @@ class ProductController {
         request.body;
       const { poster } = request.files;
       const fileName = uuid.v4() + ".jpg";
-      poster.mv(path.resolve(__dirname, "..", "static", fileName));
+      poster.mv(
+        path.resolve(
+          __dirname,
+          "..",
+          "static",
+          `${productTypeId}`,
+          `${productBrandId}`,
+          `${name}`,
+          fileName
+        )
+      );
 
       const newProduct = await Product.create({
         name,

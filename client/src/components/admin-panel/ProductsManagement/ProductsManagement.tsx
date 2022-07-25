@@ -190,6 +190,7 @@ export const ProductsManagement: FC = () => {
                      {`${productsTypes[productsTypes.findIndex((type: TypeOrBrandObject) => type.id === product.productTypeId)].name}`}
                   </span>
                   <span className="product-price-span">{product.price}</span>
+                  <img className="product-poster" src={`/${product.productTypeId}/${product.productBrandId}/${product.name}/${product.poster}`} alt="a product preview" />
                </div>
             })}
          </div>}
