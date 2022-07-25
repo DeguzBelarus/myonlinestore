@@ -59,6 +59,12 @@
           content: "Добавить постер";
         }
       }
+
+      &:focus {
+        &::after {
+          font-weight: bold;
+        }
+      }
     }
 
     select {
@@ -66,6 +72,11 @@
       height: $admin-management-inputs-default-height + px;
       padding-left: 2px;
       border: 2px solid $admin-action-management-bcolor;
+
+      &:focus {
+        outline: none;
+        font-weight: bold;
+      }
     }
 
     .buttons {
