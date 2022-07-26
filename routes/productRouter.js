@@ -11,5 +11,10 @@ router.post(
   checkRoleMiddleware("ADMIN", "CREATOR"),
   productController.create
 );
+router.delete(
+  "/:id/delete",
+  checkRoleMiddleware("ADMIN", "CREATOR"),
+  productController.delete
+);
 
 module.exports = router;

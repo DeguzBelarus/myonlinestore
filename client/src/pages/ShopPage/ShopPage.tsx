@@ -25,8 +25,6 @@ export const ShopPage: FC = () => {
          dispatch(setCurrentLanguage("en"))
       }
 
-      document.title = currentLanguage === "ru" ? "MyOnlineStore: Главная страница" : "MyOnlineStore: Main page"
-      document.documentElement.lang = currentLanguage === "ru" ? "ru" : "en"
       return () => {
          dispatch(setShopPageIsActive(false))
          dispatch(setSelectionMode(false))

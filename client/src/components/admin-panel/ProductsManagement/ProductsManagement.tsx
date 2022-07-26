@@ -1,5 +1,6 @@
 import { FC, useEffect, useState, useRef } from "react";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
+import { Link } from "react-router-dom";
 
 import {
    getProductsAsync,
@@ -190,7 +191,10 @@ export const ProductsManagement: FC = () => {
                      {`${productsTypes[productsTypes.findIndex((type: TypeOrBrandObject) => type.id === product.productTypeId)].name}`}
                   </span>
                   <span className="product-price-span">{product.price}</span>
-                  <img className="product-poster" src={`/${product.productTypeId}/${product.productBrandId}/${product.name}/${product.poster}`} alt="a product preview" />
+                  <img
+                     className="product-poster"
+                     src={`/${product.productTypeId}/${product.productBrandId}/${product.name}/${product.poster}`}
+                     alt="a product preview" />
                </div>
             })}
          </div>}
@@ -286,5 +290,29 @@ export const ProductsManagement: FC = () => {
                })}
             </div>
          </>}
+
+      {adminEditingType === "delete" &&
+         <div className="management-items-wrapper">
+            {[...allProducts].sort(sortProductsMethod).map((product: CurrentProduct) => {
+               return <div className="management-item" key={product.id}>
+                  <span className="product-name-span">{product.name}</span>
+                  <span className="product-brand-span">
+                     {`${productsBrands[productsBrands.findIndex((brand: TypeOrBrandObject) => brand.id === product.productBrandId)].name}`}
+                  </span>
+                  <span className="product-type-span">
+                     {`${productsTypes[productsTypes.findIndex((type: TypeOrBrandObject) => type.id === product.productTypeId)].name}`}
+                  </span>
+                  <span className="product-price-span">{product.price}</span>
+                  <img
+                     className="product-poster"
+                     src={`/${product.productTypeId}/${product.productBrandId}/${product.name}/${product.poster}`}
+                     alt="a product preview" />
+                  <button type="button" className="delete-button">
+                     {currentLanguage === "ru"
+                        ? "удалить" : "delete"}
+                  </button>
+               </div>
+            })}
+         </div>}
    </div>
 }

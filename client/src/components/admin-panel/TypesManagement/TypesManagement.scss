@@ -92,6 +92,7 @@
       height: $default-font-size * 1.4 + px;
       min-height: $default-font-size * 1.4 + px;
       @include flex-all-center;
+      position: relative;
       background: rgba($color: #000, $alpha: 0.1);
 
       &:not(:hover) {
@@ -116,6 +117,9 @@
         width: $admin-management-update-button-default-width + px;
         height: 100%;
         @include flex-all-center;
+        position: absolute;
+        top: 0;
+        right: 2px;
         margin-left: 5px;
         color: #000;
         border: 2px solid #555;
@@ -140,6 +144,9 @@
         width: $admin-management-delete-button-default-width + px;
         height: 100%;
         @include flex-all-center;
+        position: absolute;
+        top: 0;
+        right: 2px;
         margin-left: 5px;
         color: #000;
         border: 2px solid #555;

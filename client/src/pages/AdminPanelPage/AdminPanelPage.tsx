@@ -1,6 +1,7 @@
-import { FC } from "react";
-import { useAppDispatch } from "../../app/hooks";
+import { FC, useEffect } from "react";
+import { useAppSelector } from "../../app/hooks";
 
+import { getCurrentLanguage } from "../../app/globalSlice";
 import { AdminPanelActions } from "../../components/admin-panel/AdminPanelActions/AdminPanelActions";
 import { BrandsManagement } from "../../components/admin-panel/BrandsManagement/BrandsManagement";
 import { ProductsManagement } from "../../components/admin-panel/ProductsManagement/ProductsManagement";
@@ -13,7 +14,12 @@ interface Props {
 }
 
 export const AdminPanelPage: FC<Props> = ({ type }) => {
-   const dispatch = useAppDispatch()
+   const currentLanguage = useAppSelector(getCurrentLanguage)
+
+   useEffect(() => {
+      document.title = currentLanguage === "ru" ? "MyOnlineStore: Админ Панель" : "MyOnlineStore: Admin Panel"
+      document.documentElement.lang = currentLanguage === "ru" ? "ru" : "en"
+   }, [currentLanguage])
    return <div className="admin-panel-wrapper">
       {type === "general" && <AdminPanelActions />}
       {type === "types" && <TypesManagement />}

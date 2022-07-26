@@ -1,6 +1,7 @@
 import { FC, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
+import { getCurrentLanguage } from "../../app/globalSlice";
 import { setAuthorizationPageIsActive, getPreviousRoute } from "../../app/shopSlice";
 import { getIsAuth } from "../../app/userSlice";
 import { LoginForm } from "../../components/LoginForm/LoginForm";
@@ -14,8 +15,21 @@ interface Props {
 export const AuthorizationPage: FC<Props> = ({ type }) => {
    const dispatch = useAppDispatch()
 
+   const currentLanguage = useAppSelector(getCurrentLanguage)
    const isAuth = useAppSelector(getIsAuth)
    const previousRoute = useAppSelector(getPreviousRoute)
+
+   useEffect(() => {
+      document.documentElement.lang = currentLanguage === "ru" ? "ru" : "en"
+   }, [currentLanguage])
+
+   useEffect(() => {
+      if (type === "login") {
+         document.title = currentLanguage === "ru" ? "MyOnlineStore: Авторизация" : "MyOnlineStore: Authorization"
+      } else {
+         document.title = currentLanguage === "ru" ? "MyOnlineStore: Регистрация" : "MyOnlineStore: Registration"
+      }
+   }, [type])
 
    useEffect(() => {
       dispatch(setAuthorizationPageIsActive(true))

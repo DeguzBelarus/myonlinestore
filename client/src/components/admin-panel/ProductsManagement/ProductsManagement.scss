@@ -221,7 +221,7 @@
         height: 100%;
         position: absolute;
         top: 0;
-        left: 0;
+        left: 2px;
       }
 
       span {
@@ -234,6 +234,7 @@
       }
 
       .product-brand-span {
+        font-weight: bold;
         color: $admin-management-item-productbrand-span-fcolor;
       }
 

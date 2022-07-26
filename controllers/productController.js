@@ -1,5 +1,6 @@
 const uuid = require("uuid");
 const path = require("path");
+const fs = require("fs");
 
 const { Product, ProductDescription } = require("../models/dbmodels");
 const ApiError = require("../errors/ApiError");
@@ -33,10 +34,10 @@ class ProductController {
 
       if (description) {
         description = JSON.parse(description);
-        description.forEach((item) => {
+        description.forEach((propert) => {
           ProductDescription.create({
-            title: item.title,
-            description: item.description,
+            title: propert.title,
+            description: propert.description,
             productId: newProduct.id,
           });
         });
@@ -46,6 +47,36 @@ class ProductController {
     } catch (exception) {
       console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
+    }
+  }
+
+  async delete(request, response) {
+    try {
+      const { id } = request.params;
+      const { lang } = request.query;
+      const deletedProduct = await Product.destroy({ where: { id: id } });
+      if (deletedProduct) {
+        await ProductDescription.destroy({
+          where: { productId: id },
+        });
+
+        fs.rmdir(
+          `../static/${deletedProduct.productTypeId}/${deletedProduct.productBrandId}/${deletedProduct.name}`
+        );
+
+        const allProducts = await Product.findAll();
+
+        return response.json(allProducts);
+      } else {
+        return response.status(204).json({
+          message:
+            lang === "ru"
+              ? "Указанный товар не найден"
+              : "The specified product was not found",
+        });
+      }
+    } catch (exception) {
+      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
     }
   }
 
