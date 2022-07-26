@@ -212,6 +212,21 @@ export const createProductAsync = createAsyncThunk(
       return await response.json()
    }
 )
+
+export interface DeleteProductRequestObject {
+   id: string,
+   token: string,
+   lang: string
+}
+
+export const deleteProductAsync = createAsyncThunk(
+   "product/delete",
+   async (data: DeleteProductRequestObject) => {
+      const url = `/api/product/${data.id}/delete?${data.lang}`
+      const response: any = await deleteProduct(url, data.token)
+      return await response.json()
+   }
+)
 // products thunks
 // thunks 
 
@@ -391,7 +406,35 @@ export const productSlice = createSlice({
             state.productStatus = "failed"
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
-      // get one product cases
+         // get one product cases
+
+         // create product
+         .addCase(createProductAsync.pending, (state) => {
+            state.productStatus = "loading"
+         })
+         .addCase(createProductAsync.fulfilled, (state, action) => {
+            state.productStatus = "idle"
+            state.products = action.payload
+         })
+         .addCase(createProductAsync.rejected, (state, action) => {
+            state.productStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+         // create product
+
+         // delete brand
+         .addCase(deleteProductAsync.pending, (state) => {
+            state.productStatus = "loading"
+         })
+         .addCase(deleteProductAsync.fulfilled, (state, action) => {
+            state.productStatus = "idle"
+            state.products = action.payload
+         })
+         .addCase(deleteProductAsync.rejected, (state, action) => {
+            state.productStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+      // delete brand
       // products cases
    }
 })

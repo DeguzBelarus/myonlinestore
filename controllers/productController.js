@@ -43,7 +43,9 @@ class ProductController {
         });
       }
 
-      response.status(201).json(newProduct);
+      const allProducts = await Product.findAll();
+
+      response.status(201).json(allProducts);
     } catch (exception) {
       console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
