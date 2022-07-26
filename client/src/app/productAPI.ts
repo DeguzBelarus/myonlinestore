@@ -143,4 +143,18 @@ export function createProduct(url: string, body: any, token: string) {
       console.error("\x1b[40m\x1b[31m\x1b[1m", exception.message);
    }
 }
+
+export function deleteProduct(url: string, token: string) {
+   try {
+      return fetch(url, {
+         method: "DELETE",
+         headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+         }
+      })
+   } catch (exception: any) {
+      console.error("\x1b[40m\x1b[31m\x1b[1m", exception.message);
+   }
+}
 // products methods

@@ -60,8 +60,9 @@ class ProductController {
           where: { productId: id },
         });
 
-        fs.rmdir(
-          `../static/${deletedProduct.productTypeId}/${deletedProduct.productBrandId}/${deletedProduct.name}`
+        fs.rmdirSync(
+          `../static/${deletedProduct.productTypeId}/${deletedProduct.productBrandId}/${deletedProduct.name}`,
+          { recursive: true, force: true }
         );
 
         const allProducts = await Product.findAll();

@@ -10,7 +10,8 @@ import {
    deleteType,
    updateType,
    deleteBrand,
-   updateBrand
+   updateBrand,
+   deleteProduct
 } from "./productAPI"
 
 export interface ProductDescriptionObject {
