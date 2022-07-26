@@ -144,6 +144,21 @@ export function createProduct(url: string, body: any, token: string) {
    }
 }
 
+export function updateProduct(url: string, body: any, token: string) {
+   try {
+      return fetch(url, {
+         method: "PUT",
+         body: body,
+         headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+         }
+      })
+   } catch (exception: any) {
+      console.error("\x1b[40m\x1b[31m\x1b[1m", exception.message);
+   }
+}
+
 export function deleteProduct(url: string, token: string) {
    try {
       return fetch(url, {
