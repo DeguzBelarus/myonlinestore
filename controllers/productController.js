@@ -56,14 +56,19 @@ class ProductController {
     try {
       const { id } = request.params;
       const { lang } = request.query;
-      const deletedProduct = await Product.destroy({ where: { id: id } });
-      if (deletedProduct) {
+
+      const foundProductForDeletion = await Product.findOne({
+        where: { id: id },
+      });
+      if (foundProductForDeletion) {
         await ProductDescription.destroy({
           where: { productId: id },
         });
+        await Product.destroy({ where: { id: id } });
 
         fs.rmdirSync(
-          `../static/${deletedProduct.productTypeId}/${deletedProduct.productBrandId}/${deletedProduct.name}`,
+          __dirname +
+            `/../static/${foundProductForDeletion.productTypeId}/${foundProductForDeletion.productBrandId}/${foundProductForDeletion.name}`,
           { recursive: true, force: true }
         );
 

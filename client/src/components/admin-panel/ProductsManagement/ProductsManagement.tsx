@@ -1,6 +1,5 @@
 import { FC, useEffect, useState, useRef } from "react";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
-import { Link } from "react-router-dom";
 
 import {
    getProductsAsync,
@@ -10,10 +9,11 @@ import {
    createProductAsync,
    getProductsTypes,
    getProductsBrands,
-   getTypesAsync,
-   getBrandsAsync,
    TypeOrBrandObject,
-   ProductDescriptionObject
+   ProductDescriptionObject,
+   DeleteProductRequestObject,
+   deleteProductAsync,
+   NewProduct
 } from "../../../app/productSlice";
 import {
    getCurrentPage,
@@ -59,7 +59,7 @@ export const ProductsManagement: FC = () => {
    const [productBrandSelectDefaultValue, setProductBrandSelectDefaultValue] = useState<string>("")
    const [productPriceInputDefaultValue, setProductPriceInputDefaultValue] = useState<string>("")
    const [productDescription, setProductDescription] = useState<ProductDescriptionObject[]>([])
-   const [productFormdata, setProductFormdata] = useState<CurrentProduct>({
+   const [productFormdata, setProductFormdata] = useState<NewProduct>({
       name: "",
       price: 0,
       rating: 0,
@@ -160,6 +160,11 @@ export const ProductsManagement: FC = () => {
       })
    }
 
+   const productDelete = (id: number) => {
+      const data: DeleteProductRequestObject = { id: String(id), token: token, lang: currentLanguage }
+      dispatch(deleteProductAsync(data))
+   }
+
    const sortProductsMethod = (previous: CurrentProduct, next: CurrentProduct) => {
       switch (true) {
          case previous.name > next.name:
@@ -190,7 +195,7 @@ export const ProductsManagement: FC = () => {
                   <span className="product-type-span">
                      {`${productsTypes[productsTypes.findIndex((type: TypeOrBrandObject) => type.id === product.productTypeId)].name}`}
                   </span>
-                  <span className="product-price-span">{product.price}</span>
+                  <span className="product-price-span">{product.price} USD</span>
                   <img
                      className="product-poster"
                      src={`/${product.productTypeId}/${product.productBrandId}/${product.name}/${product.poster}`}
@@ -302,12 +307,12 @@ export const ProductsManagement: FC = () => {
                   <span className="product-type-span">
                      {`${productsTypes[productsTypes.findIndex((type: TypeOrBrandObject) => type.id === product.productTypeId)].name}`}
                   </span>
-                  <span className="product-price-span">{product.price}</span>
+                  <span className="product-price-span">{product.price} USD</span>
                   <img
                      className="product-poster"
                      src={`/${product.productTypeId}/${product.productBrandId}/${product.name}/${product.poster}`}
                      alt="a product preview" />
-                  <button type="button" className="delete-button">
+                  <button type="button" className="delete-button" onClick={() => productDelete(product.id)}>
                      {currentLanguage === "ru"
                         ? "удалить" : "delete"}
                   </button>

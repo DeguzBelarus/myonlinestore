@@ -21,7 +21,7 @@ export interface ProductDescriptionObject {
 }
 
 export interface CurrentProduct {
-   id?: number,
+   id: number,
    name: string,
    price: number,
    rating: number,
@@ -29,6 +29,17 @@ export interface CurrentProduct {
    productTypeId: number,
    productBrandId: number,
    description: ProductDescriptionObject[]
+}
+
+export interface NewProduct {
+   id?: number,
+   name: string,
+   price: number,
+   rating: number,
+   poster: string,
+   productTypeId: number,
+   productBrandId: number,
+   description?: ProductDescriptionObject[]
 }
 
 export interface TypeOrBrandObject {
