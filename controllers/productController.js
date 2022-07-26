@@ -44,11 +44,74 @@ class ProductController {
       }
 
       const allProducts = await Product.findAll();
-
       response.status(201).json(allProducts);
     } catch (exception) {
       console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
+    }
+  }
+
+  async update(request, response) {
+    try {
+      const { id } = request.params;
+      let { lang, name, price, productBrandId, productTypeId, description } =
+        request.body;
+
+      const foundProductForUpdating = await Product.findOne({
+        where: { id: id },
+      });
+
+      if (foundProductForUpdating) {
+        const { poster } = request.files;
+
+        if (poster) {
+          fs.rmdirSync(
+            __dirname +
+              `/../static/${foundProductForUpdating.productTypeId}/${foundProductForUpdating.productBrandId}/${foundProductForUpdating.name}`,
+            { recursive: true, force: true }
+          );
+
+          const fileName = uuid.v4() + ".jpg";
+          poster.mv(
+            path.resolve(
+              __dirname,
+              "..",
+              "static",
+              `${productTypeId}`,
+              `${productBrandId}`,
+              `${name}`,
+              fileName
+            )
+          );
+
+          await foundProductForUpdating.update({
+            name: name,
+            price: price,
+            productBrandId: productBrandId,
+            productTypeId: productTypeId,
+            poster: fileName,
+          });
+        } else {
+          await foundProductForUpdating.update({
+            name: name,
+            price: price,
+            productBrandId: productBrandId,
+            productTypeId: productTypeId,
+          });
+        }
+
+        const allProducts = await Product.findAll();
+        return response.json(allProducts);
+      } else {
+        return response.status(204).json({
+          message:
+            lang === "ru"
+              ? "Указанный товар не найден"
+              : "The specified product was not found",
+        });
+      }
+    } catch (exception) {
+      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
     }
   }
 
@@ -57,7 +120,7 @@ class ProductController {
       const { id } = request.params;
       const { lang } = request.query;
 
-      const foundProductForDeletion = await Product.findOne({
+      const foundProductForDeleting = await Product.findOne({
         where: { id: id },
       });
       if (foundProductForDeletion) {
@@ -73,7 +136,6 @@ class ProductController {
         );
 
         const allProducts = await Product.findAll();
-
         return response.json(allProducts);
       } else {
         return response.status(204).json({

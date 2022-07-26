@@ -11,6 +11,11 @@ router.post(
   checkRoleMiddleware("ADMIN", "CREATOR"),
   productController.create
 );
+router.put(
+  "/:id",
+  checkRoleMiddleware("ADMIN", "CREATOR"),
+  productController.update
+);
 router.delete(
   "/:id/delete",
   checkRoleMiddleware("ADMIN", "CREATOR"),
