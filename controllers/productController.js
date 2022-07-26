@@ -112,6 +112,7 @@ class ProductController {
       }
     } catch (exception) {
       console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
+      next(ApiError.badRequest(exception.message));
     }
   }
 
@@ -147,6 +148,7 @@ class ProductController {
       }
     } catch (exception) {
       console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
+      next(ApiError.badRequest(exception.message));
     }
   }
 
@@ -186,6 +188,7 @@ class ProductController {
       return response.json(allProducts);
     } catch (exception) {
       console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
+      next(ApiError.badRequest(exception.message));
     }
   }
 
@@ -199,6 +202,7 @@ class ProductController {
       response.json(foundProduct);
     } catch (exception) {
       console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
+      next(ApiError.badRequest(exception.message));
     }
   }
 }
