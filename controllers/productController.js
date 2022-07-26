@@ -34,10 +34,10 @@ class ProductController {
 
       if (description) {
         description = JSON.parse(description);
-        description.forEach((propert) => {
+        description.forEach((property) => {
           ProductDescription.create({
-            title: propert.title,
-            description: propert.description,
+            title: property.title,
+            description: property.description,
             productId: newProduct.id,
           });
         });
@@ -97,6 +97,19 @@ class ProductController {
             price: price,
             productBrandId: productBrandId,
             productTypeId: productTypeId,
+          });
+        }
+
+        if (description) {
+          description = JSON.parse(description);
+          description.forEach((property) => {
+            ProductDescription.update(
+              {
+                title: property.title,
+                description: property.description,
+              },
+              { where: { productId: foundProductForUpdating.id } }
+            );
           });
         }
 
