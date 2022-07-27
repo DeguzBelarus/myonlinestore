@@ -207,6 +207,7 @@ class ProductController {
         //     });
         //   } else {
         // }
+        
         await foundProductForUpdating.update({
           name: name,
           price: price,
