@@ -2,7 +2,7 @@ const { Brand } = require("../models/dbmodels");
 const ApiError = require("../errors/ApiError");
 
 class BrandController {
-  async create(request, response) {
+  async create(request, response, next) {
     try {
       const { name } = request.body;
       const newBrand = await Brand.create({ name });
@@ -14,7 +14,7 @@ class BrandController {
     }
   }
 
-  async update(request, response) {
+  async update(request, response, next) {
     try {
       const { id } = request.params;
       const { lang, name } = request.body;
@@ -37,7 +37,7 @@ class BrandController {
     }
   }
 
-  async delete(request, response) {
+  async delete(request, response, next) {
     try {
       const { id } = request.params;
       const { lang } = request.query;
@@ -59,7 +59,7 @@ class BrandController {
     }
   }
 
-  async getAll(request, response) {
+  async getAll(request, response, next) {
     try {
       const allBrands = await Brand.findAll();
       return response.json(allBrands);

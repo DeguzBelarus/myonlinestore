@@ -1,3 +1,4 @@
+require("dotenv").config();
 const uuid = require("uuid");
 const path = require("path");
 const fs = require("fs");
@@ -51,20 +52,26 @@ class ProductController {
     }
   }
 
-  async update(request, response) {
+  async update(request, response, next) {
     try {
       const { id } = request.params;
-      let { lang, name, price, productBrandId, productTypeId, description } =
-        request.body;
+      let {
+        lang,
+        name,
+        price,
+        productBrandId,
+        productTypeId,
+        description,
+        posterData,
+      } = request.body;
 
       const foundProductForUpdating = await Product.findOne({
         where: { id: id },
       });
 
       if (foundProductForUpdating) {
-        const { poster } = request.files;
-
-        if (poster) {
+        if (posterData !== "none") {
+          const { poster } = request.files;
           fs.rmdirSync(
             __dirname +
               `/../static/${foundProductForUpdating.productTypeId}/${foundProductForUpdating.productBrandId}/${foundProductForUpdating.name}`,
@@ -129,7 +136,7 @@ class ProductController {
     }
   }
 
-  async delete(request, response) {
+  async delete(request, response, next) {
     try {
       const { id } = request.params;
       const { lang } = request.query;
@@ -137,7 +144,7 @@ class ProductController {
       const foundProductForDeleting = await Product.findOne({
         where: { id: id },
       });
-      if (foundProductForDeletion) {
+      if (foundProductForDeleting) {
         await ProductDescription.destroy({
           where: { productId: id },
         });
@@ -145,7 +152,7 @@ class ProductController {
 
         fs.rmdirSync(
           __dirname +
-            `/../static/${foundProductForDeletion.productTypeId}/${foundProductForDeletion.productBrandId}/${foundProductForDeletion.name}`,
+            `/../static/${foundProductForDeleting.productTypeId}/${foundProductForDeleting.productBrandId}/${foundProductForDeleting.name}`,
           { recursive: true, force: true }
         );
 
@@ -165,7 +172,7 @@ class ProductController {
     }
   }
 
-  async getAll(request, response) {
+  async getAll(request, response, next) {
     try {
       let { brandId, typeId, limit, page } = request.query;
       page = page || 1;
@@ -205,7 +212,7 @@ class ProductController {
     }
   }
 
-  async getOne(request, response) {
+  async getOne(request, response, next) {
     try {
       const { id } = request.params;
       const foundProduct = await Product.findOne({

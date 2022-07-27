@@ -150,7 +150,6 @@ export function updateProduct(url: string, body: any, token: string) {
          method: "PUT",
          body: body,
          headers: {
-            "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
          }
       })

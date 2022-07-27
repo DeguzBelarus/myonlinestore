@@ -11,7 +11,8 @@ import {
    updateType,
    deleteBrand,
    updateBrand,
-   deleteProduct
+   deleteProduct,
+   updateProduct
 } from "./productAPI"
 
 export interface ProductDescriptionObject {
@@ -220,6 +221,29 @@ export const createProductAsync = createAsyncThunk(
    async (body: any) => {
       const url = `/api/product/add`
       const response: any = await createProduct(url, body.data, body.token)
+      return await response.json()
+   }
+)
+
+export interface UpdateProductRequestObject {
+   token: string,
+   data: {
+      name: string,
+      lang: string,
+      price: number,
+      poster?: string,
+      productBrandId: number,
+      productTypeId: number,
+      description?: ProductDescriptionObject[]
+   },
+   productId: string
+}
+
+export const updateProductAsync = createAsyncThunk(
+   "product/update",
+   async (body: any) => {
+      const url = `/api/product/${body.productId}`
+      const response: any = await updateProduct(url, body.data, body.token)
       return await response.json()
    }
 )

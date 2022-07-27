@@ -199,7 +199,7 @@ class UserController {
     }
   }
 
-  async update(request, response) {
+  async update(request, response, next) {
     try {
       const { id } = request.params;
       const { lang, nickname, role } = request.body;
@@ -229,7 +229,7 @@ class UserController {
     }
   }
 
-  async delete(request, response) {
+  async delete(request, response, next) {
     try {
       const { id } = request.params;
       const { lang } = request.query;
@@ -258,7 +258,7 @@ class UserController {
     }
   }
 
-  async getAll(request, response) {
+  async getAll(request, response, next) {
     try {
       const allUsers = await User.findAll();
       return response.json(allUsers);

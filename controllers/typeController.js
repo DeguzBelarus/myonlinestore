@@ -2,7 +2,7 @@ const { Type } = require("../models/dbmodels");
 const ApiError = require("../errors/ApiError");
 
 class TypeController {
-  async create(request, response) {
+  async create(request, response, next) {
     try {
       const { name } = request.body;
       const newType = await Type.create({ name });
@@ -14,7 +14,7 @@ class TypeController {
     }
   }
 
-  async update(request, response) {
+  async update(request, response, next) {
     try {
       const { id } = request.params;
       const { lang, name } = request.body;
@@ -37,7 +37,7 @@ class TypeController {
     }
   }
 
-  async delete(request, response) {
+  async delete(request, response, next) {
     try {
       const { id } = request.params;
       const { lang } = request.query;
@@ -59,7 +59,7 @@ class TypeController {
     }
   }
 
-  async getAll(request, response) {
+  async getAll(request, response, next) {
     try {
       const allTypes = await Type.findAll();
       return response.json(allTypes);
