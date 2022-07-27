@@ -118,7 +118,6 @@ class ProductController {
           Number(productBrandId) !==
             foundProductForUpdating._previousDataValues.productBrandId
         ) {
-          console.log("here all changed");
           fs.mkdirSync(
             path.join(
               __dirname,
@@ -150,7 +149,6 @@ class ProductController {
             (exception) => console.log(exception)
           );
         } else if (name !== foundProductForUpdating._previousDataValues.name) {
-          console.log("here only name changed");
           fs.renameSync(
             nodePath.join(
               __dirname,
@@ -218,14 +216,14 @@ class ProductController {
 
         if (description) {
           description = JSON.parse(description);
+          console.log(description);
+          ProductDescription.destroy({ where: { productId: id } });
           description.forEach((property) => {
-            ProductDescription.update(
-              {
-                title: property.title,
-                description: property.description,
-              },
-              { where: { productId: foundProductForUpdating.id } }
-            );
+            ProductDescription.create({
+              title: property.title,
+              description: property.description,
+              productId: id,
+            });
           });
         }
 
