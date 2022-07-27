@@ -112,15 +112,24 @@ class ProductController {
       });
 
       if (foundProductForUpdating) {
-        if (name !== foundProductForUpdating._previousDataValues.name) {
-          console.log(
-            foundProductForUpdating._previousDataValues.productTypeId,
-            productTypeId,
-            foundProductForUpdating._previousDataValues.productBrandId,
-            productBrandId,
-            foundProductForUpdating._previousDataValues.name,
-            name
+        if (
+          Number(productTypeId) !==
+            foundProductForUpdating._previousDataValues.productTypeId ||
+          Number(productBrandId) !==
+            foundProductForUpdating._previousDataValues.productBrandId
+        ) {
+          console.log("here all changed");
+          fs.mkdirSync(
+            path.join(
+              __dirname,
+              "..",
+              "static",
+              `${productTypeId}`,
+              `${productBrandId}`
+            ),
+            { recursive: true }
           );
+
           fs.renameSync(
             nodePath.join(
               __dirname,
@@ -140,37 +149,8 @@ class ProductController {
             ),
             (exception) => console.log(exception)
           );
-        }
-
-        if (
-          Number(productTypeId) !==
-            foundProductForUpdating._previousDataValues.productTypeId ||
-          Number(productBrandId) !==
-            foundProductForUpdating._previousDataValues.productBrandId
-        ) {
-          if (
-            !fs.existsSync(
-              path.join(
-                __dirname,
-                "..",
-                "static",
-                `${productTypeId}`,
-                `${productBrandId}`
-              )
-            )
-          ) {
-            fs.mkdirSync(
-              path.join(
-                __dirname,
-                "..",
-                "static",
-                `${productTypeId}`,
-                `${productBrandId}`
-              ),
-              { recursive: true }
-            );
-          }
-
+        } else if (name !== foundProductForUpdating._previousDataValues.name) {
+          console.log("here only name changed");
           fs.renameSync(
             nodePath.join(
               __dirname,
@@ -193,10 +173,17 @@ class ProductController {
         }
 
         //   if (posterData !== "none") {
-        //     const { poster } = request.files;
+        //     let { poster } = request.files;
         //     fs.rmdirSync(
-        //       __dirname +
-        //         `/../static/${foundProductForUpdating.productTypeId}/${foundProductForUpdating.productBrandId}/${foundProductForUpdating.name}`,
+        //       path.resolve(
+        //         __dirname,
+        //         "..",
+        //         "static",
+        //         `${foundProductForUpdating.productTypeId}`,
+        //         `${foundProductForUpdating.productBrandId}`,
+        //         `${foundProductForUpdating.name}`,
+        //         fileName
+        //       ),
         //       { recursive: true, force: true }
         //     );
 
@@ -221,7 +208,7 @@ class ProductController {
         //       poster: fileName,
         //     });
         //   } else {
-
+        // }
         await foundProductForUpdating.update({
           name: name,
           price: price,
