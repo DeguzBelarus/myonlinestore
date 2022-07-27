@@ -2,6 +2,7 @@ require("dotenv").config();
 const uuid = require("uuid");
 const path = require("path");
 const fs = require("fs");
+const nodePath = require("path");
 
 const { Product, ProductDescription } = require("../models/dbmodels");
 const ApiError = require("../errors/ApiError");
@@ -11,6 +12,27 @@ class ProductController {
     try {
       let { name, price, productBrandId, productTypeId, description } =
         request.body;
+
+      if (
+        name.includes("*") ||
+        name.includes("/") ||
+        name.includes("\\") ||
+        name.includes(":") ||
+        name.includes("?") ||
+        name.includes("|") ||
+        name.includes('"') ||
+        name.includes("'") ||
+        name.includes("`") ||
+        name.includes("<") ||
+        name.includes(">")
+      )
+        return response.status(400).json({
+          message:
+            lang === "ru"
+              ? "Запрещённые символы в названии"
+              : "Forbidden characters in the name",
+        });
+
       const { poster } = request.files;
       const fileName = uuid.v4() + ".jpg";
       poster.mv(
@@ -52,7 +74,7 @@ class ProductController {
     }
   }
 
-  async update(request, response, next) {
+  async update(request, response) {
     try {
       const { id } = request.params;
       let {
@@ -65,47 +87,147 @@ class ProductController {
         posterData,
       } = request.body;
 
+      if (
+        name.includes("*") ||
+        name.includes("/") ||
+        name.includes("\\") ||
+        name.includes(":") ||
+        name.includes("?") ||
+        name.includes("|") ||
+        name.includes('"') ||
+        name.includes("'") ||
+        name.includes("`") ||
+        name.includes("<") ||
+        name.includes(">")
+      )
+        return response.status(400).json({
+          message:
+            lang === "ru"
+              ? "Запрещённые символы в названии"
+              : "Forbidden characters in the name",
+        });
+
       const foundProductForUpdating = await Product.findOne({
         where: { id: id },
       });
 
       if (foundProductForUpdating) {
-        if (posterData !== "none") {
-          const { poster } = request.files;
-          fs.rmdirSync(
-            __dirname +
-              `/../static/${foundProductForUpdating.productTypeId}/${foundProductForUpdating.productBrandId}/${foundProductForUpdating.name}`,
-            { recursive: true, force: true }
+        if (name !== foundProductForUpdating._previousDataValues.name) {
+          console.log(
+            foundProductForUpdating._previousDataValues.productTypeId,
+            productTypeId,
+            foundProductForUpdating._previousDataValues.productBrandId,
+            productBrandId,
+            foundProductForUpdating._previousDataValues.name,
+            name
           );
-
-          const fileName = uuid.v4() + ".jpg";
-          poster.mv(
-            path.resolve(
+          fs.renameSync(
+            nodePath.join(
+              __dirname,
+              "..",
+              "static",
+              `${foundProductForUpdating._previousDataValues.productTypeId}`,
+              `${foundProductForUpdating._previousDataValues.productBrandId}`,
+              `${foundProductForUpdating._previousDataValues.name}`
+            ),
+            nodePath.join(
               __dirname,
               "..",
               "static",
               `${productTypeId}`,
               `${productBrandId}`,
-              `${name}`,
-              fileName
-            )
+              `${name}`
+            ),
+            (exception) => console.log(exception)
           );
-
-          await foundProductForUpdating.update({
-            name: name,
-            price: price,
-            productBrandId: productBrandId,
-            productTypeId: productTypeId,
-            poster: fileName,
-          });
-        } else {
-          await foundProductForUpdating.update({
-            name: name,
-            price: price,
-            productBrandId: productBrandId,
-            productTypeId: productTypeId,
-          });
         }
+
+        if (
+          Number(productTypeId) !==
+            foundProductForUpdating._previousDataValues.productTypeId ||
+          Number(productBrandId) !==
+            foundProductForUpdating._previousDataValues.productBrandId
+        ) {
+          if (
+            !fs.existsSync(
+              path.join(
+                __dirname,
+                "..",
+                "static",
+                `${productTypeId}`,
+                `${productBrandId}`
+              )
+            )
+          ) {
+            fs.mkdirSync(
+              path.join(
+                __dirname,
+                "..",
+                "static",
+                `${productTypeId}`,
+                `${productBrandId}`
+              ),
+              { recursive: true }
+            );
+          }
+
+          fs.renameSync(
+            nodePath.join(
+              __dirname,
+              "..",
+              "static",
+              `${foundProductForUpdating._previousDataValues.productTypeId}`,
+              `${foundProductForUpdating._previousDataValues.productBrandId}`,
+              `${foundProductForUpdating._previousDataValues.name}`
+            ),
+            nodePath.join(
+              __dirname,
+              "..",
+              "static",
+              `${productTypeId}`,
+              `${productBrandId}`,
+              `${name}`
+            ),
+            (exception) => console.log(exception)
+          );
+        }
+
+        //   if (posterData !== "none") {
+        //     const { poster } = request.files;
+        //     fs.rmdirSync(
+        //       __dirname +
+        //         `/../static/${foundProductForUpdating.productTypeId}/${foundProductForUpdating.productBrandId}/${foundProductForUpdating.name}`,
+        //       { recursive: true, force: true }
+        //     );
+
+        //     const fileName = uuid.v4() + ".jpg";
+        //     poster.mv(
+        //       path.resolve(
+        //         __dirname,
+        //         "..",
+        //         "static",
+        //         `${productTypeId}`,
+        //         `${productBrandId}`,
+        //         `${name}`,
+        //         fileName
+        //       )
+        //     );
+
+        //     await foundProductForUpdating.update({
+        //       name: name,
+        //       price: price,
+        //       productBrandId: productBrandId,
+        //       productTypeId: productTypeId,
+        //       poster: fileName,
+        //     });
+        //   } else {
+
+        await foundProductForUpdating.update({
+          name: name,
+          price: price,
+          productBrandId: productBrandId,
+          productTypeId: productTypeId,
+        });
 
         if (description) {
           description = JSON.parse(description);
@@ -132,7 +254,6 @@ class ProductController {
       }
     } catch (exception) {
       console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
-      next(ApiError.badRequest(exception.message));
     }
   }
 
@@ -151,8 +272,14 @@ class ProductController {
         await Product.destroy({ where: { id: id } });
 
         fs.rmdirSync(
-          __dirname +
-            `/../static/${foundProductForDeleting.productTypeId}/${foundProductForDeleting.productBrandId}/${foundProductForDeleting.name}`,
+          nodePath.join(
+            __dirname,
+            "..",
+            "static",
+            `${foundProductForDeleting.productTypeId}`,
+            `${foundProductForDeleting.productBrandId}`,
+            `${foundProductForDeleting.name}`
+          ),
           { recursive: true, force: true }
         );
 

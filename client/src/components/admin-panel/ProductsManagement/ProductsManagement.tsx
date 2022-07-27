@@ -171,6 +171,17 @@ export const ProductsManagement: FC = () => {
          || !productFormdata.poster
          || !productFormdata.productTypeId
          || !productFormdata.productBrandId) return
+      if (productFormdata.name.includes("*")
+         || productFormdata.name.includes("/")
+         || productFormdata.name.includes("\\")
+         || productFormdata.name.includes(":")
+         || productFormdata.name.includes("?")
+         || productFormdata.name.includes("|")
+         || productFormdata.name.includes("\"")
+         || productFormdata.name.includes("'")
+         || productFormdata.name.includes("`")
+         || productFormdata.name.includes("<")
+         || productFormdata.name.includes(">")) return
       if (allProducts.some((product) => product.name === productFormdata.name)) return
 
       const bodyFormdata = new FormData()
@@ -212,7 +223,17 @@ export const ProductsManagement: FC = () => {
          && newTypeId === productTypeSelectDefaultValue
          && newBrandId === productBrandSelectDefaultValue
          && newProductPrice === productPriceInputDefaultValue) return
-      if (allProducts.some((product) => product.name === productFormdata.name)) return
+      if (newProductName.includes("*")
+         || productFormdata.name.includes("/")
+         || productFormdata.name.includes("\\")
+         || productFormdata.name.includes(":")
+         || productFormdata.name.includes("?")
+         || productFormdata.name.includes("|")
+         || productFormdata.name.includes("\"")
+         || productFormdata.name.includes("'")
+         || productFormdata.name.includes("`")
+         || productFormdata.name.includes("<")
+         || newProductName.includes(">")) return
 
       const bodyFormdata = new FormData()
       bodyFormdata.append("name", productFormdata.name)

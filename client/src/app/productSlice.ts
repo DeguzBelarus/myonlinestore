@@ -457,7 +457,21 @@ export const productSlice = createSlice({
          })
          // create product
 
-         // delete brand
+         // update product
+         .addCase(updateProductAsync.pending, (state) => {
+            state.productStatus = "loading"
+         })
+         .addCase(updateProductAsync.fulfilled, (state, action) => {
+            state.productStatus = "idle"
+            state.products = action.payload
+         })
+         .addCase(updateProductAsync.rejected, (state, action) => {
+            state.productStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+         // update product
+
+         // delete product
          .addCase(deleteProductAsync.pending, (state) => {
             state.productStatus = "loading"
          })
@@ -469,7 +483,7 @@ export const productSlice = createSlice({
             state.productStatus = "failed"
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
-      // delete brand
+      // delete product
       // products cases
    }
 })
