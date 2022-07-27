@@ -219,10 +219,10 @@ export const ProductsManagement: FC = () => {
       const newBrandId: string = productBrandSelect.current.value
       const newProductPrice: string = productPriceInput.current.value
 
-      if (newProductName === productNameInputDefaultValue
-         && newTypeId === productTypeSelectDefaultValue
-         && newBrandId === productBrandSelectDefaultValue
-         && newProductPrice === productPriceInputDefaultValue) return
+      if (!newProductName
+         || !newTypeId
+         || !newBrandId
+         || !newProductPrice) return
       if (newProductName.includes("*")
          || productFormdata.name.includes("/")
          || productFormdata.name.includes("\\")
@@ -240,11 +240,7 @@ export const ProductsManagement: FC = () => {
       bodyFormdata.append("price", `${productFormdata.price}`)
       bodyFormdata.append("productTypeId", `${productFormdata.productTypeId}`)
       bodyFormdata.append("productBrandId", `${productFormdata.productBrandId}`)
-      if (productPosterInput.current.files[0]) {
-         bodyFormdata.append("poster", productFormdata.poster)
-      } else {
-         bodyFormdata.append("poster", "none")
-      }
+      bodyFormdata.append("poster", productFormdata.poster)
       bodyFormdata.append("description", JSON.stringify(productDescription))
 
       productNameInput.current.value = ""
