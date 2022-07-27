@@ -245,9 +245,7 @@ export const ProductsManagement: FC = () => {
       } else {
          bodyFormdata.append("poster", "none")
       }
-      if (productDescription.length) {
-         bodyFormdata.append("description", JSON.stringify(productDescription))
-      }
+      bodyFormdata.append("description", JSON.stringify(productDescription))
 
       productNameInput.current.value = ""
       productTypeSelect.current.value = ""
