@@ -9,7 +9,6 @@ class BrandController {
       const allBrands = await Brand.findAll();
       return response.status(201).json(allBrands);
     } catch (exception) {
-      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
     }
   }
@@ -32,7 +31,6 @@ class BrandController {
         });
       }
     } catch (exception) {
-      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
     }
   }
@@ -54,7 +52,6 @@ class BrandController {
         });
       }
     } catch (exception) {
-      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
     }
   }
@@ -64,7 +61,6 @@ class BrandController {
       const allBrands = await Brand.findAll();
       return response.json(allBrands);
     } catch (exception) {
-      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
     }
   }

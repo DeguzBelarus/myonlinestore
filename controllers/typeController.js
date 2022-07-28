@@ -9,7 +9,6 @@ class TypeController {
       const allTypes = await Type.findAll();
       return response.status(201).json(allTypes);
     } catch (exception) {
-      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
     }
   }
@@ -32,7 +31,6 @@ class TypeController {
         });
       }
     } catch (exception) {
-      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
     }
   }
@@ -54,7 +52,6 @@ class TypeController {
         });
       }
     } catch (exception) {
-      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
     }
   }
@@ -64,7 +61,6 @@ class TypeController {
       const allTypes = await Type.findAll();
       return response.json(allTypes);
     } catch (exception) {
-      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
     }
   }

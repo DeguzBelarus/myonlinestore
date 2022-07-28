@@ -118,7 +118,6 @@ class UserController {
             : "Registration is successfully completed!",
       });
     } catch (exception) {
-      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
     }
   }
@@ -168,7 +167,7 @@ class UserController {
             : "You have successfully logged in!",
       });
     } catch (exception) {
-      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
+      next(ApiError.badRequest(exception.message));
     }
   }
 
@@ -194,7 +193,6 @@ class UserController {
             : "Authorization is confirmed!",
       });
     } catch (exception) {
-      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
     }
   }
@@ -224,7 +222,6 @@ class UserController {
         });
       }
     } catch (exception) {
-      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
     }
   }
@@ -253,7 +250,6 @@ class UserController {
         });
       }
     } catch (exception) {
-      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
     }
   }
@@ -263,7 +259,6 @@ class UserController {
       const allUsers = await User.findAll();
       return response.json(allUsers);
     } catch (exception) {
-      console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
       next(ApiError.badRequest(exception.message));
     }
   }
