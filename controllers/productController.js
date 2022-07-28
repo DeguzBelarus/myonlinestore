@@ -25,13 +25,27 @@ class ProductController {
         name.includes("`") ||
         name.includes("<") ||
         name.includes(">")
-      )
+      ) {
         return response.status(400).json({
           message:
             lang === "ru"
               ? "Запрещённые символы в названии"
               : "Forbidden characters in the name",
         });
+      }
+
+      const foundProductWithSameName = await Product.findOne({
+        where: { name: name },
+      });
+
+      if (foundProductWithSameName) {
+        return response.status(400).json({
+          message:
+            lang === "ru"
+              ? "Указанное имя товара не никальное"
+              : "The specified product name is not unique",
+        });
+      }
 
       const { poster } = request.files;
       const fileName = uuid.v4() + ".jpg";
@@ -99,13 +113,30 @@ class ProductController {
         name.includes("`") ||
         name.includes("<") ||
         name.includes(">")
-      )
+      ) {
         return response.status(400).json({
           message:
             lang === "ru"
               ? "Запрещённые символы в названии"
               : "Forbidden characters in the name",
         });
+      }
+
+      const foundProductWithSameName = await Product.findOne({
+        where: { name: name },
+      });
+
+      if (
+        foundProductWithSameName &&
+        foundProductWithSameName.dataValues.id !== Number(id)
+      ) {
+        return response.status(400).json({
+          message:
+            lang === "ru"
+              ? "Указанное имя товара не никальное"
+              : "The specified product name is not unique",
+        });
+      }
 
       const foundProductForUpdating = await Product.findOne({
         where: { id: id },
@@ -267,7 +298,7 @@ class ProductController {
 
         if (description) {
           description = JSON.parse(description);
-          ProductDescription.destroy({ where: { productId: id } });
+          await ProductDescription.destroy({ where: { productId: id } });
           description.forEach((property) => {
             ProductDescription.create({
               title: property.title,

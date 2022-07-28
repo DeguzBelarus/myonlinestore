@@ -241,6 +241,14 @@ export const ProductsManagement: FC = () => {
          || productFormdata.name.includes("`")
          || productFormdata.name.includes("<")
          || newProductName.includes(">")) return
+      if (allProducts.some((product) => {
+         if (product.name === productFormdata.name && product.id !== productId) {
+            return true
+         } else {
+            return false
+         }
+
+      })) return
       if (productDescription.some((property: ProductDescriptionObject) => {
          if (property.title === "" || property.description === "") {
             return true
