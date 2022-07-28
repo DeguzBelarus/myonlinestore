@@ -295,6 +295,7 @@ export const ProductsManagement: FC = () => {
       if (adminEditingType !== "create") {
          dispatch(getProductsAsync(getProductsQueryParams))
          setUpdatingMode(false)
+         setProductDescription([])
       }
    }, [adminEditingType])
 
