@@ -183,6 +183,13 @@ export const ProductsManagement: FC = () => {
          || productFormdata.name.includes("<")
          || productFormdata.name.includes(">")) return
       if (allProducts.some((product) => product.name === productFormdata.name)) return
+      if (productDescription.some((property: ProductDescriptionObject) => {
+         if (property.title === "" || property.description === "") {
+            return true
+         } else {
+            return false
+         }
+      })) return
 
       const bodyFormdata = new FormData()
       bodyFormdata.append("name", productFormdata.name)
@@ -234,6 +241,13 @@ export const ProductsManagement: FC = () => {
          || productFormdata.name.includes("`")
          || productFormdata.name.includes("<")
          || newProductName.includes(">")) return
+      if (productDescription.some((property: ProductDescriptionObject) => {
+         if (property.title === "" || property.description === "") {
+            return true
+         } else {
+            return false
+         }
+      })) return
 
       const bodyFormdata = new FormData()
       bodyFormdata.append("name", productFormdata.name)
