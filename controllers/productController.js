@@ -5,10 +5,9 @@ const fs = require("fs");
 const nodePath = require("path");
 
 const { Product, ProductDescription } = require("../models/dbmodels");
-const ApiError = require("../errors/ApiError");
 
 class ProductController {
-  async create(request, response, next) {
+  async create(request, response) {
     try {
       let { name, price, productBrandId, productTypeId, description } =
         request.body;
@@ -84,7 +83,6 @@ class ProductController {
       response.status(201).json(allProducts);
     } catch (exception) {
       console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
-      next(ApiError.badRequest(exception.message));
     }
   }
 
@@ -323,7 +321,7 @@ class ProductController {
     }
   }
 
-  async delete(request, response, next) {
+  async delete(request, response) {
     try {
       const { id } = request.params;
       const { lang } = request.query;
@@ -374,11 +372,10 @@ class ProductController {
       }
     } catch (exception) {
       console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
-      next(ApiError.badRequest(exception.message));
     }
   }
 
-  async getAll(request, response, next) {
+  async getAll(request, response) {
     try {
       let { brandId, typeId, limit, page } = request.query;
       page = page || 1;
@@ -414,11 +411,10 @@ class ProductController {
       return response.json(allProducts);
     } catch (exception) {
       console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
-      next(ApiError.badRequest(exception.message));
     }
   }
 
-  async getOne(request, response, next) {
+  async getOne(request, response) {
     try {
       const { id } = request.params;
       const foundProduct = await Product.findOne({
@@ -428,7 +424,6 @@ class ProductController {
       response.json(foundProduct);
     } catch (exception) {
       console.log("\x1b[40m\x1b[31m\x1b[1m", exception.message);
-      next(ApiError.badRequest(exception.message));
     }
   }
 }
