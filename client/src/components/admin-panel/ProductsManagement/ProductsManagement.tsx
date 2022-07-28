@@ -453,7 +453,7 @@ export const ProductsManagement: FC = () => {
 
                      <input
                         type="file"
-                        className={currentLanguage === "ru" ? "poster-input ru" : "poster-input"}
+                        className={currentLanguage === "ru" ? "poster-change-input ru" : "poster-change-input"}
                         title={currentLanguage === "ru" ? "Выберите постер товара" : "Select a product poster"}
                         name="poster"
                         onChange={productPosterHandler}

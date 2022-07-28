@@ -84,7 +84,7 @@ class ProductController {
         productBrandId,
         productTypeId,
         description,
-        posterData,
+        poster,
       } = request.body;
 
       if (
@@ -118,106 +118,155 @@ class ProductController {
           Number(productBrandId) !==
             foundProductForUpdating._previousDataValues.productBrandId
         ) {
-          fs.mkdirSync(
-            path.join(
-              __dirname,
-              "..",
-              "static",
-              `${productTypeId}`,
-              `${productBrandId}`
-            ),
-            { recursive: true }
-          );
+          if (
+            !fs.existsSync(
+              nodePath.join(
+                __dirname,
+                "..",
+                "static",
+                `${productTypeId}`,
+                `${productBrandId}`
+              )
+            )
+          ) {
+            fs.mkdirSync(
+              nodePath.join(
+                __dirname,
+                "..",
+                "static",
+                `${productTypeId}`,
+                `${productBrandId}`
+              ),
+              { recursive: true }
+            );
+          }
 
-          fs.renameSync(
-            nodePath.join(
-              __dirname,
-              "..",
-              "static",
-              `${foundProductForUpdating._previousDataValues.productTypeId}`,
-              `${foundProductForUpdating._previousDataValues.productBrandId}`,
-              `${foundProductForUpdating._previousDataValues.name}`
-            ),
-            nodePath.join(
-              __dirname,
-              "..",
-              "static",
-              `${productTypeId}`,
-              `${productBrandId}`,
-              `${name}`
-            ),
-            (exception) => console.log(exception)
-          );
+          if (
+            fs.existsSync(
+              nodePath.join(
+                __dirname,
+                "..",
+                "static",
+                `${foundProductForUpdating._previousDataValues.productTypeId}`,
+                `${foundProductForUpdating._previousDataValues.productBrandId}`,
+                `${foundProductForUpdating._previousDataValues.name}`
+              )
+            )
+          ) {
+            fs.renameSync(
+              nodePath.join(
+                __dirname,
+                "..",
+                "static",
+                `${foundProductForUpdating._previousDataValues.productTypeId}`,
+                `${foundProductForUpdating._previousDataValues.productBrandId}`,
+                `${foundProductForUpdating._previousDataValues.name}`
+              ),
+              nodePath.join(
+                __dirname,
+                "..",
+                "static",
+                `${productTypeId}`,
+                `${productBrandId}`,
+                `${name}`
+              ),
+              (exception) => console.log(exception)
+            );
+          }
         } else if (name !== foundProductForUpdating._previousDataValues.name) {
-          fs.renameSync(
-            nodePath.join(
-              __dirname,
-              "..",
-              "static",
-              `${foundProductForUpdating._previousDataValues.productTypeId}`,
-              `${foundProductForUpdating._previousDataValues.productBrandId}`,
-              `${foundProductForUpdating._previousDataValues.name}`
-            ),
-            nodePath.join(
-              __dirname,
-              "..",
-              "static",
-              `${productTypeId}`,
-              `${productBrandId}`,
-              `${name}`
-            ),
-            (exception) => console.log(exception)
-          );
+          if (
+            fs.existsSync(
+              nodePath.join(
+                __dirname,
+                "..",
+                "static",
+                `${foundProductForUpdating._previousDataValues.productTypeId}`,
+                `${foundProductForUpdating._previousDataValues.productBrandId}`,
+                `${foundProductForUpdating._previousDataValues.name}`
+              )
+            )
+          ) {
+            fs.renameSync(
+              nodePath.join(
+                __dirname,
+                "..",
+                "static",
+                `${foundProductForUpdating._previousDataValues.productTypeId}`,
+                `${foundProductForUpdating._previousDataValues.productBrandId}`,
+                `${foundProductForUpdating._previousDataValues.name}`
+              ),
+              nodePath.join(
+                __dirname,
+                "..",
+                "static",
+                `${productTypeId}`,
+                `${productBrandId}`,
+                `${name}`
+              ),
+              (exception) => console.log(exception)
+            );
+          }
         }
 
-        //   if (posterData !== "none") {
-        //     let { poster } = request.files;
-        //     fs.rmdirSync(
-        //       path.resolve(
-        //         __dirname,
-        //         "..",
-        //         "static",
-        //         `${foundProductForUpdating.productTypeId}`,
-        //         `${foundProductForUpdating.productBrandId}`,
-        //         `${foundProductForUpdating.name}`,
-        //         fileName
-        //       ),
-        //       { recursive: true, force: true }
-        //     );
+        if (typeof poster !== "string") {
+          ({ poster } = request.files);
 
-        //     const fileName = uuid.v4() + ".jpg";
-        //     poster.mv(
-        //       path.resolve(
-        //         __dirname,
-        //         "..",
-        //         "static",
-        //         `${productTypeId}`,
-        //         `${productBrandId}`,
-        //         `${name}`,
-        //         fileName
-        //       )
-        //     );
+          if (
+            fs.existsSync(
+              nodePath.join(
+                __dirname,
+                "..",
+                "static",
+                `${productTypeId}`,
+                `${productBrandId}`,
+                `${name}`
+              )
+            )
+          ) {
+            fs.rmdirSync(
+              nodePath.join(
+                __dirname,
+                "..",
+                "static",
+                `${productTypeId}`,
+                `${productBrandId}`,
+                `${name}`
+              ),
+              { recursive: true, force: true }
+            );
+          }
 
-        //     await foundProductForUpdating.update({
-        //       name: name,
-        //       price: price,
-        //       productBrandId: productBrandId,
-        //       productTypeId: productTypeId,
-        //       poster: fileName,
-        //     });
-        //   } else {
-        // }
-        
-        await foundProductForUpdating.update({
-          name: name,
-          price: price,
-          productBrandId: productBrandId,
-          productTypeId: productTypeId,
-        });
+          const fileName = uuid.v4() + ".jpg";
+          poster.mv(
+            path.resolve(
+              __dirname,
+              "..",
+              "static",
+              `${productTypeId}`,
+              `${productBrandId}`,
+              `${name}`,
+              fileName
+            )
+          );
+
+          await foundProductForUpdating.update({
+            name: name,
+            price: price,
+            productBrandId: productBrandId,
+            productTypeId: productTypeId,
+            poster: fileName,
+          });
+        } else {
+          await foundProductForUpdating.update({
+            name: name,
+            price: price,
+            productBrandId: productBrandId,
+            productTypeId: productTypeId,
+          });
+        }
 
         if (description) {
           description = JSON.parse(description);
-          console.log(description);
           ProductDescription.destroy({ where: { productId: id } });
           description.forEach((property) => {
             ProductDescription.create({
@@ -257,17 +306,30 @@ class ProductController {
         });
         await Product.destroy({ where: { id: id } });
 
-        fs.rmdirSync(
-          nodePath.join(
-            __dirname,
-            "..",
-            "static",
-            `${foundProductForDeleting.productTypeId}`,
-            `${foundProductForDeleting.productBrandId}`,
-            `${foundProductForDeleting.name}`
-          ),
-          { recursive: true, force: true }
-        );
+        if (
+          fs.existsSync(
+            nodePath.join(
+              __dirname,
+              "..",
+              "static",
+              `${foundProductForDeleting.productTypeId}`,
+              `${foundProductForDeleting.productBrandId}`,
+              `${foundProductForDeleting.name}`
+            )
+          )
+        ) {
+          fs.rmdirSync(
+            nodePath.join(
+              __dirname,
+              "..",
+              "static",
+              `${foundProductForDeleting.productTypeId}`,
+              `${foundProductForDeleting.productBrandId}`,
+              `${foundProductForDeleting.name}`
+            ),
+            { recursive: true, force: true }
+          );
+        }
 
         const allProducts = await Product.findAll();
         return response.json(allProducts);
