@@ -57,6 +57,12 @@ export const TypesManagement: FC = () => {
       setTypeNameInputDefaultValue("")
    }
 
+   const updatingModeOffOnEscape = (event: any) => {
+      if (event.key === "Escape") {
+         updatingModeOff()
+      }
+   }
+
    const productsTypeAdd = (event: any) => {
       event.preventDefault()
       const newTypeName = typeNameInput.current.value
@@ -102,6 +108,10 @@ export const TypesManagement: FC = () => {
       setTypeId(null)
       dispatch(getTypesAsync())
    }, [adminEditingType])
+
+   useEffect(() => {
+      document.body.addEventListener("keydown", updatingModeOffOnEscape)
+   }, [])
    return <div className="types-management-wrapper">
       <CRUDModeSwitcher type="othermanagement" />
 

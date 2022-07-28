@@ -148,6 +148,12 @@ export const ProductsManagement: FC = () => {
       })
    }
 
+   const updatingModeOffOnEscape = (event: any) => {
+      if (event.key === "Escape") {
+         updatingModeOff()
+      }
+   }
+
    const descriptionAdd = () => {
       setProductDescription([...productDescription, { id: Date.now(), title: "", description: "" }])
    }
@@ -304,6 +310,10 @@ export const ProductsManagement: FC = () => {
          setProductDescription(currentProduct.description)
       }
    }, [currentProduct])
+
+   useEffect(() => {
+      document.body.addEventListener("keydown", updatingModeOffOnEscape)
+   }, [])
    return <div className="products-management-wrapper">
       <CRUDModeSwitcher type="othermanagement" />
 

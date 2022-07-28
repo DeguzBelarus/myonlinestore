@@ -72,10 +72,15 @@ export const UsersManagement: FC = () => {
       setNicknameInputDefaultValue("")
    }
 
+   const updatingModeOffOnEscape = (event: any) => {
+      if (event.key === "Escape") {
+         updatingModeOff()
+      }
+   }
+
    const userUpdate = (event: any) => {
       event.preventDefault()
-      const newNickname = nicknameInput.current.value
-      const newRole = roleSelect.current.value
+
       if (!nickname || !role) return
       if (nickname === nicknameInputDefaultValue && role === roleSelectDefaultValue) return
 
@@ -110,6 +115,10 @@ export const UsersManagement: FC = () => {
       setUserId(null)
       dispatch(getAllUsersAsync(token))
    }, [adminEditingType])
+
+   useEffect(() => {
+      document.body.addEventListener("keydown", updatingModeOffOnEscape)
+   }, [])
    return <div className="users-management-wrapper">
       <CRUDModeSwitcher type="usermanagement" />
 

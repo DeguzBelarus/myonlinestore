@@ -57,6 +57,12 @@ export const BrandsManagement: FC = () => {
       setBrandNameInputDefaultValue("")
    }
 
+   const updatingModeOffOnEscape = (event: any) => {
+      if (event.key === "Escape") {
+         updatingModeOff()
+      }
+   }
+
    const productsBrandAdd = (event: any) => {
       event.preventDefault()
       const newBrandName = brandNameInput.current.value
@@ -102,6 +108,10 @@ export const BrandsManagement: FC = () => {
       setBrandId(null)
       dispatch(getBrandsAsync())
    }, [adminEditingType])
+
+   useEffect(() => {
+      document.body.addEventListener("keydown", updatingModeOffOnEscape)
+   }, [])
    return <div className="brands-management-wrapper">
       <CRUDModeSwitcher type="othermanagement" />
 
