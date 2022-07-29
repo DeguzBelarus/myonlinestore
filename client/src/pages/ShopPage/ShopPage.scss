@@ -15,5 +15,9 @@
     padding: 50px 80px;
     background-color: #fff;
     overflow-y: scroll;
+
+    &.loading {
+      @include flex-all-center;
+    }
   }
 }

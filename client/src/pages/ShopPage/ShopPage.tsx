@@ -59,7 +59,9 @@ export const ShopPage: FC = () => {
       }
    }, [])
    return <div className="shop-page-wrapper">
-      <div className="products-cards-wrapper">
+      <div className={productStatus === "loading"
+         ? "products-cards-wrapper loading"
+         : "products-cards-wrapper"}>
          {productStatus !== "loading"
             ? allProducts.map((product: CurrentProduct) => {
                return <ProductCard productData={product} key={product.id} />
