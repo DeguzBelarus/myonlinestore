@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useAppDispatch } from "../../app/hooks";
 
 import { setProductIsDragged, setDraggedProduct } from "../../app/shopSlice";
@@ -12,13 +12,15 @@ interface Props {
 export const ProductCard: FC<Props> = ({ productData }) => {
    const dispatch = useAppDispatch()
 
-   const dragStartHandler = () => {
+   const dragStartHandler = (event: any) => {
       dispatch(setProductIsDragged(true))
       dispatch(setDraggedProduct(productData))
+      event.currentTarget.setAttribute("class", "product-card-wrapper product-dragging")
    }
 
-   const dragEndHandler = () => {
+   const dragEndHandler = (event: any) => {
       dispatch(setProductIsDragged(false))
+      event.currentTarget.setAttribute("class", "product-card-wrapper")
    }
    return <div
       className="product-card-wrapper"
@@ -28,6 +30,7 @@ export const ProductCard: FC<Props> = ({ productData }) => {
       <span>{productData.name}</span>
       <img
          className="product-poster"
+         draggable={false}
          src={`/${productData.productTypeId}/${productData.productBrandId}/${productData.name}/${productData.poster}`}
          alt="a product preview" />
       <span>{productData.price} $</span>

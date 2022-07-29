@@ -6,11 +6,28 @@
   max-height: $shop-product-card-default-height + px;
   @include flex-column-line-center-vertical-top;
   padding: 5px;
+  transition-property: border-color;
+  transition-duration: 0.8s;
+  border: 2px solid #fff;
+  border-radius: 20px;
   overflow: hidden;
   cursor: grab;
 
   .product-poster {
     width: auto;
     height: 80%;
+    @include user-select-none;
+  }
+}
+
+@media (hover: hover) {
+  .product-card-wrapper {
+    &:hover {
+      border-color: $shop-product-card-bcolor;
+
+      &.product-dragging {
+        border-color: $shop-product-card-dragged-bcolor;
+      }
+    }
   }
 }
