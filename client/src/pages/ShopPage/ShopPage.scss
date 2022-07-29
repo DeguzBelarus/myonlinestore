@@ -8,7 +8,7 @@
   .products-cards-wrapper {
     width: 75%;
     height: $shop-products-cards-wrapper-default-height + px;
-    @include flex-line-center-vertical-top;
+    @include flex-line-start-vertical-top;
     margin: 0 auto;
     flex-wrap: wrap;
   }
