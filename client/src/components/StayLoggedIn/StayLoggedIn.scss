@@ -46,6 +46,39 @@
   }
 }
 
+@media screen and (min-width: 1024px) {
+  .stay-logged-in-wrapper {
+    width: $auth-login-button-default-width + px;
+    height: $auth-stayloggedin-checkbox-default-size + px;
+    bottom: -33px;
+
+    .checkbox {
+      height: $auth-stayloggedin-checkbox-default-size + px;
+
+      label {
+        width: $auth-login-button-default-width + px;
+        padding-left: 18.5px;
+        padding-top: 2px;
+        margin-top: -2px;
+        font-size: $auth-stayloggedin-checkbox-default-fsize + px;
+
+        &::before {
+          width: $auth-stayloggedin-checkbox-default-size + px;
+          height: $auth-stayloggedin-checkbox-default-size + px;
+          top: 0;
+          left: 0;
+        }
+
+        &::after {
+          top: 0;
+          left: 4px;
+          font-size: $auth-stayloggedin-checkbox-default-fsize + px;
+        }
+      }
+    }
+  }
+}
+
 @media screen and (min-width: 1440px) {
   .stay-logged-in-wrapper {
     width: $auth-login-button-default-width + px;
