@@ -1,0 +1,15 @@
+@import "../../variables";
+
+.product-card-wrapper {
+  width: $shop-product-card-default-width + px;
+  height: $shop-product-card-default-height + px;
+  max-height: $shop-product-card-default-height + px;
+  @include flex-column-line-center-vertical-top;
+  padding: 5px;
+  overflow: hidden;
+
+  .product-poster {
+    width: auto;
+    height: 80%;
+  }
+}

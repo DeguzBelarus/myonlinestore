@@ -49,6 +49,10 @@ $admin-management-item-productbrand-span-fcolor: #0aad0a;
 $admin-management-item-producttype-span-fcolor: #000;
 $admin-management-item-productprice-span-fcolor: #f00cbb;
 //== admin panel
+
+//== shop page
+$shop-product-card-bcolor: #f00cbb;
+//== shop page
 //== colors
 
 //== sizes
@@ -116,6 +120,12 @@ $admin-management-delete-button-default-width: 65;
 $admin-management-addProperty-button-default-width: 155;
 $admin-management-removeProperty-button-default-width: 20;
 //== admin panel
+
+//== shop page
+$shop-products-cards-wrapper-default-height: 800;
+$shop-product-card-default-width: 180;
+$shop-product-card-default-height: 300;
+//== shop page
 //== sizes
 // variables
 
@@ -142,6 +152,12 @@ $admin-management-removeProperty-button-default-width: 20;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+
+@mixin flex-line-start-vertical-top {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 @mixin flex-line-end-vertical-center {

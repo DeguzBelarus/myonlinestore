@@ -2,15 +2,42 @@ import { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
-import { setShopPageIsActive, setSelectionMode } from "../../app/shopSlice";
+import {
+   getProductsAsync,
+   getAllProducts,
+   GetProductsQueryParams,
+   CurrentProduct,
+   getProductStatus
+} from "../../app/productSlice";
+import {
+   setShopPageIsActive,
+   setSelectionMode,
+   getCurrentPage,
+   getProductsPerPage,
+   getSelectedType,
+   getSelectedBrand
+} from "../../app/shopSlice";
 import { getCurrentLanguage, setCurrentLanguage } from "../../app/globalSlice";
 import "./ShopPage.scss"
+import { ProductCard } from "../../components/ProductCard/ProductCard";
 
 export const ShopPage: FC = () => {
    const navigate = useNavigate()
    const dispatch = useAppDispatch()
 
+   const allProducts = useAppSelector(getAllProducts)
+   const productStatus: string = useAppSelector(getProductStatus)
    const currentLanguage: string = useAppSelector(getCurrentLanguage)
+   const currentPage: number = useAppSelector(getCurrentPage)
+   const productsPerPage: number = useAppSelector(getProductsPerPage)
+   const selectedType: number = useAppSelector(getSelectedType)
+   const selectedBrand: number = useAppSelector(getSelectedBrand)
+   const getProductsQueryParams: GetProductsQueryParams = {
+      limit: productsPerPage,
+      page: currentPage,
+      typeId: selectedType,
+      brandId: selectedBrand
+   }
 
    useEffect(() => {
       document.title = currentLanguage === "ru" ? "MyOnlineStore: Главная страница" : "MyOnlineStore: Main page"
@@ -18,6 +45,7 @@ export const ShopPage: FC = () => {
    }, [currentLanguage])
 
    useEffect(() => {
+      dispatch(getProductsAsync(getProductsQueryParams))
       dispatch(setShopPageIsActive(true))
       navigate("/shop")
 
@@ -30,5 +58,13 @@ export const ShopPage: FC = () => {
          dispatch(setSelectionMode(false))
       }
    }, [])
-   return <div className="shop-page-wrapper"></div>
+   return <div className="shop-page-wrapper">
+      <div className="products-cards-wrapper">
+         {productStatus !== "loading"
+            ? allProducts.map((product: CurrentProduct) => {
+               return <ProductCard productData={product} key={product.id} />
+            })
+            : "loading..."}
+      </div>
+   </div>
 }

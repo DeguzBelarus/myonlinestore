@@ -3,4 +3,12 @@
 .shop-page-wrapper {
   width: 100%;
   height: calc(100vh - #{($navbar-default-height + px)});
+  @include flex-column-line-center-vertical-top;
+
+  .products-cards-wrapper {
+    width: 100%;
+    height: $shop-products-cards-wrapper-default-height + px;
+    @include flex-line-center-vertical-top;
+    flex-wrap: wrap;
+  }
 }
