@@ -6,9 +6,10 @@
   @include flex-column-line-center-vertical-top;
 
   .products-cards-wrapper {
-    width: 100%;
+    width: 75%;
     height: $shop-products-cards-wrapper-default-height + px;
     @include flex-line-center-vertical-top;
+    margin: 0 auto;
     flex-wrap: wrap;
   }
 }

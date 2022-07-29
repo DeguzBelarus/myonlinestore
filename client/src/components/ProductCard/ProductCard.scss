@@ -7,6 +7,7 @@
   @include flex-column-line-center-vertical-top;
   padding: 5px;
   overflow: hidden;
+  cursor: grab;
 
   .product-poster {
     width: auto;

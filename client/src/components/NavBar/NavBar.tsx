@@ -20,9 +20,14 @@ import {
    getProductPageIsActive,
    getRouteId,
    setPreviousRoute,
-   getCartPageIsActive
+   getCartPageIsActive,
+   getProductIsDragged,
+   setDraggedProduct,
+   setProductIsDragged,
+   getDraggedProduct
 } from "../../app/shopSlice";
 import { getCurrentLanguage } from "../../app/globalSlice";
+import { CurrentProduct } from "../../app/productSlice";
 import { LanguageSwitcher } from "../LanguageSwitcher/LanguageSwitcher";
 import mainLogo from "../../assets/main-logo.png"
 import "./NavBar.scss"
@@ -41,6 +46,22 @@ export const NavBar: FC = () => {
    const productPageIsActive: boolean = useAppSelector(getProductPageIsActive)
    const routeId: string | null = useAppSelector(getRouteId)
    const currentLanguage: string = useAppSelector(getCurrentLanguage)
+   const productIsDragged: boolean = useAppSelector(getProductIsDragged)
+   const draggedProduct: CurrentProduct | null = useAppSelector(getDraggedProduct)
+
+   const dragOverHandler = (event: any) => {
+      event.preventDefault()
+   }
+
+   const dragEndHandler = () => {
+      dispatch(setDraggedProduct(null))
+   }
+
+   const dropHandler = (event: any) => {
+      event.preventDefault()
+      console.log(draggedProduct);
+      dragEndHandler()
+   }
 
    const selectionModeHandler = () => {
       if (!selectionMode) {
@@ -52,6 +73,21 @@ export const NavBar: FC = () => {
 
    const loginPageEnter = () => {
       navigate("/login")
+
+      switch (true) {
+         case shopPageIsActive:
+            return dispatch(setPreviousRoute("/shop"))
+         case adminPanelPageIsActive:
+            return dispatch(setPreviousRoute("/admin"))
+         case productPageIsActive:
+            return dispatch(setPreviousRoute(`/shop/product/${routeId}`))
+         case cartPageIsActive:
+            return dispatch(setPreviousRoute("/shop/cart"))
+      }
+   }
+
+   const cartPageEnter = () => {
+      navigate("/shop/cart")
 
       switch (true) {
          case shopPageIsActive:
@@ -110,6 +146,14 @@ export const NavBar: FC = () => {
             : userRole === "ADMIN" || userRole === "CREATOR"
                ? <>
                   <LanguageSwitcher />
+                  {!cartPageIsActive &&
+                     <button
+                        type="button"
+                        className={productIsDragged ? "cart-page-button product-dragging" : "cart-page-button"}
+                        onClick={cartPageEnter}
+                        onDragOver={dragOverHandler}
+                        onDrop={dropHandler}
+                     >{currentLanguage === "ru" ? "Корзина" : "Cart"}</button>}
                   {!adminPanelPageIsActive &&
                      <button
                         type="button"
@@ -124,6 +168,14 @@ export const NavBar: FC = () => {
                </>
                : <>
                   <LanguageSwitcher />
+                  {!cartPageIsActive &&
+                     <button
+                        type="button"
+                        className={productIsDragged ? "cart-page-button product-dragging" : "cart-page-button"}
+                        onClick={cartPageEnter}
+                        onDragOver={dragOverHandler}
+                        onDrop={dropHandler}
+                     >{currentLanguage === "ru" ? "Корзина" : "Cart"}</button>}
                   <button
                      type="button"
                      className="logout-button"

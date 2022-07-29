@@ -43,6 +43,25 @@
     @include flex-line-start-vertical-center;
     gap: 5px;
 
+    .cart-page-button {
+      width: $navbar-cart-button-default-width + px;
+      height: $navbar-buttons-default-height + px;
+      @include flex-all-center;
+      @include user-select-none;
+      padding: $navbar-buttons-paddings;
+      background: none;
+      color: #fff;
+      border: 2px solid #fff;
+      cursor: pointer;
+
+      &.product-dragging {
+        background: rgba(
+          $color: $navbar-cart-button-productDragging-color,
+          $alpha: 0.8
+        );
+      }
+    }
+
     .authorization-page-button {
       width: $navbar-auth-button-default-width + px;
       height: $navbar-buttons-default-height + px;
@@ -104,7 +123,8 @@
 @media (hover: hover) {
   .selection-mode-button,
   .authorization-page-button,
-  .adminpanel-page-button {
+  .adminpanel-page-button,
+  .cart-page-button {
     &:hover {
       background: rgba($color: #000, $alpha: 0.1);
     }

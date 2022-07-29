@@ -1,6 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 
+interface ProductDescriptionObject {
+   id: number,
+   title: string,
+   description: string
+}
+
+interface CurrentProduct {
+   id: number,
+   name: string,
+   price: number,
+   rating: number,
+   poster: string,
+   productTypeId: number,
+   productBrandId: number,
+   description: ProductDescriptionObject[]
+}
+
 interface ShopState {
    selectionMode: boolean,
    shopPageIsActive: boolean,
@@ -8,6 +25,8 @@ interface ShopState {
    adminPanelPageIsActive: boolean,
    productPageIsActive: boolean,
    cartPageIsActive: boolean,
+   productIsDragged: boolean,
+   draggedProduct: CurrentProduct | null
    selectedType: number,
    selectedBrand: number,
    currentPage: number,
@@ -24,6 +43,8 @@ const initialState = {
    adminPanelPageIsActive: false,
    productPageIsActive: false,
    cartPageIsActive: false,
+   productIsDragged: false,
+   draggedProduct: null,
    selectedType: 0,
    selectedBrand: 0,
    currentPage: 1,
@@ -115,6 +136,18 @@ export const shopSlice = createSlice({
          } else {
             state.adminEditingType = initialState.adminEditingType
          }
+      }, setProductIsDragged(state: any, action: PayloadAction<any>) {
+         if (action.payload) {
+            state.productIsDragged = action.payload
+         } else {
+            state.productIsDragged = initialState.productIsDragged
+         }
+      }, setDraggedProduct(state: any, action: PayloadAction<any>) {
+         if (action.payload) {
+            state.draggedProduct = action.payload
+         } else {
+            state.draggedProduct = initialState.draggedProduct
+         }
       }
    }
 })
@@ -132,7 +165,9 @@ export const {
    setProductPageIsActive,
    setRoutId,
    setCartPageIsActive,
-   setAdminEditingType
+   setAdminEditingType,
+   setProductIsDragged,
+   setDraggedProduct
 } = shopSlice.actions
 
 export const getSelectionMode = (state: RootState) => state.shop.selectionMode
@@ -148,5 +183,7 @@ export const getProductsPerPage = (state: RootState) => state.shop.productsPerPa
 export const getPreviousRoute = (state: RootState) => state.shop.previousRoute
 export const getRouteId = (state: RootState) => state.shop.routId
 export const getAdminEditingType = (state: RootState) => state.shop.adminEditingType
+export const getProductIsDragged = (state: RootState) => state.shop.productIsDragged
+export const getDraggedProduct = (state: RootState) => state.shop.draggedProduct
 
 export default shopSlice.reducer
