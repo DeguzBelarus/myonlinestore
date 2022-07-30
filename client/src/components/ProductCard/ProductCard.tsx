@@ -1,6 +1,7 @@
 import { FC } from "react";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
+import { getIsAuth } from "../../app/userSlice";
 import { setProductIsDragged, setDraggedProduct } from "../../app/shopSlice";
 import { CurrentProduct } from "../../app/productSlice";
 import "./ProductCard.scss"
@@ -12,19 +13,25 @@ interface Props {
 export const ProductCard: FC<Props> = ({ productData }) => {
    const dispatch = useAppDispatch()
 
+   const isAuth: boolean = useAppSelector(getIsAuth)
+
    const dragStartHandler = (event: any) => {
-      dispatch(setProductIsDragged(true))
-      dispatch(setDraggedProduct(productData))
-      event.currentTarget.setAttribute("class", "product-card-wrapper product-dragging")
+      if (isAuth) {
+         dispatch(setProductIsDragged(true))
+         dispatch(setDraggedProduct(productData))
+         event.currentTarget.setAttribute("class", "product-card-wrapper product-dragging")
+      }
    }
 
    const dragEndHandler = (event: any) => {
-      dispatch(setProductIsDragged(false))
-      event.currentTarget.setAttribute("class", "product-card-wrapper")
+      if (isAuth) {
+         dispatch(setProductIsDragged(false))
+         event.currentTarget.setAttribute("class", "product-card-wrapper")
+      }
    }
    return <div
-      className="product-card-wrapper"
-      draggable={true}
+      className={isAuth ? "product-card-wrapper logged" : "product-card-wrapper"}
+      draggable={isAuth}
       onDragStart={dragStartHandler}
       onDragEnd={dragEndHandler}>
       <span>{productData.name}</span>

@@ -23,7 +23,6 @@ import {
    getCartPageIsActive,
    getProductIsDragged,
    setDraggedProduct,
-   setProductIsDragged,
    getDraggedProduct
 } from "../../app/shopSlice";
 import { getCurrentLanguage } from "../../app/globalSlice";
@@ -50,17 +49,23 @@ export const NavBar: FC = () => {
    const draggedProduct: CurrentProduct | null = useAppSelector(getDraggedProduct)
 
    const dragOverHandler = (event: any) => {
-      event.preventDefault()
+      if (isAuth) {
+         event.preventDefault()
+      }
    }
 
    const dragEndHandler = () => {
-      dispatch(setDraggedProduct(null))
+      if (isAuth) {
+         dispatch(setDraggedProduct(null))
+      }
    }
 
    const dropHandler = (event: any) => {
-      event.preventDefault()
-      console.log(draggedProduct);
-      dragEndHandler()
+      if (isAuth) {
+         event.preventDefault()
+         console.log(draggedProduct);
+         dragEndHandler()
+      }
    }
 
    const selectionModeHandler = () => {

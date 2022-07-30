@@ -11,7 +11,11 @@
   border: 2px solid #fff;
   border-radius: 20px;
   overflow: hidden;
-  cursor: grab;
+  cursor: default;
+
+  &.logged {
+    cursor: grab;
+  }
 
   .product-poster {
     width: auto;
