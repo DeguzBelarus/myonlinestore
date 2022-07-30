@@ -26,7 +26,7 @@ export const ProductCard: FC<Props> = ({ productData }) => {
    const dragEndHandler = (event: any) => {
       if (isAuth) {
          dispatch(setProductIsDragged(false))
-         event.currentTarget.setAttribute("class", "product-card-wrapper")
+         event.currentTarget.setAttribute("class", "product-card-wrapper logged")
       }
    }
    return <div
