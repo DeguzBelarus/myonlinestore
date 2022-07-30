@@ -207,6 +207,135 @@
   }
 }
 
+@media screen and (min-width: 320px) {
+  #registration-form {
+    width: $auth-forms-default-width + px;
+    height: $registration-form-default-height + px;
+
+    label {
+      width: $auth-inputs-default-width + px;
+      height: $auth-inputs-default-height + px;
+
+      input {
+        &:focus,
+        &:not(:placeholder-shown) {
+          + span {
+            top: -$auth-inputs-default-height * 0.5 + px;
+            left: 1px;
+            opacity: 1;
+            font-size: $auth-inputs-placeholder-default-fsize * 0.75 + px;
+          }
+        }
+      }
+
+      span {
+        top: $auth-inputs-default-height * 0.02 + px;
+        font-size: $auth-inputs-placeholder-default-fsize + px;
+      }
+    }
+  }
+
+  .buttons {
+    .loginpage-enter-button {
+      width: $auth-backto-login-button-default-width + px;
+      height: $auth-buttons-default-height + px;
+      padding: $auth-buttons-paddings;
+    }
+
+    .register-button {
+      width: $auth-register-button-default-width + px;
+      height: $auth-buttons-default-height + px;
+      padding: $auth-buttons-paddings;
+    }
+  }
+}
+
+@media screen and (min-width: 425px) {
+  #registration-form {
+    width: $auth-forms-default-width + px;
+    height: $registration-form-default-height + px;
+
+    label {
+      width: $auth-inputs-default-width + px;
+      height: $auth-inputs-default-height + px;
+
+      input {
+        &:focus,
+        &:not(:placeholder-shown) {
+          + span {
+            top: -$auth-inputs-default-height * 0.5 + px;
+            left: 1px;
+            opacity: 1;
+            font-size: $auth-inputs-placeholder-default-fsize * 0.75 + px;
+          }
+        }
+      }
+
+      span {
+        top: $auth-inputs-default-height * 0.02 + px;
+        font-size: $auth-inputs-placeholder-default-fsize + px;
+      }
+    }
+  }
+
+  .buttons {
+    .loginpage-enter-button {
+      width: $auth-backto-login-button-default-width + px;
+      height: $auth-buttons-default-height + px;
+      padding: $auth-buttons-paddings;
+    }
+
+    .register-button {
+      width: $auth-register-button-default-width + px;
+      height: $auth-buttons-default-height + px;
+      padding: $auth-buttons-paddings;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #registration-form {
+    width: $auth-forms-default-width + px;
+    height: $registration-form-default-height + px;
+
+    label {
+      width: $auth-inputs-default-width + px;
+      height: $auth-inputs-default-height + px;
+
+      input {
+        &:focus,
+        &:not(:placeholder-shown) {
+          + span {
+            top: -$auth-inputs-default-height * 0.5 + px;
+            left: 1px;
+            opacity: 1;
+            font-size: $auth-inputs-placeholder-default-fsize * 0.75 + px;
+          }
+        }
+      }
+
+      span {
+        top: $auth-inputs-default-height * 0.02 + px;
+        font-size: $auth-inputs-placeholder-default-fsize + px;
+      }
+    }
+  }
+
+  .buttons {
+    .loginpage-enter-button {
+      width: $auth-backto-login-button-default-width + px;
+      height: $auth-buttons-default-height + px;
+      padding: $auth-buttons-paddings;
+    }
+
+    .register-button {
+      width: $auth-register-button-default-width + px;
+      height: $auth-buttons-default-height + px;
+      padding: $auth-buttons-paddings;
+    }
+  }
+}
+
 @media screen and (min-width: 1024px) {
   #registration-form {
     width: $auth-forms-default-width + px;
