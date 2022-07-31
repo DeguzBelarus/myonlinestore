@@ -5,6 +5,7 @@
   height: $shop-product-card-default-height + px;
   max-height: $shop-product-card-default-height + px;
   @include flex-column-line-center-vertical-top;
+  position: relative;
   padding: 5px;
   transition-property: border-color, box-shadow;
   transition-duration: 1.2s;
@@ -12,6 +13,16 @@
   border-radius: 20px;
   overflow: hidden;
   cursor: default;
+
+  .product-name-span {
+    font-weight: bold;
+    color: $shop-product-card-name-fcolor;
+  }
+
+  .product-price-span {
+    font-weight: bold;
+    color: $shop-product-card-price-fcolor;
+  }
 
   &.logged {
     cursor: grab;
@@ -21,6 +32,28 @@
     width: auto;
     height: 80%;
     @include user-select-none;
+  }
+
+  .cart-icon {
+    width: 19px;
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    opacity: 0;
+    transition-property: filter, opacity;
+    transition-duration: 0.3s, 1.2s;
+    cursor: pointer;
+  }
+
+  .favorite-icon {
+    width: 16px;
+    position: absolute;
+    bottom: 8px;
+    left: 12px;
+    opacity: 0;
+    transition-property: filter, opacity;
+    transition-duration: 0.3s, 1.2s;
+    cursor: pointer;
   }
 }
 
@@ -32,6 +65,16 @@
 
       &.product-dragging {
         border-color: $shop-product-card-dragged-bcolor;
+      }
+
+      .cart-icon,
+      .favorite-icon {
+        opacity: 1;
+
+        &:hover {
+          -webkit-filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7));
+          filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7));
+        }
       }
     }
   }

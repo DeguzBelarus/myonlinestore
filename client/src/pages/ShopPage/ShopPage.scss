@@ -4,6 +4,7 @@
   width: 100%;
   height: calc(100vh - #{($navbar-default-height + px)});
   @include flex-column-line-center-vertical-top;
+  position: relative;
   background-color: #fff;
 
   .products-cards-wrapper {
@@ -19,5 +20,13 @@
     &.loading {
       @include flex-all-center;
     }
+  }
+
+  .copyright-span {
+    @include user-select-none;
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    font-size: $default-font-size * 0.8 + px;
   }
 }

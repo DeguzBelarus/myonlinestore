@@ -68,5 +68,6 @@ export const ShopPage: FC = () => {
             })
             : "loading..."}
       </div>
+      <span className="copyright-span">© Deguz, designed with: Lysa, 2022</span>
    </div>
 }

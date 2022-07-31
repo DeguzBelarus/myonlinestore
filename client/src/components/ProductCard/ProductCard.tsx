@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { getIsAuth } from "../../app/userSlice";
 import { setProductIsDragged, setDraggedProduct } from "../../app/shopSlice";
 import { CurrentProduct } from "../../app/productSlice";
+import cartIcon from "../../assets/cart-icon.svg"
+import favoriteIcon from "../../assets/favorite-icon.svg"
 import "./ProductCard.scss"
 
 interface Props {
@@ -34,12 +36,21 @@ export const ProductCard: FC<Props> = ({ productData }) => {
       draggable={isAuth}
       onDragStart={dragStartHandler}
       onDragEnd={dragEndHandler}>
-      <span>{productData.name}</span>
+      <span className="product-name-span">{productData.name}</span>
       <img
          className="product-poster"
          draggable={false}
          src={`/${productData.productTypeId}/${productData.productBrandId}/${productData.name}/${productData.poster}`}
          alt="a product preview" />
-      <span>{productData.price} $</span>
+      <span className="product-price-span">{productData.price} $</span>
+      <img
+         className="cart-icon"
+         src={cartIcon}
+         alt="a product cart" />
+
+      <img
+         className="favorite-icon"
+         src={favoriteIcon}
+         alt="a product cart" />
    </div>
 }

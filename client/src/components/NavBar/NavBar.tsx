@@ -28,7 +28,7 @@ import {
 import { getCurrentLanguage } from "../../app/globalSlice";
 import { CurrentProduct } from "../../app/productSlice";
 import { LanguageSwitcher } from "../LanguageSwitcher/LanguageSwitcher";
-import mainLogo from "../../assets/main-logo.png"
+import mainLogo from "../../assets/main-logo.svg"
 import "./NavBar.scss"
 
 export const NavBar: FC = () => {
@@ -129,7 +129,8 @@ export const NavBar: FC = () => {
             className="logo-link"
          >
             <img src={mainLogo} className="main-logo" alt="main logo" />
-            MyOnlineStore</Link>
+            MyOnlineStore
+         </Link>
          {shopPageIsActive &&
             <button
                type="button"
