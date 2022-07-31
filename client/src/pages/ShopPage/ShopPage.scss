@@ -12,7 +12,7 @@
     height: $shop-products-cards-wrapper-default-height + px;
     @include flex-line-start-vertical-top;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 15px;
     padding: 50px 80px;
     background-color: #fff;
     overflow-y: scroll;
