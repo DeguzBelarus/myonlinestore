@@ -19,6 +19,12 @@
     color: $shop-product-card-name-fcolor;
   }
 
+  .product-brand-span {
+    font-size: $default-font-size * 0.9 + px;
+    font-weight: bold;
+    color: #000;
+  }
+
   .product-price-span {
     font-weight: bold;
     color: $shop-product-card-price-fcolor;
@@ -30,7 +36,7 @@
 
   .product-poster {
     width: auto;
-    height: 80%;
+    height: 75%;
     @include user-select-none;
   }
 

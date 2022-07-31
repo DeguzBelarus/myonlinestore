@@ -7,7 +7,9 @@ import {
    getAllProducts,
    GetProductsQueryParams,
    CurrentProduct,
-   getProductStatus
+   getProductStatus,
+   getBrandsAsync,
+   getTypesAsync,
 } from "../../app/productSlice";
 import {
    setShopPageIsActive,
@@ -38,13 +40,14 @@ export const ShopPage: FC = () => {
       typeId: selectedType,
       brandId: selectedBrand
    }
-
    useEffect(() => {
       document.title = currentLanguage === "ru" ? "MyOnlineStore: Главная страница" : "MyOnlineStore: Main page"
       document.documentElement.lang = currentLanguage === "ru" ? "ru" : "en"
    }, [currentLanguage])
 
    useEffect(() => {
+      dispatch(getBrandsAsync())
+      dispatch(getTypesAsync())
       dispatch(getProductsAsync(getProductsQueryParams))
       dispatch(setShopPageIsActive(true))
       navigate("/shop")
