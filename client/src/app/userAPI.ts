@@ -69,3 +69,32 @@ export function getAllUsers(url: string, token: string) {
       console.error("\x1b[40m\x1b[31m\x1b[1m", exception.message);
    }
 }
+
+export function getCartProducts(url: string, token: string) {
+   try {
+      return fetch(url, {
+         method: "GET",
+         headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+         }
+      })
+   } catch (exception: any) {
+      console.error("\x1b[40m\x1b[31m\x1b[1m", exception.message);
+   }
+}
+
+export function addCartProduct(url: string, body: any, token: string) {
+   try {
+      return fetch(url, {
+         method: "POST",
+         body: body,
+         headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+         }
+      })
+   } catch (exception: any) {
+      console.error("\x1b[40m\x1b[31m\x1b[1m", exception.message);
+   }
+}

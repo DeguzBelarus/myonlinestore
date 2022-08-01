@@ -5,7 +5,9 @@ import {
    checkAuthorization,
    getAllUsers,
    deleteUser,
-   updateUser
+   updateUser,
+   getCartProducts,
+   addCartProduct
 } from "./userAPI"
 import jwtDecode from "jwt-decode"
 
@@ -17,16 +19,23 @@ export interface UserObject {
    role: string
 }
 
+export interface CartProduct {
+   id: number,
+   cartId: number,
+   productId: number
+}
+
 interface UserState {
    token: string,
    isAuth: boolean,
    role: string,
-   userId: string | null,
+   userId: string,
    nickname: string | null,
    isStayLoggedIn: boolean,
    registrationEmail: string,
    authMessage: string,
    users: UserObject[],
+   cartProducts: CartProduct[],
    authStatus: "idle" | "loading" | "failed"
 }
 
@@ -34,12 +43,13 @@ const initialState = {
    token: "",
    isAuth: false,
    role: "USER",
-   userId: null,
+   userId: "",
    nickname: null,
    isStayLoggedIn: true,
    registrationEmail: "",
    authMessage: "",
    users: [],
+   cartProducts: [],
    authStatus: "idle"
 } as UserState
 
@@ -124,6 +134,36 @@ export const getAllUsersAsync = createAsyncThunk(
       return await response.json()
    }
 )
+
+export interface GetCartProductsObject {
+   id: string,
+   token: string,
+   lang: string
+}
+
+export const getCartProductsAsync = createAsyncThunk(
+   "user/cart/getall",
+   async (data: GetCartProductsObject) => {
+      const url = `/api/user/${data.id}/cart?${data.lang}`
+      const response: any = await getCartProducts(url, data.token)
+      return await response.json()
+   }
+)
+
+export interface AddCartProductsObject {
+   token: string,
+   data: { id: string, productId: number },
+   lang: string
+}
+
+export const addCartProductAsync = createAsyncThunk(
+   "user/cart/add",
+   async (body: AddCartProductsObject) => {
+      const url = `/api/user/addtocart?${body.lang}`
+      const response: any = await addCartProduct(url, JSON.stringify(body.data), body.token)
+      return await response.json()
+   }
+)
 // thunks 
 
 export const userSlice = createSlice({
@@ -177,6 +217,12 @@ export const userSlice = createSlice({
             state.registrationEmail = action.payload
          } else {
             state.registrationEmail = initialState.registrationEmail
+         }
+      }, setCartProducts(state: any, action: PayloadAction<any>) {
+         if (action.payload) {
+            state.cartProducts = action.payload
+         } else {
+            state.cartProducts = initialState.cartProducts
          }
       }
    }, extraReducers: (builder) => {
@@ -313,7 +359,25 @@ export const userSlice = createSlice({
             state.authStatus = "failed"
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
-      // delete user
+         // delete user
+
+         // get cart products
+         .addCase(getCartProductsAsync.fulfilled, (state, action) => {
+            state.cartProducts = action.payload
+         })
+         .addCase(getCartProductsAsync.rejected, (state, action) => {
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+         // get cart products
+
+         // add product to cart
+         .addCase(addCartProductAsync.fulfilled, (state, action) => {
+            state.cartProducts = action.payload
+         })
+         .addCase(addCartProductAsync.rejected, (state, action) => {
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+      // add product to cart
    }
 })
 
@@ -325,7 +389,8 @@ export const {
    setUserId,
    setUserNickname,
    setUserRole,
-   setRegistrationEmail
+   setRegistrationEmail,
+   setCartProducts
 } = userSlice.actions
 
 export const getIsAuth = (state: RootState) => state.user.isAuth
@@ -338,5 +403,6 @@ export const getIsStayLoggedIn = (state: RootState) => state.user.isStayLoggedIn
 export const getToken = (state: RootState) => state.user.token
 export const getRegistrationEmail = (state: RootState) => state.user.registrationEmail
 export const getUsers = (state: RootState) => state.user.users
+export const getProductsInCart = (state: RootState) => state.user.cartProducts
 
 export default userSlice.reducer

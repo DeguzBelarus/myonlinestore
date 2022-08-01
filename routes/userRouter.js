@@ -7,8 +7,10 @@ const checkRoleMiddleware = require("../middleware/checkRoleMiddleware");
 
 router.get("/authcheck", checkAuthMiddleware, userController.authCheck);
 router.get("/", checkRoleMiddleware("ADMIN", "CREATOR"), userController.getAll);
+router.get("/:id/cart", checkAuthMiddleware, userController.getCartProducts);
 router.post("/registration", userController.registration);
 router.post("/login", userController.login);
+router.post("/addtocart", checkAuthMiddleware, userController.addCartProduct);
 router.put(
   "/:id",
   checkRoleMiddleware("ADMIN", "CREATOR"),

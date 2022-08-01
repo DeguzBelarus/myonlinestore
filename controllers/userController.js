@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const ApiError = require("../errors/ApiError");
-const { User } = require("../models/dbmodels");
+const { User, Cart, CartProduct } = require("../models/dbmodels");
 
 class UserController {
   async registration(request, response, next) {
@@ -109,6 +109,8 @@ class UserController {
         process.env.SECRET_KEY,
         { expiresIn: "13h" }
       );
+
+      await Cart.create({ userId: newUser.id });
 
       return response.status(201).json({
         token,
@@ -230,7 +232,8 @@ class UserController {
     try {
       const { id } = request.params;
       const { lang } = request.query;
-      const deletedUser = await User.destroy({ where: { id: id } });
+
+      const deletedUser = await User.findOne({ where: { id: id } });
       if (deletedUser) {
         const requestUserRole = request.user.role;
         if (requestUserRole !== "CREATOR" && deletedUser.role === "CREATOR") {
@@ -238,6 +241,15 @@ class UserController {
             message: lang === "ru" ? "Нет прав" : "No rights",
           });
         }
+
+        const foundCart = await Cart.findOne({ where: { userId: id } });
+
+        if (foundCart) {
+          await CartProduct.destroy({ where: { cartId: foundCart.id } });
+          await Cart.destroy({ where: { userId: id } });
+        }
+
+        await User.destroy({ where: { id: id } });
 
         const allUsers = await User.findAll();
         return response.json(allUsers);
@@ -258,6 +270,60 @@ class UserController {
     try {
       const allUsers = await User.findAll();
       return response.json(allUsers);
+    } catch (exception) {
+      next(ApiError.badRequest(exception.message));
+    }
+  }
+
+  async getCartProducts(request, response, next) {
+    try {
+      const { id } = request.params;
+      const { lang } = request.query;
+
+      const foundCart = await Cart.findOne({ where: { userId: id } });
+
+      if (!foundCart) {
+        return next(
+          ApiError.badRequest(
+            lang === "ru"
+              ? "Запрашивая корзина покупок не найдена"
+              : "Requesting shopping cart not found"
+          )
+        );
+      }
+
+      const cartProducts = await CartProduct.findAll({
+        where: { cartId: foundCart.id },
+      });
+      return response.json(cartProducts);
+    } catch (exception) {
+      next(ApiError.badRequest(exception.message));
+    }
+  }
+
+  async addCartProduct(request, response, next) {
+    try {
+      const { id, productId } = request.body;
+      const { lang } = request.query;
+
+      const foundCart = await Cart.findOne({ where: { userId: id } });
+
+      if (!foundCart) {
+        return next(
+          ApiError.badRequest(
+            lang === "ru"
+              ? "Запрашивая корзина покупок не найдена"
+              : "Requesting shopping cart not found"
+          )
+        );
+      }
+
+      await CartProduct.create({ cartId: foundCart.id, productId });
+
+      const cartProducts = await CartProduct.findAll({
+        where: { cartId: foundCart.id },
+      });
+      return response.status(201).json(cartProducts);
     } catch (exception) {
       next(ApiError.badRequest(exception.message));
     }

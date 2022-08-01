@@ -23,6 +23,14 @@ const ProductDescription = sequelize.define("product_description", {
   description: { type: DataTypes.STRING, allowNull: false },
 });
 
+const Cart = sequelize.define("cart", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+});
+
+const CartProduct = sequelize.define("cart_product", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+});
+
 const Rating = sequelize.define("product_rating", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   rate: { type: DataTypes.INTEGER, allowNull: false },
@@ -42,11 +50,20 @@ const TypeBrand = sequelize.define("type-brand", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
-User.hasOne(Rating);
+User.hasMany(Rating);
 Rating.belongsTo(User);
 
 Product.hasMany(Rating);
 Rating.belongsTo(Product);
+
+User.hasOne(Cart);
+Cart.belongsTo(User);
+
+Cart.hasMany(CartProduct);
+CartProduct.belongsTo(Cart);
+
+Product.hasMany(CartProduct);
+CartProduct.belongsTo(Product);
 
 Product.hasMany(ProductDescription, { as: "description" });
 ProductDescription.belongsTo(Product);
@@ -68,4 +85,6 @@ module.exports = {
   Rating,
   ProductDescription,
   TypeBrand,
+  Cart,
+  CartProduct,
 };

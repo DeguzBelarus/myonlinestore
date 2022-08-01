@@ -3,6 +3,7 @@
 //== navbar
 $navbar-color: #f00cbb;
 $navbar-cart-button-productDragging-color: #0aad0a;
+$navbar-cart-button-notEmpty-color: #ff8c00;
 $selection-bar-color: rgba(#8f0d70, 0.1);
 //== navbar
 //== auth page
@@ -75,7 +76,7 @@ $navbar-auth-button-default-width: 110;
 $navbar-product-choose-button-default-width: 135;
 $navbar-admin-panel-button-default-width: 125;
 $navbar-logout-button-default-width: 61;
-$navbar-cart-button-default-width: 80;
+$navbar-cart-button-default-width: 135;
 //== navbar
 
 //== auth page

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
@@ -9,7 +9,14 @@ import {
    setUserRole,
    setUserId,
    setUserNickname,
-   setToken
+   setToken,
+   getProductsInCart,
+   getCartProductsAsync,
+   CartProduct,
+   setCartProducts,
+   getUserId,
+   getToken,
+   addCartProductAsync
 } from "../../app/userSlice";
 import {
    getSelectionMode,
@@ -23,7 +30,7 @@ import {
    getCartPageIsActive,
    getProductIsDragged,
    setDraggedProduct,
-   getDraggedProduct
+   getDraggedProduct,
 } from "../../app/shopSlice";
 import { getCurrentLanguage } from "../../app/globalSlice";
 import { CurrentProduct } from "../../app/productSlice";
@@ -37,6 +44,8 @@ export const NavBar: FC = () => {
 
    const isAuth: boolean = useAppSelector(getIsAuth)
    const userRole: string = useAppSelector(getUserRole)
+   const userId: string | null = useAppSelector(getUserId)
+   const token: string | null = useAppSelector(getToken)
    const selectionMode: boolean = useAppSelector(getSelectionMode)
    const shopPageIsActive: boolean = useAppSelector(getShopPageIsActive)
    const cartPageIsActive: boolean = useAppSelector(getCartPageIsActive)
@@ -47,6 +56,7 @@ export const NavBar: FC = () => {
    const currentLanguage: string = useAppSelector(getCurrentLanguage)
    const productIsDragged: boolean = useAppSelector(getProductIsDragged)
    const draggedProduct: CurrentProduct | null = useAppSelector(getDraggedProduct)
+   const cartProducts: CartProduct[] = useAppSelector(getProductsInCart)
 
    const dragOverHandler = (event: any) => {
       if (isAuth) {
@@ -63,7 +73,13 @@ export const NavBar: FC = () => {
    const dropHandler = (event: any) => {
       if (isAuth) {
          event.preventDefault()
-         console.log(draggedProduct);
+         if (draggedProduct?.id) {
+            dispatch(addCartProductAsync({
+               lang: currentLanguage,
+               token: token,
+               data: { id: userId, productId: draggedProduct.id }
+            }))
+         }
          dragEndHandler()
       }
    }
@@ -122,6 +138,13 @@ export const NavBar: FC = () => {
       }
    }
 
+   useEffect(() => {
+      if (isAuth) {
+         dispatch(getCartProductsAsync({ id: userId, token: token, lang: currentLanguage }))
+      } else {
+         setCartProducts([])
+      }
+   }, [isAuth])
    return <div className="navbar">
       <div className="navbar-actions-wrapper">
          <Link
@@ -155,11 +178,16 @@ export const NavBar: FC = () => {
                   {!cartPageIsActive &&
                      <button
                         type="button"
-                        className={productIsDragged ? "cart-page-button product-dragging" : "cart-page-button"}
+                        className={productIsDragged
+                           ? cartProducts.length ? "cart-page-button product-dragging" : "cart-page-button product-dragging"
+                           : cartProducts.length ? "cart-page-button notempty" : "cart-page-button"}
                         onClick={cartPageEnter}
                         onDragOver={dragOverHandler}
-                        onDrop={dropHandler}
-                     >{currentLanguage === "ru" ? "Корзина" : "Cart"}</button>}
+                        onDrop={dropHandler}>
+                        {currentLanguage === "ru"
+                           ? cartProducts.length ? `Корзина: ${cartProducts.length} шт.` : `Корзина`
+                           : cartProducts.length ? `Cart: ${cartProducts.length} pcs.` : `Cart`}
+                     </button>}
                   {!adminPanelPageIsActive &&
                      <button
                         type="button"
@@ -177,11 +205,16 @@ export const NavBar: FC = () => {
                   {!cartPageIsActive &&
                      <button
                         type="button"
-                        className={productIsDragged ? "cart-page-button product-dragging" : "cart-page-button"}
+                        className={productIsDragged
+                           ? cartProducts.length ? "cart-page-button product-dragging" : "cart-page-button product-dragging"
+                           : cartProducts.length ? "cart-page-button notempty" : "cart-page-button"}
                         onClick={cartPageEnter}
                         onDragOver={dragOverHandler}
-                        onDrop={dropHandler}
-                     >{currentLanguage === "ru" ? "Корзина" : "Cart"}</button>}
+                        onDrop={dropHandler}>
+                        {currentLanguage === "ru"
+                           ? cartProducts.length ? `Корзина: ${cartProducts.length} шт.` : `Корзина`
+                           : cartProducts.length ? `Cart: ${cartProducts.length} pcs.` : `Cart`}
+                     </button>}
                   <button
                      type="button"
                      className="logout-button"

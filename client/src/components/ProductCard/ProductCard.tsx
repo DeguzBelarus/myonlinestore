@@ -1,13 +1,19 @@
 import { FC } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
-import { getIsAuth } from "../../app/userSlice";
+import {
+   getIsAuth,
+   addCartProductAsync,
+   getToken,
+   getUserId
+} from "../../app/userSlice";
 import { setProductIsDragged, setDraggedProduct } from "../../app/shopSlice";
 import {
    CurrentProduct,
    TypeOrBrandObject,
    getProductsBrands
 } from "../../app/productSlice";
+import { getCurrentLanguage } from "../../app/globalSlice";
 import cartIcon from "../../assets/cart-icon.svg"
 import favoriteIcon from "../../assets/favorite-icon.svg"
 import "./ProductCard.scss"
@@ -21,6 +27,9 @@ export const ProductCard: FC<Props> = ({ productData }) => {
 
    const isAuth: boolean = useAppSelector(getIsAuth)
    const productsBrands: TypeOrBrandObject[] = useAppSelector(getProductsBrands)
+   const userId: string | null = useAppSelector(getUserId)
+   const token: string | null = useAppSelector(getToken)
+   const currentLanguage: string = useAppSelector(getCurrentLanguage)
 
    const dragStartHandler = (event: any) => {
       if (isAuth) {
@@ -36,6 +45,14 @@ export const ProductCard: FC<Props> = ({ productData }) => {
          event.currentTarget.setAttribute("class", "product-card-wrapper logged")
       }
    }
+
+   const addProductToCart = () => {
+      dispatch(addCartProductAsync({
+         lang: currentLanguage,
+         token: token,
+         data: { id: userId, productId: productData.id }
+      }))
+   }
    return <div
       className={isAuth ? "product-card-wrapper logged" : "product-card-wrapper"}
       draggable={isAuth}
@@ -50,14 +67,19 @@ export const ProductCard: FC<Props> = ({ productData }) => {
          src={`/${productData.productTypeId}/${productData.productBrandId}/${productData.name}/${productData.poster}`}
          alt="a product preview" />
       <span className="product-price-span">{productData.price} $</span>
-      <img
-         className="cart-icon"
-         src={cartIcon}
-         alt="a product cart" />
 
-      <img
-         className="favorite-icon"
-         src={favoriteIcon}
-         alt="a product cart" />
+      {isAuth
+         && <>
+            <img
+               className="favorite-icon"
+               src={favoriteIcon}
+               alt="a product cart" />
+
+            <img
+               className="cart-icon"
+               src={cartIcon}
+               onClick={addProductToCart}
+               alt="a product cart" />
+         </>}
    </div>
 }

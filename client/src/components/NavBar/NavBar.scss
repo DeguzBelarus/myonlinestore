@@ -55,10 +55,19 @@
       cursor: pointer;
 
       &.product-dragging {
-        background: rgba(
+        background-color: rgba(
           $color: $navbar-cart-button-productDragging-color,
           $alpha: 0.8
         );
+      }
+
+      &.notempty {
+        &:not(:hover) {
+          background-color: rgba(
+            $color: $navbar-cart-button-notEmpty-color,
+            $alpha: 0.8
+          );
+        }
       }
     }
 
