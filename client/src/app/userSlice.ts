@@ -7,7 +7,8 @@ import {
    deleteUser,
    updateUser,
    getCartProducts,
-   addCartProduct
+   addCartProduct,
+   deleteCartProduct
 } from "./userAPI"
 import jwtDecode from "jwt-decode"
 
@@ -23,6 +24,15 @@ export interface CartProduct {
    id: number,
    cartId: number,
    productId: number
+   details?: {
+      id: number,
+      name: string,
+      price: number,
+      rating: number,
+      poster: string,
+      productTypeId: number,
+      productBrandId: number
+   }
 }
 
 interface UserState {
@@ -161,6 +171,21 @@ export const addCartProductAsync = createAsyncThunk(
    async (body: AddCartProductsObject) => {
       const url = `/api/user/addtocart?${body.lang}`
       const response: any = await addCartProduct(url, JSON.stringify(body.data), body.token)
+      return await response.json()
+   }
+)
+
+export interface DeleteCartProductRequestObject {
+   id: string,
+   token: string,
+   lang: string
+}
+
+export const deleteCartProductAsync = createAsyncThunk(
+   "user/cart/delete",
+   async (data: DeleteCartProductRequestObject) => {
+      const url = `/api/user/${data.id}/cart/delete?${data.lang}`
+      const response: any = await deleteCartProduct(url, data.token)
       return await response.json()
    }
 )
@@ -377,7 +402,16 @@ export const userSlice = createSlice({
          .addCase(addCartProductAsync.rejected, (state, action) => {
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
-      // add product to cart
+         // add product to cart
+
+         // delete product from cart
+         .addCase(deleteCartProductAsync.fulfilled, (state, action) => {
+            state.cartProducts = action.payload
+         })
+         .addCase(deleteCartProductAsync.rejected, (state, action) => {
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+      // delete product from cart
    }
 })
 

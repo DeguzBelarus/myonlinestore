@@ -328,8 +328,50 @@ class UserController {
 
       const cartProducts = await CartProduct.findAll({
         where: { cartId: foundCart.id },
+        include: [
+          {
+            model: Product,
+            as: "details",
+          },
+        ],
       });
       return response.status(201).json(cartProducts);
+    } catch (exception) {
+      next(ApiError.badRequest(exception.message));
+    }
+  }
+
+  async deleteCartProduct(request, response, next) {
+    try {
+      const { id } = request.params;
+      const { lang } = request.query;
+
+      const deletedCartProduct = await CartProduct.findOne({
+        where: { id: id },
+      });
+      if (deletedCartProduct) {
+        await CartProduct.destroy({
+          where: { id: id },
+        });
+
+        const cartProducts = await CartProduct.findAll({
+          where: { cartId: deletedCartProduct.cartId },
+          include: [
+            {
+              model: Product,
+              as: "details",
+            },
+          ],
+        });
+        return response.json(cartProducts);
+      } else {
+        return response.status(204).json({
+          message:
+            lang === "ru"
+              ? "Указанный товар не найден в корзине"
+              : "The specified product was not found in the cart",
+        });
+      }
     } catch (exception) {
       next(ApiError.badRequest(exception.message));
     }

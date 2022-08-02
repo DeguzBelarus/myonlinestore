@@ -1,2 +1,19 @@
+@import "../../variables";
+
 .shopping-cart-page-wrapper {
+  width: 100%;
+  height: calc(100vh - #{($navbar-default-height + px)});
+  @include flex-column-line-center-vertical-top;
+  position: relative;
+  padding-top: 50px;
+  background-color: #fff;
+
+  .cart-items-wrapper {
+    width: $cart-items-wrapper-default-width + px;
+    min-height: $cart-items-wrapper-default-minHeight + px;
+    @include flex-column-line-center-vertical-top;
+    position: relative;
+    border: 2px solid $cart-items-wrapper-bcolor;
+    background-color: #fff;
+  }
 }

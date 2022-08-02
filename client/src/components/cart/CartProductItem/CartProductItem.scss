@@ -1,0 +1,8 @@
+@import "../../../variables";
+
+.cart-product-item-wrapper {
+  width: 100%;
+  height: $cart-item-default-height + px;
+  @include flex-line-start-vertical-center;
+  border: 1px solid $cart-item-bcolor;
+}

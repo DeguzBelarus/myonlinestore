@@ -21,5 +21,10 @@ router.delete(
   checkRoleMiddleware("ADMIN", "CREATOR"),
   userController.delete
 );
+router.delete(
+  "/:id/cart/delete",
+  checkAuthMiddleware,
+  userController.deleteCartProduct
+);
 
 module.exports = router;
