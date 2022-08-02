@@ -249,6 +249,12 @@ export const userSlice = createSlice({
          } else {
             state.cartProducts = initialState.cartProducts
          }
+      }, setAuthStatus(state: any, action: PayloadAction<any>) {
+         if (action.payload) {
+            state.authStatus = action.payload
+         } else {
+            state.authStatus = initialState.authStatus
+         }
       }
    }, extraReducers: (builder) => {
       builder
@@ -387,28 +393,43 @@ export const userSlice = createSlice({
          // delete user
 
          // get cart products
+         .addCase(getCartProductsAsync.pending, (state) => {
+            state.authStatus = "loading"
+         })
          .addCase(getCartProductsAsync.fulfilled, (state, action) => {
+            state.authStatus = "idle"
             state.cartProducts = action.payload
          })
          .addCase(getCartProductsAsync.rejected, (state, action) => {
+            state.authStatus = "failed"
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
          // get cart products
 
          // add product to cart
+         .addCase(addCartProductAsync.pending, (state) => {
+            state.authStatus = "loading"
+         })
          .addCase(addCartProductAsync.fulfilled, (state, action) => {
+            state.authStatus = "idle"
             state.cartProducts = action.payload
          })
          .addCase(addCartProductAsync.rejected, (state, action) => {
+            state.authStatus = "failed"
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
          // add product to cart
 
          // delete product from cart
+         .addCase(deleteCartProductAsync.pending, (state) => {
+            state.authStatus = "loading"
+         })
          .addCase(deleteCartProductAsync.fulfilled, (state, action) => {
+            state.authStatus = "idle"
             state.cartProducts = action.payload
          })
          .addCase(deleteCartProductAsync.rejected, (state, action) => {
+            state.authStatus = "failed"
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
       // delete product from cart
@@ -424,7 +445,8 @@ export const {
    setUserNickname,
    setUserRole,
    setRegistrationEmail,
-   setCartProducts
+   setCartProducts,
+   setAuthStatus
 } = userSlice.actions
 
 export const getIsAuth = (state: RootState) => state.user.isAuth

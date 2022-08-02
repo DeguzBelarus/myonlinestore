@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import { getCurrentLanguage } from "../../app/globalSlice";
 import { setAuthorizationPageIsActive, getPreviousRoute } from "../../app/shopSlice";
-import { getIsAuth } from "../../app/userSlice";
+import { getIsAuth, setAuthMessage, setAuthStatus } from "../../app/userSlice";
 import { LoginForm } from "../../components/LoginForm/LoginForm";
 import { RegistrationForm } from "../../components/RegistrationForm/RegistrationForm";
 import "./AuthorizationPage.scss"
@@ -33,6 +33,8 @@ export const AuthorizationPage: FC<Props> = ({ type }) => {
 
    useEffect(() => {
       dispatch(setAuthorizationPageIsActive(true))
+      dispatch(setAuthStatus("idle"))
+      dispatch(setAuthMessage(""))
 
       return () => {
          dispatch(setAuthorizationPageIsActive(false))
