@@ -24,7 +24,7 @@ export const CartProductItem: FC<Props> = ({ data }) => {
 
    return <div className="cart-product-item-wrapper">
       <span>{data.details?.name}</span>
-      <span>{data.details?.price}</span>
+      <span>{`${data.details?.price} USD`}</span>
       <button
          className="remove-cart-product-button"
          onClick={() => removeCartProductHandler(data.id.toString())}>

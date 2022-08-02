@@ -26,11 +26,17 @@ export const ShoppingCartPage: FC = () => {
       }
    }, [])
    return <div className="shopping-cart-page-wrapper">
-      Shopping cart
-      <div className="cart-items-wrapper">
-         {productsInCart.map((cartItem: CartProduct) => {
-            return <CartProductItem data={cartItem} key={cartItem.id} />
-         })}
+      <div className={productsInCart.length ? "cart-items-wrapper" : "cart-items-wrapper empty"}>
+         {productsInCart.length
+            ? productsInCart.map((cartItem: CartProduct) => {
+               return <CartProductItem data={cartItem} key={cartItem.id} />
+            })
+            : <span
+               className="about-emptiness-span">
+               {currentLanguage === "ru"
+                  ? "Ваша Корзина пуста :("
+                  : "Your Shopping cart is empty :("}
+            </span>}
       </div>
    </div>
 }

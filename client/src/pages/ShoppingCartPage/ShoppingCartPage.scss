@@ -15,5 +15,14 @@
     position: relative;
     border: 2px solid $cart-items-wrapper-bcolor;
     background-color: #fff;
+
+    &.empty {
+      @include flex-all-center;
+    }
+
+    .about-emptiness-span {
+      font-weight: bold;
+      color: $cart-items-wrapper-bcolor;
+    }
   }
 }
