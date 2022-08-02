@@ -63,7 +63,7 @@ Cart.hasMany(CartProduct);
 CartProduct.belongsTo(Cart);
 
 Product.hasMany(CartProduct);
-CartProduct.belongsTo(Product);
+CartProduct.belongsTo(Product, { as: "details", foreignKey: "productId" });
 
 Product.hasMany(ProductDescription, { as: "description" });
 ProductDescription.belongsTo(Product);

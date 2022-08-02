@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const ApiError = require("../errors/ApiError");
-const { User, Cart, CartProduct } = require("../models/dbmodels");
+const { User, Cart, CartProduct, Product } = require("../models/dbmodels");
 
 class UserController {
   async registration(request, response, next) {
@@ -294,6 +294,12 @@ class UserController {
 
       const cartProducts = await CartProduct.findAll({
         where: { cartId: foundCart.id },
+        include: [
+          {
+            model: Product,
+            as: "details",
+          },
+        ],
       });
       return response.json(cartProducts);
     } catch (exception) {
