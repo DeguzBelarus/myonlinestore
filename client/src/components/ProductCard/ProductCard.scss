@@ -15,17 +15,19 @@
   cursor: default;
 
   .product-name-span {
+    font-size: $default-font-size * 1 + px;
     font-weight: bold;
     color: $shop-product-card-name-fcolor;
   }
 
   .product-brand-span {
-    font-size: $default-font-size * 0.9 + px;
+    font-size: $default-font-size * 0.85 + px;
     font-weight: bold;
     color: #000;
   }
 
   .product-price-span {
+    font-size: $default-font-size * 0.8 + px;
     font-weight: bold;
     color: $shop-product-card-price-fcolor;
   }

@@ -66,7 +66,7 @@ export const ProductCard: FC<Props> = ({ productData }) => {
          draggable={false}
          src={`/${productData.productTypeId}/${productData.productBrandId}/${productData.name}/${productData.poster}`}
          alt="a product preview" />
-      <span className="product-price-span">{productData.price} $</span>
+      <span className="product-price-span">{productData.price} USD</span>
 
       {isAuth
          && <>
