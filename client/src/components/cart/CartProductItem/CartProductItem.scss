@@ -3,15 +3,21 @@
 .cart-product-item-wrapper {
   width: 100%;
   height: $cart-item-default-height + px;
+  min-height: $cart-item-default-height + px;
+
   @include flex-line-start-vertical-center;
   gap: 5px;
   border: 1px solid $cart-item-bcolor;
 
-  .remove-cart-product-button {
+  .poster {
+    height: 100%;
+  }
+
+  .remove-cart-product-button,
+  .add-cart-product-button {
     @include flex-all-center;
     @include user-select-none;
     position: relative;
-    margin-left: 50px;
     padding: 5px 10px;
     color: $auth-backto-login-button-fcolor;
     border: 2px solid $auth-backto-login-button-bcolor;

@@ -11,17 +11,32 @@
   .cart-items-wrapper {
     width: $cart-items-wrapper-default-width + px;
     min-height: $cart-items-wrapper-default-minHeight + px;
+    max-height: $cart-items-wrapper-default-maxHeight + px;
     @include flex-column-line-center-vertical-top;
+    @include user-select-none;
+    gap: 2px;
     position: relative;
     border: 2px solid $cart-items-wrapper-bcolor;
     background-color: #fff;
+    overflow-y: scroll;
 
     &.empty {
       @include flex-all-center;
     }
 
     .about-emptiness-span {
+      @include user-select-none;
       font-weight: bold;
+      color: $cart-items-wrapper-bcolor;
+    }
+  }
+
+  .total-cost-paragraph {
+    @include user-select-none;
+    font-weight: bold;
+    color: #000;
+
+    span {
       color: $cart-items-wrapper-bcolor;
     }
   }
