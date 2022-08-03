@@ -10,14 +10,14 @@
 
   .cart-items-wrapper {
     width: $cart-items-wrapper-default-width + px;
-    min-height: $cart-items-wrapper-default-minHeight + px;
     max-height: $cart-items-wrapper-default-maxHeight + px;
     @include flex-column-line-center-vertical-top;
     @include user-select-none;
-    gap: 2px;
+    padding: 4px 2px;
+    gap: 4px;
     position: relative;
     border: 2px solid $cart-items-wrapper-bcolor;
-    background-color: #fff;
+    background-color: #eee;
     overflow-y: scroll;
 
     &.empty {
