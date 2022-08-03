@@ -44,8 +44,6 @@ export const CartProductItem: FC<Props> = ({ data }) => {
          draggable={false}
          alt="a product preview" />
       <span>{data.productName}</span>
-      <span>{`${data.productPrice} USD`}</span>
-
       <div className="quantity-block">
          <button
             type="button"
