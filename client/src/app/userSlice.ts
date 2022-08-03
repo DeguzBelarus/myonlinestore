@@ -189,6 +189,22 @@ export const deleteCartProductAsync = createAsyncThunk(
       return await response.json()
    }
 )
+
+export interface DeleteCartProductsGroupRequestObject {
+   id: string,
+   productId: number
+   token: string,
+   lang: string
+}
+
+export const deleteCartProductsGroupAsync = createAsyncThunk(
+   "user/cart/delete/group",
+   async (data: DeleteCartProductsGroupRequestObject) => {
+      const url = `/api/user/${data.id}/cart/delete/${data.productId}/group?${data.lang}`
+      const response: any = await deleteCartProduct(url, data.token)
+      return await response.json()
+   }
+)
 // thunks 
 
 export const userSlice = createSlice({
@@ -432,7 +448,22 @@ export const userSlice = createSlice({
             state.authStatus = "failed"
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
-      // delete product from cart
+         // delete product from cart
+
+
+         // delete products group from cart
+         .addCase(deleteCartProductsGroupAsync.pending, (state) => {
+            state.authStatus = "loading"
+         })
+         .addCase(deleteCartProductsGroupAsync.fulfilled, (state, action) => {
+            state.authStatus = "idle"
+            state.cartProducts = action.payload
+         })
+         .addCase(deleteCartProductsGroupAsync.rejected, (state, action) => {
+            state.authStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+      // delete products group from cart
    }
 })
 

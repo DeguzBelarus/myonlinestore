@@ -376,6 +376,54 @@ class UserController {
       next(ApiError.badRequest(exception.message));
     }
   }
+
+  async deleteCartProductsGroup(request, response, next) {
+    try {
+      const { id, productId } = request.params;
+      const { lang } = request.query;
+
+      const foundCart = await Cart.findOne({ where: { userId: id } });
+
+      if (!foundCart) {
+        return next(
+          ApiError.badRequest(
+            lang === "ru"
+              ? "Запрашивая корзина покупок не найдена"
+              : "Requesting shopping cart not found"
+          )
+        );
+      }
+
+      const deletedCartProductsGroup = await CartProduct.findOne({
+        where: { cartId: foundCart.id, productId: productId },
+      });
+      if (deletedCartProductsGroup) {
+        await CartProduct.destroy({
+          where: { cartId: foundCart.id, productId: productId },
+        });
+
+        const cartProducts = await CartProduct.findAll({
+          where: { cartId: foundCart.id },
+          include: [
+            {
+              model: Product,
+              as: "details",
+            },
+          ],
+        });
+        return response.json(cartProducts);
+      } else {
+        return response.status(204).json({
+          message:
+            lang === "ru"
+              ? "Указанная группа товаров не найдена в корзине"
+              : "The specified product group was not found in the shopping cart",
+        });
+      }
+    } catch (exception) {
+      next(ApiError.badRequest(exception.message));
+    }
+  }
 }
 
 module.exports = new UserController();

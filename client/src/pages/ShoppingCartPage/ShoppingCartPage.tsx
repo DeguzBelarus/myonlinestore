@@ -1,11 +1,12 @@
 import { FC, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 import { setCartPageIsActive } from "../../app/shopSlice";
 import { getCurrentLanguage } from "../../app/globalSlice";
 import { getProductsInCart, CartProduct } from "../../app/userSlice";
-import "./ShoppingCartPage.scss"
 import { CartProductItem } from "../../components/cart/CartProductItem/CartProductItem";
+import "./ShoppingCartPage.scss"
 
 export interface ProductInCartModified {
    cartItemId: number,
@@ -24,6 +25,7 @@ export interface ProductInCartModified {
 
 export const ShoppingCartPage: FC = () => {
    const dispatch = useAppDispatch()
+   const navigate = useNavigate()
 
    const currentLanguage = useAppSelector(getCurrentLanguage)
    const productsInCart: CartProduct[] = useAppSelector(getProductsInCart)
@@ -40,6 +42,11 @@ export const ShoppingCartPage: FC = () => {
       }
    }
 
+   const orderPageEnter = () => {
+      if (!productsInCart.length) return
+      navigate("/shop/order")
+   }
+
    useEffect(() => {
       document.title = currentLanguage === "ru" ? "MyOnlineStore: Ваша Корзина" : "MyOnlineStore: Your Cart"
       document.documentElement.lang = currentLanguage === "ru" ? "ru" : "en"
@@ -49,7 +56,7 @@ export const ShoppingCartPage: FC = () => {
       setProductsInCartModified(
          productsInCart
             .map((cartItem: CartProduct, index, array) => {
-               const productId = cartItem.productId
+               const productId: number = cartItem.productId
 
                return {
                   cartItemId: cartItem.id,
@@ -97,14 +104,23 @@ export const ShoppingCartPage: FC = () => {
                   : "Your Shopping cart is empty :("}
             </span>}
       </div>
-      <p className="total-cost-paragraph">
-         {currentLanguage === "ru" ? "Итого: " : "Total: "}
-         <span>
-            {`${productsInCart.reduce((sum: number, cartItem: CartProduct) => {
-               return sum += cartItem.details?.price || sum
-            }, 0)} `}
-            USD
-         </span>
-      </p>
+      <div className="lower-block">
+         <p className="total-cost-paragraph">
+            {currentLanguage === "ru" ? "Итого: " : "Total: "}
+            <span>
+               {`${productsInCart.reduce((sum: number, cartItem: CartProduct) => {
+                  return sum += cartItem.details?.price || sum
+               }, 0)} `}
+               USD
+            </span>
+         </p>
+         <button
+            type="button"
+            className="order-page-transition-button"
+            disabled={!productsInCart.length}
+            onClick={orderPageEnter}>
+            {currentLanguage === "ru" ? "Заказать" : "Order"}
+         </button>
+      </div>
    </div>
 }

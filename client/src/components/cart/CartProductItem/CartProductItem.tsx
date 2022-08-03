@@ -3,7 +3,8 @@ import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 
 import {
    deleteCartProductAsync,
-   addCartProductAsync
+   addCartProductAsync,
+   deleteCartProductsGroupAsync
 } from "../../../app/userSlice";
 import { getCurrentLanguage } from "../../../app/globalSlice";
 import { getToken, getUserId } from "../../../app/userSlice";
@@ -25,6 +26,10 @@ export const CartProductItem: FC<Props> = ({ data }) => {
       dispatch(deleteCartProductAsync({ id: id, token: token, lang: currentLanguage }))
    }
 
+   const removeCartProductsGroupHandler = (productId: number) => {
+      dispatch(deleteCartProductsGroupAsync({ id: userId, productId: productId, token: token, lang: currentLanguage }))
+   }
+
    const addProductToCart = () => {
       dispatch(addCartProductAsync({
          lang: currentLanguage,
@@ -40,20 +45,29 @@ export const CartProductItem: FC<Props> = ({ data }) => {
          alt="a product preview" />
       <span>{data.productName}</span>
       <span>{`${data.productPrice} USD`}</span>
+
+      <div className="quantity-block">
+         <button
+            type="button"
+            className="remove-cart-product-button"
+            onClick={() => removeCartProductHandler(data.cartItemId.toString())}>
+            -</button>
+         <span>{currentLanguage === "ru"
+            ? `${data.quantity} шт.`
+            : `${data.quantity} pcs.`}
+         </span>
+         <button
+            type="button"
+            className="add-cart-product-button"
+            onClick={addProductToCart}>
+            +</button>
+         <span>{`${data.sum} USD`}</span>
+      </div>
       <button
          type="button"
-         className="remove-cart-product-button"
-         onClick={() => removeCartProductHandler(data.cartItemId.toString())}>
-         -</button>
-      <span>{currentLanguage === "ru"
-         ? `${data.quantity} шт.`
-         : `${data.quantity} pcs.`}
-      </span>
-      <button
-         type="button"
-         className="add-cart-product-button"
-         onClick={addProductToCart}>
-         +</button>
-      <span>{`${data.sum} USD`}</span>
+         className="remove-cart-products-group-button"
+         onClick={() => removeCartProductsGroupHandler(data.productId)}>
+         {currentLanguage === "ru" ? "Удалить" : "Remove"}
+      </button>
    </div>
 }

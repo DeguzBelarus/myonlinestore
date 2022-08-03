@@ -7,6 +7,7 @@ import { ShopPage } from "../pages/ShopPage/ShopPage";
 import { ProductPage } from "../pages/ProductPage/ProductPage";
 import { ShoppingCartPage } from "../pages/ShoppingCartPage/ShoppingCartPage";
 import { AdminPanelPage } from "../pages/AdminPanelPage/AdminPanelPage";
+import { OrderPage } from "../pages/OrderPage/OrderPage";
 
 export const useRoutes = () => {
    const isAuth: boolean = useAppSelector(getIsAuth)
@@ -26,6 +27,7 @@ export const useRoutes = () => {
                <Route path="/shop" element={<ShopPage />}></Route>
                <Route path="product/:id" element={<ProductPage />}></Route>
                <Route path="cart" element={<ShoppingCartPage />}></Route>
+               <Route path="order" element={<OrderPage />}></Route>
             </Route>
             <Route path="*" element={<ShopPage />}></Route>
          </Routes>
@@ -36,6 +38,7 @@ export const useRoutes = () => {
             <Route path="/shop" element={<ShopPage />}></Route>
             <Route path="product/:id" element={<ProductPage />}></Route>
             <Route path="cart" element={<ShoppingCartPage />}></Route>
+            <Route path="order" element={<OrderPage />}></Route>
          </Route>
          <Route path="*" element={<ShopPage />}></Route>
       </Routes>

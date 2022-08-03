@@ -31,13 +31,60 @@
     }
   }
 
-  .total-cost-paragraph {
+  .lower-block {
+    width: $cart-items-wrapper-default-width + px;
+    height: $cart-lowerBlock-default-height + px;
+    @include flex-all-center;
     @include user-select-none;
-    font-weight: bold;
-    color: #000;
+    position: relative;
+    padding-top: 2px;
 
-    span {
-      color: $cart-items-wrapper-bcolor;
+    .total-cost-paragraph {
+      font-weight: bold;
+      color: #000;
+
+      span {
+        color: $cart-items-wrapper-bcolor;
+      }
+    }
+
+    .order-page-transition-button {
+      width: $cart-order-transition-button-default-width + px;
+      height: 100%;
+      position: absolute;
+      top: 4px;
+      right: -2px;
+      border: 2px solid $admin-action-button-bcolor;
+      color: $admin-action-button-fcolor;
+      font-size: $default-font-size * 0.8 + px;
+      cursor: pointer;
+
+      &:not(:hover) {
+        background-color: $admin-action-button-bgcolor;
+      }
+
+      &:disabled {
+        background-color: #555;
+        color: #ccc;
+        cursor: default;
+      }
+    }
+  }
+}
+
+@media (hover: hover) {
+  .shopping-cart-page-wrapper {
+    .lower-block {
+      .order-page-transition-button {
+        &:not(:disabled) {
+          &:hover {
+            background-color: rgba(
+              $color: $cart-order-transition-button-bgcolor-hover,
+              $alpha: 0.7
+            );
+          }
+        }
+      }
     }
   }
 }
