@@ -11,6 +11,7 @@
   &-actions-wrapper {
     @include flex-line-start-vertical-center;
     gap: 10px;
+    position: relative;
 
     .logo-link {
       height: $navbar-buttons-default-height + px;
@@ -22,7 +23,15 @@
       .main-logo {
         width: $navbar-mainlogo-default-size + px;
         height: $navbar-mainlogo-default-size + px;
+        position: absolute;
+        top: 1px;
+        left: 0;
         margin-right: 4px;
+        z-index: 1;
+      }
+
+      .brand-text-span {
+        margin-left: 45px;
       }
     }
 
