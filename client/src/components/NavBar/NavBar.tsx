@@ -149,9 +149,14 @@ export const NavBar: FC = () => {
       <div className="navbar-actions-wrapper">
          <Link
             to="/shop"
+            draggable={false}
             className="logo-link"
          >
-            <img src={mainLogo} className="main-logo" alt="main logo" />
+            <img
+               src={mainLogo}
+               className="main-logo"
+               draggable={false}
+               alt="main logo" />
             <span className="brand-text-span">MyOnlineStore</span>
          </Link>
          {shopPageIsActive &&
