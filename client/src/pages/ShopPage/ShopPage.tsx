@@ -44,14 +44,17 @@ export const ShopPage: FC = () => {
    }
 
    useEffect(() => {
+      dispatch(getTypesAsync())
+      dispatch(getBrandsAsync())
+   }, [])
+
+   useEffect(() => {
       document.title = currentLanguage === "ru" ? "MyOnlineStore: Главная страница" : "MyOnlineStore: Main page"
       document.documentElement.lang = currentLanguage === "ru" ? "ru" : "en"
    }, [currentLanguage])
 
    useEffect(() => {
       dispatch(setProducts([]))
-      dispatch(getBrandsAsync())
-      dispatch(getTypesAsync())
       dispatch(getProductsAsync(getProductsQueryParams))
    }, [currentPage, productsPerPage, selectedType, selectedBrand])
 
