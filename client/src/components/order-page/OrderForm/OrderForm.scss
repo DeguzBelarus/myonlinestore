@@ -1,0 +1,48 @@
+@import "../../../variables";
+
+.order-form-wrapper {
+  @include flex-column-line-center-vertical-top;
+  margin-top: 5px;
+  border: 3px double $cart-items-wrapper-bcolor;
+
+  .order-form {
+    width: $order-form-default-width + px;
+    height: $order-form-default-height + px;
+    @include flex-column-line-center-vertical-top;
+    position: relative;
+    background-color: $order-form-default-bgcolor;
+
+    label,
+    input,
+    textarea {
+      width: 80%;
+      padding-left: 2px;
+      border: none;
+      outline: none;
+    }
+
+    input {
+      height: $order-form-inputs-default-height + px;
+      background-color: #fff;
+    }
+
+    .confirm-order-button {
+      width: 100%;
+      height: $order-confirm-button-default-height + px;
+      @include flex-all-center;
+      @include user-select-none;
+      position: relative;
+      margin-top: 5px;
+      padding: 5px 10px;
+      color: #fff;
+      border: none;
+      background-color: rgba($color: $order-confirm-button-bgcolor, $alpha: 1);
+      border-top: 1px solid #000;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}

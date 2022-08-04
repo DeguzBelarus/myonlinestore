@@ -8,7 +8,8 @@ import {
    updateUser,
    getCartProducts,
    addCartProduct,
-   deleteCartProduct
+   deleteCartProduct,
+   addOrder
 } from "./userAPI"
 import jwtDecode from "jwt-decode"
 
@@ -35,6 +36,21 @@ export interface CartProduct {
    }
 }
 
+export interface ProductInCartModified {
+   cartItemId: number,
+   cartProductid: number,
+   cartId: number,
+   productId: number,
+   productName?: string,
+   productPrice?: number,
+   productRating?: number,
+   productPoster?: string,
+   productTypeId?: number,
+   productBrandId?: number,
+   quantity: number,
+   sum: number
+}
+
 interface UserState {
    token: string,
    isAuth: boolean,
@@ -46,6 +62,7 @@ interface UserState {
    authMessage: string,
    users: UserObject[],
    cartProducts: CartProduct[],
+   orderInfo: ProductInCartModified[],
    authStatus: "idle" | "loading" | "failed"
 }
 
@@ -60,6 +77,7 @@ const initialState = {
    authMessage: "",
    users: [],
    cartProducts: [],
+   orderInfo: [],
    authStatus: "idle"
 } as UserState
 
@@ -205,6 +223,15 @@ export const deleteCartProductsGroupAsync = createAsyncThunk(
       return await response.json()
    }
 )
+
+export const addOrderAsync = createAsyncThunk(
+   "user/order/add",
+   async (body: any) => {
+      const url = `/api/user/order?${body.lang}`
+      const response: any = await addOrder(url, JSON.stringify(body.data), body.token)
+      return await response.json()
+   }
+)
 // thunks 
 
 export const userSlice = createSlice({
@@ -270,6 +297,12 @@ export const userSlice = createSlice({
             state.authStatus = action.payload
          } else {
             state.authStatus = initialState.authStatus
+         }
+      }, setOrderInfo(state: any, action: PayloadAction<ProductInCartModified[]>) {
+         if (action.payload) {
+            state.orderInfo = action.payload
+         } else {
+            state.orderInfo = initialState.orderInfo
          }
       }
    }, extraReducers: (builder) => {
@@ -463,7 +496,20 @@ export const userSlice = createSlice({
             state.authStatus = "failed"
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
-      // delete products group from cart
+         // delete products group from cart
+
+         // add order
+         .addCase(addOrderAsync.pending, (state) => {
+            state.authStatus = "loading"
+         })
+         .addCase(addOrderAsync.fulfilled, (state, action) => {
+            state.authStatus = "idle"
+         })
+         .addCase(addOrderAsync.rejected, (state, action) => {
+            state.authStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+      // add order
    }
 })
 
@@ -477,7 +523,8 @@ export const {
    setUserRole,
    setRegistrationEmail,
    setCartProducts,
-   setAuthStatus
+   setAuthStatus,
+   setOrderInfo
 } = userSlice.actions
 
 export const getIsAuth = (state: RootState) => state.user.isAuth
@@ -491,5 +538,6 @@ export const getToken = (state: RootState) => state.user.token
 export const getRegistrationEmail = (state: RootState) => state.user.registrationEmail
 export const getUsers = (state: RootState) => state.user.users
 export const getProductsInCart = (state: RootState) => state.user.cartProducts
+export const getOrderInfo = (state: RootState) => state.user.orderInfo
 
 export default userSlice.reducer

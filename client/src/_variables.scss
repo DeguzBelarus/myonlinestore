@@ -57,6 +57,9 @@ $shop-product-card-bcolor: #888;
 $shop-product-card-dragged-bcolor: #0aad0a;
 $shop-product-card-name-fcolor: #f00cbb;
 $shop-product-card-price-fcolor: #0aad0a;
+$shop-pages-bar-bgcolor: rgba(#8f0d70, 0.05);
+$shop-pages-bar-buttons-bgcolor: #222;
+$shop-pages-bar-buttons-current-fcolor: #ff8c00;
 //== shop page
 
 //== cart page
@@ -66,6 +69,17 @@ $cart-item-bcolor: #888;
 $cart-order-transition-button-bgcolor: #f00cbb;
 $cart-order-transition-button-bgcolor-hover: #0aad0a;
 //== cart page
+
+//== order page
+$order-form-default-bcolor: #f00cbb;
+$order-form-default-bgcolor: #c0a8b7;
+$order-total-cost-span-fcolor: #0aad0a;
+$order-confirm-button-bgcolor: #0aad0a;
+//== order page
+
+//== footer
+$footer-bgcolor: #c0a8b7;
+//== footer
 //== colors
 
 //== sizes
@@ -136,9 +150,11 @@ $admin-management-removeProperty-button-default-width: 20;
 //== admin panel
 
 //== shop page
-$shop-products-cards-wrapper-default-height: 800;
 $shop-product-card-default-width: 155;
 $shop-product-card-default-height: 300;
+$shop-pages-bar-default-height: 40;
+$shop-bages-bar-buttons-default-width: auto;
+$shop-bages-bar-buttons-default-paddings: 0 10px;
 //== shop page
 
 //== cart page
@@ -148,6 +164,17 @@ $cart-item-default-height: 80;
 $cart-order-transition-button-default-width: 120;
 $cart-lowerBlock-default-height: 35;
 //== cart page
+
+//== order page
+$order-form-default-width: 310;
+$order-form-default-height: 450;
+$order-form-inputs-default-height: 40;
+$order-confirm-button-default-height: 45;
+//== order page
+
+//== footer
+$footer-default-height: 30;
+//== footer
 //== sizes
 // variables
 

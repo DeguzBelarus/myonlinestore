@@ -381,31 +381,31 @@ class ProductController {
       let { brandId, typeId, limit, page } = request.query;
       page = page || 1;
       limit = limit || 20;
-      const offSet = page * limit - limit;
+      const offset = page * limit - limit;
 
       let allProducts;
       if (!brandId && !typeId) {
-        allProducts = await Product.findAndCountAll({ limit, offSet });
+        allProducts = await Product.findAndCountAll({ limit, offset });
       }
       if (brandId && !typeId) {
         allProducts = await Product.findAndCountAll({
           where: { brandId },
           limit,
-          offSet,
+          offset,
         });
       }
       if (!brandId && typeId) {
         allProducts = await Product.findAndCountAll({
           where: { typeId },
           limit,
-          offSet,
+          offset,
         });
       }
       if (brandId && typeId) {
         allProducts = await Product.findAndCountAll({
           where: { typeId, brandId },
           limit,
-          offSet,
+          offset,
         });
       }
 

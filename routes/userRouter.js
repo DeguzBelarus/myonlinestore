@@ -11,6 +11,7 @@ router.get("/:id/cart", checkAuthMiddleware, userController.getCartProducts);
 router.post("/registration", userController.registration);
 router.post("/login", userController.login);
 router.post("/addtocart", checkAuthMiddleware, userController.addCartProduct);
+router.post("/order", checkAuthMiddleware, userController.addOrder);
 router.put(
   "/:id",
   checkRoleMiddleware("ADMIN", "CREATOR"),

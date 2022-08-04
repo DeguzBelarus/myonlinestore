@@ -424,6 +424,14 @@ class UserController {
       next(ApiError.badRequest(exception.message));
     }
   }
+
+  async addOrder(request, response, next) {
+    try {
+      console.log(request.body);
+    } catch (exception) {
+      next(ApiError.badRequest(exception.message));
+    }
+  }
 }
 
 module.exports = new UserController();

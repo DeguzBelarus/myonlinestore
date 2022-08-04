@@ -4,24 +4,9 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 import { setCartPageIsActive } from "../../app/shopSlice";
 import { getCurrentLanguage } from "../../app/globalSlice";
-import { getProductsInCart, CartProduct } from "../../app/userSlice";
+import { getProductsInCart, CartProduct, ProductInCartModified } from "../../app/userSlice";
 import { CartProductItem } from "../../components/cart/CartProductItem/CartProductItem";
 import "./ShoppingCartPage.scss"
-
-export interface ProductInCartModified {
-   cartItemId: number,
-   cartProductid: number,
-   cartId: number,
-   productId: number,
-   productName?: string,
-   productPrice?: number,
-   productRating?: number,
-   productPoster?: string,
-   productTypeId?: number,
-   productBrandId?: number,
-   quantity: number,
-   sum: number
-}
 
 export const ShoppingCartPage: FC = () => {
    const dispatch = useAppDispatch()
@@ -42,17 +27,7 @@ export const ShoppingCartPage: FC = () => {
       }
    }
 
-   const orderPageEnter = () => {
-      if (!productsInCart.length) return
-      navigate("/shop/order")
-   }
-
-   useEffect(() => {
-      document.title = currentLanguage === "ru" ? "MyOnlineStore: Ваша Корзина" : "MyOnlineStore: Your Cart"
-      document.documentElement.lang = currentLanguage === "ru" ? "ru" : "en"
-   }, [currentLanguage])
-
-   useEffect(() => {
+   const productsInCartModifiedUpdation = () => {
       setProductsInCartModified(
          productsInCart
             .map((cartItem: CartProduct, index, array) => {
@@ -82,6 +57,20 @@ export const ShoppingCartPage: FC = () => {
                return unique.find((uniqueElement: ProductInCartModified) => uniqueElement.cartProductid === cartItemModified.cartProductid) ? unique : [...unique, cartItemModified]
             }, [])
       )
+   }
+
+   const orderPageEnter = () => {
+      if (!productsInCart.length) return
+      navigate("/shop/order")
+   }
+
+   useEffect(() => {
+      document.title = currentLanguage === "ru" ? "MyOnlineStore: Ваша Корзина" : "MyOnlineStore: Your Cart"
+      document.documentElement.lang = currentLanguage === "ru" ? "ru" : "en"
+   }, [currentLanguage])
+
+   useEffect(() => {
+      productsInCartModifiedUpdation()
    }, [productsInCart])
 
    useEffect(() => {

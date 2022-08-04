@@ -53,7 +53,7 @@ interface ProductState {
    brands: TypeOrBrandObject[],
    products: CurrentProduct[],
    currentProduct: CurrentProduct,
-   totalProducts: number | null,
+   totalProducts: number,
    productStatus: "idle" | "loading" | "failed"
 }
 
@@ -64,7 +64,7 @@ const initialState = {
    currentProduct: {
       id: 0, name: "", price: 0, rating: 0, poster: "", productTypeId: 0, productBrandId: 0, description: []
    },
-   totalProducts: null,
+   totalProducts: 0,
    productStatus: "idle"
 } as ProductState
 

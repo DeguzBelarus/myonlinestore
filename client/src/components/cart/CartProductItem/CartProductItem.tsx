@@ -7,8 +7,7 @@ import {
    deleteCartProductsGroupAsync
 } from "../../../app/userSlice";
 import { getCurrentLanguage } from "../../../app/globalSlice";
-import { getToken, getUserId } from "../../../app/userSlice";
-import { ProductInCartModified } from "../../../pages/ShoppingCartPage/ShoppingCartPage";
+import { getToken, getUserId, ProductInCartModified } from "../../../app/userSlice";
 import "./CartProductItem.scss"
 
 interface Props {

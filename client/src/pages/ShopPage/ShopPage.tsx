@@ -10,6 +10,7 @@ import {
    getProductStatus,
    getBrandsAsync,
    getTypesAsync,
+   setProducts
 } from "../../app/productSlice";
 import {
    setShopPageIsActive,
@@ -22,6 +23,7 @@ import {
 import { getCurrentLanguage, setCurrentLanguage } from "../../app/globalSlice";
 import "./ShopPage.scss"
 import { ProductCard } from "../../components/ProductCard/ProductCard";
+import { PagesBar } from "../../components/PagesBar/PagesBar";
 
 export const ShopPage: FC = () => {
    const navigate = useNavigate()
@@ -40,15 +42,20 @@ export const ShopPage: FC = () => {
       typeId: selectedType,
       brandId: selectedBrand
    }
+
    useEffect(() => {
       document.title = currentLanguage === "ru" ? "MyOnlineStore: Главная страница" : "MyOnlineStore: Main page"
       document.documentElement.lang = currentLanguage === "ru" ? "ru" : "en"
    }, [currentLanguage])
 
    useEffect(() => {
+      dispatch(setProducts([]))
       dispatch(getBrandsAsync())
       dispatch(getTypesAsync())
       dispatch(getProductsAsync(getProductsQueryParams))
+   }, [currentPage, productsPerPage, selectedType, selectedBrand])
+
+   useEffect(() => {
       dispatch(setShopPageIsActive(true))
       navigate("/shop")
 
@@ -71,6 +78,6 @@ export const ShopPage: FC = () => {
             })
             : "loading..."}
       </div>
-      <span className="copyright-span">© Deguz, designed with: Lysa, 2022</span>
+      <PagesBar />
    </div>
 }

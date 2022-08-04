@@ -4,6 +4,7 @@ import { useAppDispatch } from "./app/hooks";
 import { checkAuthorizationAsync } from "./app/userSlice";
 import { useRoutes } from "./hooks/useRoutes"
 import { NavBar } from "./components/NavBar/NavBar"
+import { Footer } from "./components/Footer/Footer";
 
 function App() {
    const dispatch = useAppDispatch()
@@ -19,6 +20,7 @@ function App() {
       <>
          <NavBar />
          {routes}
+         <Footer />
       </>
    );
 }
