@@ -17,7 +17,7 @@
     gap: 4px;
     position: relative;
     border: 2px solid $cart-items-wrapper-bcolor;
-    background-color: #eee;
+    background-color: $cart-items-wrapper-bgcolor;
     overflow-y: scroll;
 
     &.empty {

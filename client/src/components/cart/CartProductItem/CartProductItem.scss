@@ -5,7 +5,7 @@
   height: $cart-item-default-height + px;
   min-height: $cart-item-default-height + px;
   padding-right: 4px;
-  background-color: #fff;
+  background-color: rgba($color: #fff, $alpha: 0.9);
 
   @include flex-line-start-vertical-center;
   gap: 5px;
