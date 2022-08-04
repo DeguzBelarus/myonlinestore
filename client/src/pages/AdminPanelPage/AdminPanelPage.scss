@@ -2,6 +2,10 @@
 
 .admin-panel-wrapper {
   width: 100%;
-  height: calc(100vh - #{($navbar-default-height + px)});
+  height: calc(
+    100vh - #{($shop-pages-bar-default-height + px)} - #{(
+        $footer-default-height + px
+      )}
+  );
   @include flex-column-all-center;
 }
