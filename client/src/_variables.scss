@@ -64,6 +64,7 @@ $shop-product-card-price-fcolor: #0aad0a;
 $shop-pages-bar-bgcolor: rgba(#8f0d70, 0.05);
 $shop-pages-bar-buttons-bgcolor: #222;
 $shop-pages-bar-buttons-current-fcolor: #ff8c00;
+$shop-loader-bcolor: violet;
 //== shop page
 
 //== cart page
@@ -161,6 +162,10 @@ $shop-product-card-default-height: 300;
 $shop-pages-bar-default-height: 40;
 $shop-bages-bar-buttons-default-width: auto;
 $shop-bages-bar-buttons-default-paddings: 0 10px;
+$shop-loader-default-width: 20;
+$shop-loader-default-height: 20;
+$shop-loader-arrow-default-width: 40;
+$shop-loader-arrow-default-height: 2;
 //== shop page
 
 //== cart page

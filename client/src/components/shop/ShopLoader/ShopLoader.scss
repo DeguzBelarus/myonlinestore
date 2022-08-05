@@ -1,0 +1,29 @@
+@import "../../../variables";
+
+.shop-loader {
+  width: $shop-loader-default-width + px;
+  height: $shop-loader-default-height + px;
+  @include flex-all-center;
+  @include user-select-none;
+  position: relative;
+  border: 2px solid $shop-loader-bcolor;
+  border-radius: 50%;
+
+  .arrow {
+    width: $shop-loader-arrow-default-width + px;
+    height: $shop-loader-arrow-default-height + px;
+    border: 2px solid $shop-loader-bcolor;
+    position: absolute;
+    z-index: 1;
+    animation-name: rotation;
+    animation-iteration-count: infinite;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+  }
+}
+
+@keyframes rotation {
+  100% {
+    transform: rotate(360deg);
+  }
+}

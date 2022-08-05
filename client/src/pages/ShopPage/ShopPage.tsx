@@ -21,9 +21,10 @@ import {
    getSelectedBrand
 } from "../../app/shopSlice";
 import { getCurrentLanguage, setCurrentLanguage } from "../../app/globalSlice";
-import "./ShopPage.scss"
 import { ProductCard } from "../../components/ProductCard/ProductCard";
 import { PagesBar } from "../../components/PagesBar/PagesBar";
+import { ShopLoader } from "../../components/shop/ShopLoader/ShopLoader";
+import "./ShopPage.scss"
 
 export const ShopPage: FC = () => {
    const navigate = useNavigate()
@@ -87,7 +88,7 @@ export const ShopPage: FC = () => {
             ? [...allProducts].sort(productsSortMethod).map((product: CurrentProduct) => {
                return <ProductCard productData={product} key={product.id} />
             })
-            : "loading..."}
+            : <ShopLoader />}
       </div>
       <PagesBar />
    </div>
