@@ -425,9 +425,75 @@ class UserController {
     }
   }
 
+  async deleteAllCartProducts(request, response, next) {
+    try {
+      const { id } = request.params;
+      const { lang } = request.query;
+
+      const foundCart = await Cart.findOne({ where: { userId: id } });
+
+      if (!foundCart) {
+        return next(
+          ApiError.badRequest(
+            lang === "ru"
+              ? "Запрашивая корзина покупок не найдена"
+              : "Requesting shopping cart not found"
+          )
+        );
+      }
+
+      const deletedCartProducts = await CartProduct.findOne({
+        where: { cartId: foundCart.id },
+      });
+
+      if (deletedCartProducts) {
+        await CartProduct.destroy({
+          where: { cartId: foundCart.id },
+        });
+
+        const cartProducts = await CartProduct.findAll({
+          where: { cartId: foundCart.id },
+          include: [
+            {
+              model: Product,
+              as: "details",
+            },
+          ],
+        });
+        return response.json(cartProducts);
+      } else {
+        return response.status(204).json({
+          message:
+            lang === "ru"
+              ? "В корзине товаров не найдено"
+              : "No products found in the shopping cart",
+        });
+      }
+    } catch (exception) {
+      next(ApiError.badRequest(exception.message));
+    }
+  }
+
   async addOrder(request, response, next) {
     try {
-      console.log(request.body);
+      let { buyerInfo, orderInfo, lang } = request.body;
+
+      if (!buyerInfo || !orderInfo) {
+        return next(
+          ApiError.badRequest(
+            lang === "ru"
+              ? "Недостаточно данных для принятия заказа"
+              : "Insufficient data to accept the order"
+          )
+        );
+      }
+
+      return response.status(201).json({
+        message:
+          lang === "ru"
+            ? "Заказ успешно принят!"
+            : "The order has been successfully accepted!",
+      });
     } catch (exception) {
       next(ApiError.badRequest(exception.message));
     }

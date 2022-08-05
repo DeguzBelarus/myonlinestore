@@ -4,7 +4,12 @@ const path = require("path");
 const fs = require("fs");
 const nodePath = require("path");
 
-const { Product, ProductDescription } = require("../models/dbmodels");
+const {
+  Product,
+  ProductDescription,
+  Type,
+  Brand,
+} = require("../models/dbmodels");
 const ApiError = require("../errors/ApiError");
 
 class ProductController {
@@ -80,7 +85,12 @@ class ProductController {
         });
       }
 
-      const allProducts = await Product.findAll();
+      const allProducts = await Product.findAll({
+        include: [
+          { model: Type, as: "typeInfo" },
+          { model: Brand, as: "brandInfo" },
+        ],
+      });
       response.status(201).json(allProducts);
     } catch (exception) {
       next(ApiError.badRequest(exception.message));
@@ -307,7 +317,12 @@ class ProductController {
           });
         }
 
-        const allProducts = await Product.findAll();
+        const allProducts = await Product.findAll({
+          include: [
+            { model: Type, as: "typeInfo" },
+            { model: Brand, as: "brandInfo" },
+          ],
+        });
         return response.json(allProducts);
       } else {
         return response.status(204).json({
@@ -361,7 +376,12 @@ class ProductController {
           );
         }
 
-        const allProducts = await Product.findAll();
+        const allProducts = await Product.findAll({
+          include: [
+            { model: Type, as: "typeInfo" },
+            { model: Brand, as: "brandInfo" },
+          ],
+        });
         return response.json(allProducts);
       } else {
         return response.status(204).json({
@@ -385,13 +405,24 @@ class ProductController {
 
       let allProducts;
       if (!brandId && !typeId) {
-        allProducts = await Product.findAndCountAll({ limit, offset });
+        allProducts = await Product.findAndCountAll({
+          limit,
+          offset,
+          include: [
+            { model: Type, as: "typeInfo" },
+            { model: Brand, as: "brandInfo" },
+          ],
+        });
       }
       if (brandId && !typeId) {
         allProducts = await Product.findAndCountAll({
           where: { brandId },
           limit,
           offset,
+          include: [
+            { model: Type, as: "typeInfo" },
+            { model: Brand, as: "brandInfo" },
+          ],
         });
       }
       if (!brandId && typeId) {
@@ -399,6 +430,10 @@ class ProductController {
           where: { typeId },
           limit,
           offset,
+          include: [
+            { model: Type, as: "typeInfo" },
+            { model: Brand, as: "brandInfo" },
+          ],
         });
       }
       if (brandId && typeId) {
@@ -406,6 +441,10 @@ class ProductController {
           where: { typeId, brandId },
           limit,
           offset,
+          include: [
+            { model: Type, as: "typeInfo" },
+            { model: Brand, as: "brandInfo" },
+          ],
         });
       }
 
@@ -420,7 +459,11 @@ class ProductController {
       const { id } = request.params;
       const foundProduct = await Product.findOne({
         where: { id },
-        include: [{ model: ProductDescription, as: "description" }],
+        include: [
+          { model: ProductDescription, as: "description" },
+          { model: Type, as: "typeInfo" },
+          { model: Brand, as: "brandInfo" },
+        ],
       });
       response.json(foundProduct);
     } catch (exception) {

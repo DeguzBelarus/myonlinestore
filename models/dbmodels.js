@@ -72,10 +72,10 @@ Product.hasMany(ProductDescription, {
 ProductDescription.belongsTo(Product);
 
 Type.hasMany(Product);
-Product.belongsTo(Type);
+Product.belongsTo(Type, { as: "typeInfo", foreignKey: "productTypeId" });
 
 Brand.hasMany(Product);
-Product.belongsTo(Brand);
+Product.belongsTo(Brand, { as: "brandInfo", foreignKey: "productBrandId" });
 
 Type.belongsToMany(Brand, { through: TypeBrand });
 Brand.belongsToMany(Type, { through: TypeBrand });

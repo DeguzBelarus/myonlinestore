@@ -224,9 +224,43 @@ export const deleteCartProductsGroupAsync = createAsyncThunk(
    }
 )
 
+export interface DeleteAllCartProductsRequestObject {
+   id: string,
+   token: string,
+   lang: string
+}
+
+export const deleteAllCartProductAsync = createAsyncThunk(
+   "user/cart/delete/all",
+   async (data: DeleteAllCartProductsRequestObject) => {
+      const url = `/api/user/${data.id}/cart/deleteall?${data.lang}`
+      const response: any = await deleteCartProduct(url, data.token)
+      return await response.json()
+   }
+)
+
+export interface BuyerInfoObject {
+   firstname: string,
+   lastname: string,
+   city: string
+   adress: string,
+   zipcode: number,
+   phone: number,
+   comment?: string
+}
+
+export interface AddOrderRequestObject {
+   data: {
+      buyerInfo: BuyerInfoObject,
+      orderInfo: ProductInCartModified[]
+   },
+   token: string,
+   lang: string
+}
+
 export const addOrderAsync = createAsyncThunk(
    "user/order/add",
-   async (body: any) => {
+   async (body: AddOrderRequestObject) => {
       const url = `/api/user/order?${body.lang}`
       const response: any = await addOrder(url, JSON.stringify(body.data), body.token)
       return await response.json()
@@ -483,7 +517,6 @@ export const userSlice = createSlice({
          })
          // delete product from cart
 
-
          // delete products group from cart
          .addCase(deleteCartProductsGroupAsync.pending, (state) => {
             state.authStatus = "loading"
@@ -497,6 +530,20 @@ export const userSlice = createSlice({
             console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
          })
          // delete products group from cart
+
+         // delete all products from cart
+         .addCase(deleteAllCartProductAsync.pending, (state) => {
+            state.authStatus = "loading"
+         })
+         .addCase(deleteAllCartProductAsync.fulfilled, (state, action) => {
+            state.authStatus = "idle"
+            state.cartProducts = action.payload
+         })
+         .addCase(deleteAllCartProductAsync.rejected, (state, action) => {
+            state.authStatus = "failed"
+            console.error("\x1b[40m\x1b[31m\x1b[1m", action.error.message);
+         })
+         // delete all products from cart
 
          // add order
          .addCase(addOrderAsync.pending, (state) => {

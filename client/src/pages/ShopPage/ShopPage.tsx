@@ -43,10 +43,16 @@ export const ShopPage: FC = () => {
       brandId: selectedBrand
    }
 
-   useEffect(() => {
-      dispatch(getTypesAsync())
-      dispatch(getBrandsAsync())
-   }, [])
+   const productsSortMethod = (prevProduct: CurrentProduct, nextProduct: CurrentProduct) => {
+      switch (true) {
+         case prevProduct.name > nextProduct.name:
+            return 1
+         case prevProduct.name < nextProduct.name:
+            return -1
+         default:
+            return 0
+      }
+   }
 
    useEffect(() => {
       document.title = currentLanguage === "ru" ? "MyOnlineStore: Главная страница" : "MyOnlineStore: Main page"
@@ -59,6 +65,8 @@ export const ShopPage: FC = () => {
    }, [currentPage, productsPerPage, selectedType, selectedBrand])
 
    useEffect(() => {
+      dispatch(getTypesAsync())
+      dispatch(getBrandsAsync())
       dispatch(setShopPageIsActive(true))
       navigate("/shop")
 
@@ -76,7 +84,7 @@ export const ShopPage: FC = () => {
          ? "products-cards-wrapper loading"
          : "products-cards-wrapper"}>
          {productStatus !== "loading"
-            ? allProducts.map((product: CurrentProduct) => {
+            ? [...allProducts].sort(productsSortMethod).map((product: CurrentProduct) => {
                return <ProductCard productData={product} key={product.id} />
             })
             : "loading..."}

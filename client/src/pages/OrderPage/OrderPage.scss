@@ -12,6 +12,10 @@
   padding-top: 50px;
   background-color: #fff;
 
+  &.confirmed {
+    @include flex-all-center;
+  }
+
   .total-cost-span {
     font-weight: bold;
     color: $order-total-cost-span-fcolor;
@@ -20,5 +24,10 @@
 
   .heading-text {
     @include user-select-none;
+  }
+
+  .confirmation-notifiaction {
+    @include user-select-none;
+    font-weight: bold;
   }
 }

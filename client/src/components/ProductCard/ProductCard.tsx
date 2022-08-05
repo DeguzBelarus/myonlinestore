@@ -9,9 +9,7 @@ import {
 } from "../../app/userSlice";
 import { setProductIsDragged, setDraggedProduct } from "../../app/shopSlice";
 import {
-   CurrentProduct,
-   TypeOrBrandObject,
-   getProductsBrands
+   CurrentProduct
 } from "../../app/productSlice";
 import { getCurrentLanguage } from "../../app/globalSlice";
 import cartIcon from "../../assets/cart-icon.svg"
@@ -26,7 +24,6 @@ export const ProductCard: FC<Props> = ({ productData }) => {
    const dispatch = useAppDispatch()
 
    const isAuth: boolean = useAppSelector(getIsAuth)
-   const productsBrands: TypeOrBrandObject[] = useAppSelector(getProductsBrands)
    const userId: string | null = useAppSelector(getUserId)
    const token: string | null = useAppSelector(getToken)
    const currentLanguage: string = useAppSelector(getCurrentLanguage)
@@ -59,8 +56,7 @@ export const ProductCard: FC<Props> = ({ productData }) => {
       onDragStart={dragStartHandler}
       onDragEnd={dragEndHandler}>
       <span className="product-name-span">{productData.name}</span>
-      <span className="product-brand-span">{`${productsBrands[productsBrands
-         .findIndex((brand: TypeOrBrandObject) => brand.id === productData.productBrandId)].name}`}</span>
+      <span className="product-brand-span">{productData.brandInfo?.name}</span>
       <img
          className="product-poster"
          draggable={false}

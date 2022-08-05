@@ -21,6 +21,11 @@ export interface ProductDescriptionObject {
    description: string
 }
 
+export interface TypeOrBrandObject {
+   id: number,
+   name: string
+}
+
 export interface CurrentProduct {
    id: number,
    name: string,
@@ -29,7 +34,9 @@ export interface CurrentProduct {
    poster: string,
    productTypeId: number,
    productBrandId: number,
-   description: ProductDescriptionObject[]
+   description?: ProductDescriptionObject[],
+   typeInfo?: TypeOrBrandObject,
+   brandInfo?: TypeOrBrandObject
 }
 
 export interface NewProduct {
@@ -40,12 +47,7 @@ export interface NewProduct {
    poster: string,
    productTypeId: number,
    productBrandId: number,
-   description?: ProductDescriptionObject[]
-}
-
-export interface TypeOrBrandObject {
-   id: number,
-   name: string
+   description?: ProductDescriptionObject[],
 }
 
 interface ProductState {

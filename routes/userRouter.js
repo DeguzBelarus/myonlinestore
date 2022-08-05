@@ -32,5 +32,10 @@ router.delete(
   checkAuthMiddleware,
   userController.deleteCartProductsGroup
 );
+router.delete(
+  "/:id/cart/deleteall",
+  checkAuthMiddleware,
+  userController.deleteAllCartProducts
+);
 
 module.exports = router;
