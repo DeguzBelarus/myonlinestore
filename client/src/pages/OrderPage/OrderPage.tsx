@@ -25,7 +25,7 @@ export const OrderPage: FC = () => {
 
          const returningPromise = new Promise((resolve, reject) => {
             const returningInterval = setInterval(() => {
-               if (returnningValue === 0) {
+               if (returnningValue === 1) {
                   clearInterval(returningInterval)
                   return resolve(returnningValue)
                }
@@ -34,7 +34,7 @@ export const OrderPage: FC = () => {
             }, 1000)
          })
          returningPromise.then((returnningValue) => {
-            if (returnningValue === 0) retutningToTheShop()
+            if (returnningValue === 1) retutningToTheShop()
          })
       }
    }, [isOrderConfirmed])
