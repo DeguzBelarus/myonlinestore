@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
@@ -31,9 +31,13 @@ import {
    getProductIsDragged,
    setDraggedProduct,
    getDraggedProduct,
+   getProductsPerPage,
+   getCurrentPage,
+   getSelectedType,
+   getSelectedBrand
 } from "../../app/shopSlice";
 import { getCurrentLanguage } from "../../app/globalSlice";
-import { CurrentProduct } from "../../app/productSlice";
+import { CurrentProduct, getProductsAsync } from "../../app/productSlice";
 import { LanguageSwitcher } from "../LanguageSwitcher/LanguageSwitcher";
 import mainLogo from "../../assets/strawberry.svg"
 import "./NavBar.scss"
@@ -57,6 +61,28 @@ export const NavBar: FC = () => {
    const productIsDragged: boolean = useAppSelector(getProductIsDragged)
    const draggedProduct: CurrentProduct | null = useAppSelector(getDraggedProduct)
    const cartProducts: CartProduct[] = useAppSelector(getProductsInCart)
+
+   const productsPerPage: number = useAppSelector(getProductsPerPage)
+   const currentPage: number = useAppSelector(getCurrentPage)
+   const selectedType: number = useAppSelector(getSelectedType)
+   const selectedBrand: number = useAppSelector(getSelectedBrand)
+   const [isSearchByName, setIsSearchByName] = useState<boolean>(false)
+
+   const searchProductsByName = (event: any) => {
+      if (event.target.value || selectedType || selectedBrand) {
+         setIsSearchByName(true)
+      } else {
+         setIsSearchByName(false)
+      }
+
+      dispatch(getProductsAsync({
+         name: event.target.value,
+         limit: productsPerPage,
+         page: currentPage,
+         typeId: selectedType,
+         brandId: selectedBrand
+      }))
+   }
 
    const dragOverHandler = (event: any) => {
       if (isAuth) {
@@ -162,7 +188,9 @@ export const NavBar: FC = () => {
          {shopPageIsActive &&
             <button
                type="button"
-               className="selection-mode-button"
+               className={
+                  !isSearchByName
+                     ? "selection-mode-button" : "selection-mode-button active"}
                onClick={selectionModeHandler}
             >{currentLanguage === "ru" ? "Выбрать товары" : "Choose Products"}</button>}
       </div>
@@ -228,6 +256,14 @@ export const NavBar: FC = () => {
                </>}
       </div>
       {shopPageIsActive &&
-         <div className={!selectionMode ? "navbar-selection-bar" : "navbar-selection-bar active"}></div>}
+         <div className={!selectionMode ? "navbar-selection-bar" : "navbar-selection-bar active"}>
+            <input
+               type="text"
+               className={!selectionMode ? "selection-input" : "selection-input selection-mode"}
+               placeholder={currentLanguage === "ru"
+                  ? "Введите название товара"
+                  : "Enter the product name"}
+               onChange={searchProductsByName} />
+         </div>}
    </div>
 }

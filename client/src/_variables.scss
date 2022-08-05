@@ -5,7 +5,10 @@ $navbar-color: #c0a8b7;
 $navbar-cart-button-productDragging-color: #0aad0a;
 $navbar-cart-button-notEmpty-color: #ff8c00;
 $selection-bar-color: rgba(#8f0d70, 0.1);
+$navbar-search-input-bcolor: violet;
+$navbar-selection-button-active-bcolor: #0aad0a;
 //== navbar
+
 //== auth page
 $auth-forms-border-color: #f00cbb;
 $auth-inputs-border-color: #f00cbb;
@@ -28,6 +31,7 @@ $auth-register-button-bgcolor: #fff;
 $auth-stayloggedin-checkbox-color: #0aad0a;
 $auth-registration-email-header-color: #f00cbb;
 //== auth page
+
 //== admin panel
 $admin-actions-container-bcolor: #f00cbb;
 $admin-actions-container-bgcolor: #c0a8b7;
@@ -99,6 +103,8 @@ $navbar-product-choose-button-default-width: 135;
 $navbar-admin-panel-button-default-width: 125;
 $navbar-logout-button-default-width: 61;
 $navbar-cart-button-default-width: 135;
+$navbar-search-input-default-width: 450;
+$navbar-search-input-default-height: 35;
 //== navbar
 
 //== auth page

@@ -176,13 +176,14 @@ export interface GetProductsQueryParams {
    page?: number,
    limit?: number,
    typeId?: number,
-   brandId?: number
+   brandId?: number,
+   name?: string
 }
 
 export const getProductsAsync = createAsyncThunk(
    "product/get/all",
    async (params: GetProductsQueryParams) => {
-      const { page, limit, typeId, brandId } = params
+      const { page, limit, typeId, brandId, name } = params
 
       if (page || limit || typeId || brandId) {
          const urlSearchParams = new URLSearchParams()
@@ -197,6 +198,9 @@ export const getProductsAsync = createAsyncThunk(
          }
          if (brandId) {
             urlSearchParams.append("brandId", `${brandId}`)
+         }
+         if (name) {
+            urlSearchParams.append("name", `${name}`)
          }
          const url = `/api/product?${urlSearchParams}`
          const response: any = await getProducts(url)
@@ -249,7 +253,6 @@ export const updateProductAsync = createAsyncThunk(
       return await response.json()
    }
 )
-
 export interface DeleteProductRequestObject {
    id: string,
    token: string,

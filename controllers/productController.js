@@ -1,4 +1,6 @@
 require("dotenv").config();
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 const uuid = require("uuid");
 const path = require("path");
 const fs = require("fs");
@@ -398,54 +400,122 @@ class ProductController {
 
   async getAll(request, response, next) {
     try {
-      let { brandId, typeId, limit, page } = request.query;
+      let { brandId, typeId, limit, page, name } = request.query;
       page = page || 1;
       limit = limit || 20;
       const offset = page * limit - limit;
 
       let allProducts;
       if (!brandId && !typeId) {
-        allProducts = await Product.findAndCountAll({
-          limit,
-          offset,
-          include: [
-            { model: Type, as: "typeInfo" },
-            { model: Brand, as: "brandInfo" },
-          ],
-        });
+        if (name) {
+          allProducts = await Product.findAndCountAll({
+            where: {
+              name: {
+                [Op.or]: { [Op.startsWith]: name, [Op.iLike]: `${name}%` },
+              },
+            },
+            limit,
+            offset,
+            include: [
+              { model: Type, as: "typeInfo" },
+              { model: Brand, as: "brandInfo" },
+            ],
+          });
+        } else {
+          allProducts = await Product.findAndCountAll({
+            limit,
+            offset,
+            include: [
+              { model: Type, as: "typeInfo" },
+              { model: Brand, as: "brandInfo" },
+            ],
+          });
+        }
       }
       if (brandId && !typeId) {
-        allProducts = await Product.findAndCountAll({
-          where: { brandId },
-          limit,
-          offset,
-          include: [
-            { model: Type, as: "typeInfo" },
-            { model: Brand, as: "brandInfo" },
-          ],
-        });
+        if (name) {
+          allProducts = await Product.findAndCountAll({
+            where: {
+              brandId,
+              name: {
+                [Op.or]: { [Op.startsWith]: name, [Op.iLike]: `${name}%` },
+              },
+            },
+            limit,
+            offset,
+            include: [
+              { model: Type, as: "typeInfo" },
+              { model: Brand, as: "brandInfo" },
+            ],
+          });
+        } else {
+          allProducts = await Product.findAndCountAll({
+            where: { brandId },
+            limit,
+            offset,
+            include: [
+              { model: Type, as: "typeInfo" },
+              { model: Brand, as: "brandInfo" },
+            ],
+          });
+        }
       }
       if (!brandId && typeId) {
-        allProducts = await Product.findAndCountAll({
-          where: { typeId },
-          limit,
-          offset,
-          include: [
-            { model: Type, as: "typeInfo" },
-            { model: Brand, as: "brandInfo" },
-          ],
-        });
+        if (name) {
+          allProducts = await Product.findAndCountAll({
+            where: {
+              typeId,
+              name: {
+                [Op.or]: { [Op.startsWith]: name, [Op.iLike]: `${name}%` },
+              },
+            },
+            limit,
+            offset,
+            include: [
+              { model: Type, as: "typeInfo" },
+              { model: Brand, as: "brandInfo" },
+            ],
+          });
+        } else {
+          allProducts = await Product.findAndCountAll({
+            where: { typeId },
+            limit,
+            offset,
+            include: [
+              { model: Type, as: "typeInfo" },
+              { model: Brand, as: "brandInfo" },
+            ],
+          });
+        }
       }
       if (brandId && typeId) {
-        allProducts = await Product.findAndCountAll({
-          where: { typeId, brandId },
-          limit,
-          offset,
-          include: [
-            { model: Type, as: "typeInfo" },
-            { model: Brand, as: "brandInfo" },
-          ],
-        });
+        if (name) {
+          allProducts = await Product.findAndCountAll({
+            where: {
+              typeId,
+              brandId,
+              name: {
+                [Op.or]: { [Op.startsWith]: name, [Op.iLike]: `${name}%` },
+              },
+            },
+            limit,
+            offset,
+            include: [
+              { model: Type, as: "typeInfo" },
+              { model: Brand, as: "brandInfo" },
+            ],
+          });
+        } else {
+          allProducts = await Product.findAndCountAll({
+            where: { typeId, brandId },
+            limit,
+            offset,
+            include: [
+              { model: Type, as: "typeInfo" },
+              { model: Brand, as: "brandInfo" },
+            ],
+          });
+        }
       }
 
       return response.json(allProducts);
