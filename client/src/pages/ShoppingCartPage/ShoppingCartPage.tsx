@@ -103,13 +103,14 @@ export const ShoppingCartPage: FC = () => {
                USD
             </span>
          </p>
-         <button
-            type="button"
-            className="order-page-transition-button"
-            disabled={!productsInCart.length}
-            onClick={orderPageEnter}>
-            {currentLanguage === "ru" ? "Заказать" : "Order"}
-         </button>
+         {Boolean(productsInCart.length)
+            && <button
+               type="button"
+               className="order-page-transition-button"
+               disabled={!productsInCart.length}
+               onClick={orderPageEnter}>
+               {currentLanguage === "ru" ? "Заказать" : "Order"}
+            </button>}
       </div>
    </div>
 }

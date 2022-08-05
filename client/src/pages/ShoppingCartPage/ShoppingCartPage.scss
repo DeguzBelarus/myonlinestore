@@ -26,12 +26,13 @@
 
     &.empty {
       @include flex-all-center;
+      overflow-y: hidden;
     }
 
     .about-emptiness-span {
       @include user-select-none;
       font-weight: bold;
-      color: $cart-items-wrapper-bcolor;
+      color: #000;
     }
   }
 
